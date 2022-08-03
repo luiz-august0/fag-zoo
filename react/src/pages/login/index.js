@@ -20,9 +20,9 @@ const Login = () => {
             <p>{String(authenticated)}</p>
             <form className="form" onSubmit={handleSubmit}>
                 <div className="field">
-                    <label htmlFor="usuario">Usuario</label>
+                    <label className="lbUsuario" htmlFor="usuario">Usuario</label>
                     <input 
-                        type="usuario" 
+                        type="text" 
                         name="usuario" 
                         id="usuario"
                         value={usuario} 
@@ -30,7 +30,7 @@ const Login = () => {
                     />
                 </div>
                 <div className="field">
-                    <label htmlFor="senha">Senha</label>
+                    <label className="lbSenha" htmlFor="senha">Senha</label>
                     <input 
                         type="password" 
                         name="senha" 
