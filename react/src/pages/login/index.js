@@ -1,6 +1,7 @@
 import React, { useState, useContext } from 'react';
 import './styles.css';
 import { AuthContext } from '../../contexts/auth';
+import Image from '../../img/image.png';
 
 const Login = () => {
     const { authenticated, login } = useContext(AuthContext);
@@ -16,7 +17,7 @@ const Login = () => {
 
     return (
         <div id="login">
-            <h1 className="title">Login</h1>
+            <img src={Image} alt=""/>
             <p>{String(authenticated)}</p>
             <form className="form" onSubmit={handleSubmit}>
                 <div className="field">
@@ -40,7 +41,7 @@ const Login = () => {
                     />
                 </div>
                 <div className="actions">
-                    <button type="submit">Entrar</button>                
+                    <button type="submit">ENTRAR</button>                
                 </div>
             </form>
         </div>
