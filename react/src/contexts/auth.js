@@ -1,4 +1,4 @@
-import React, { useState, createContext } from "react";
+import React, { useState, createContext, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
 export const AuthContext = createContext();
@@ -6,6 +6,17 @@ export const AuthContext = createContext();
 export const AuthProvider = ({ children }) => {
     const navigate = useNavigate();
     const [usuario, setUsuario] = useState(null);
+    const [loading, setLoading] = useState(true);
+
+    useEffect(() => {
+        const usuarioRecuperado = localStorage.getItem("usuario");
+
+        if(usuarioRecuperado) {
+            setUsuario(JSON.parse(usuarioRecuperado));
+        }
+
+        setLoading(false);
+    }, []);
 
     const login = (usuario, senha) => {
 
@@ -26,13 +37,14 @@ export const AuthProvider = ({ children }) => {
 
     const logout = () => {
         console.log("logout");
+        localStorage.removeItem('usuario');
         setUsuario(null);
         navigate("/login");
     };
 
     return (
         <AuthContext.Provider 
-        value={{authenticated: !!usuario, usuario, login,
+        value={{authenticated: !!usuario, usuario, loading, login,
         logout}}
         >
             {children}

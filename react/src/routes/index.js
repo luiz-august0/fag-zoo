@@ -6,7 +6,11 @@ import { AuthProvider, AuthContext } from "../contexts/auth";
 
 const Rotas = () => {
     const Private = ({children}) => {
-        const { autthenticated } = useContext(AuthContext);
+        const { autthenticated, loading } = useContext(AuthContext);
+
+        if (loading) {
+            return <div className="loading">Carregando...</div>
+        }
 
         if(!autthenticated) {
             return <Navigate to="/login" />
