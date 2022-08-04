@@ -1,35 +1,34 @@
-import React, { useState } from "react";
-import { BrowserRouter, Route, Routes } from "react-router-dom";
+import React, { useContext } from "react";
+import { BrowserRouter, Route, Routes, Navigate } from "react-router-dom";
 import Login from "../pages/login/index";
 import Home from "../pages/home/index";
-import { AuthContext } from "../contexts/auth";
+import { AuthProvider, AuthContext } from "../contexts/auth";
 
 const Rotas = () => {
-    const [usuario, setUsuario] = useState(null);
+    const Private = ({children}) => {
+        const { autthenticated } = useContext(AuthContext);
 
-    const login = (usuario, senha) => {
-        console.log("login", { usuario, senha});
-        setUsuario({ id: "123", usuario });
-    };
+        if(!autthenticated) {
+            return <Navigate to="/login" />
+        }
 
-    const logout = () => {
-        console.log("logout");
-    };
+        return children;
+    }
 
     return (
         <BrowserRouter>
-            <AuthContext.Provider 
-                value={{authenticated: !!usuario, usuario, login,
-                logout}}
-            >
+            <AuthProvider>
                 <Routes>
                     <Route exact path="/login" element={<Login/>}/>
-                    <Route exact path="/" element={<Home/>}/>
+                    <Route exact path="/" 
+                    element={
+                    <Private>
+                        <Home/>
+                    </Private>}/>
                 </Routes>
-            </AuthContext.Provider>
+            </AuthProvider>
         </BrowserRouter>
     );
 };
 
 export default Rotas;
- 

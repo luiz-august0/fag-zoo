@@ -10,10 +10,10 @@ const Login = () => {
     const [senha, setSenha] = useState(""); 
 
     const handleSubmit = (e) => {
-        e.preventDeafault();
-        console.log("submit", { usuario, senha});
+        e.preventDefault();
+        console.log("submit", {usuario, senha});
         login(usuario, senha);
-    }
+    };
 
     return (
         <div id="login">
