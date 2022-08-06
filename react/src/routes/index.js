@@ -6,13 +6,13 @@ import { AuthProvider, AuthContext } from "../contexts/auth";
 
 const Rotas = () => {
     const Private = ({children}) => {
-        const { autthenticated, loading } = useContext(AuthContext);
+        const { authenticated, loading } = useContext(AuthContext);
 
         if (loading) {
             return <div className="loading">Carregando...</div>
         }
 
-        if(!autthenticated) {
+        if(!authenticated) {
             return <Navigate to="/login" />
         }
 
@@ -28,7 +28,8 @@ const Rotas = () => {
                     element={
                     <Private>
                         <Home/>
-                    </Private>}/>
+                    </Private>}
+                    />
                 </Routes>
             </AuthProvider>
         </BrowserRouter>
