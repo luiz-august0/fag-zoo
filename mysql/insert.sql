@@ -1,0 +1,1 @@
+INSERT INTO usuario (Usr_Nome, Usr_Login, Usr_Senha, Usr_Setor) VALUES ("admin", "admin", "admin", "admin");

@@ -1,8 +1,8 @@
 CREATE TABLE usuario(
     Usr_Codigo INT PRIMARY KEY AUTO_INCREMENT,
-    Usr_Nome VARCHAR(55) NOT NULL,
     Usr_Login VARCHAR(55) NOT NULL,
-    Usr_Senha VARCHAR(50) NOT NULL
+    Usr_Senha VARCHAR(255) NOT NULL,
+    Usr_Setor VARCHAR(50) NOT NULL
 );
 
 CREATE TABLE animal(
