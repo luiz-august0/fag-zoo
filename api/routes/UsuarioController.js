@@ -1,3 +1,4 @@
+import { json } from 'body-parser';
 import { createPasswordHash } from '../services/auth';
 
 const mysql = require('../mysql').pool;
@@ -68,7 +69,7 @@ class UsuarioController {
     async update(req, res) {
         try {
             const { id } = req.params;
-            const { usuario, senha } = req.body;
+            const { usuario, senha, setor } = req.body;
             const encryptedPassword = await createPasswordHash(senha);
 
             mysql.getConnection((error, conn) => {
@@ -77,12 +78,12 @@ class UsuarioController {
                     (error, result, fields) => {
                         if (error) { return res.status(500).send({ error: error }) }
 
-                        if (!result) {
+                        if (JSON.stringify(result) === '[]') {
                             return res.status(404).json();
                         }
                         else {
                             conn.query(
-                                `UPDATE usuario SET Usr_Login = "${usuario}", Usr_Senha = "${encryptedPassword}" WHERE Usr_Codigo = "${id}"`,
+                                `UPDATE usuario SET Usr_Login = "${usuario}", Usr_Senha = "${encryptedPassword}", Usr_Setor = "${setor}" WHERE Usr_Codigo = "${id}"`,
                             (error, result, fields) => {
                                 conn.release();
                                 if (error) { return res.status(500).send({ error: error }) }
