@@ -1,7 +1,7 @@
 import { json } from 'body-parser';
 import { createPasswordHash } from '../services/auth';
 
-const mysql = require('../mysql').pool;
+const mysql = require('../config/mysql').pool;
 
 class UsuarioController {
     async index(req, res) {
@@ -95,6 +95,39 @@ class UsuarioController {
                 )
             });
             
+        } catch (err) {
+            console.error(err);
+            return res.status(500).json({ error: "Internal server error." });
+        }
+    }
+
+    async destroy(req, res) {
+        try {
+            const { id } = req.params;
+
+            mysql.getConnection((error, conn) => {
+                conn.query(
+                    `SELECT * FROM usuario WHERE Usr_Codigo = "${id}"`,
+                    (error, result, fields) => {
+                        if (error) { return res.status(500).send({ error: error }) }
+
+                        if (JSON.stringify(result) === '[]') {
+                            return res.status(404).json();
+                        }
+                        else {
+                            conn.query(
+                                `DELETE FROM usuario WHERE Usr_Codigo = "${id}"`,
+                            (error, result, fields) => {
+                                conn.release();
+                                if (error) { return res.status(500).send({ error: error }) }
+                                return res.status(201).json(result);
+                            }
+                            )
+                        }
+                    }
+                )
+            });
+
         } catch (err) {
             console.error(err);
             return res.status(500).json({ error: "Internal server error." });
