@@ -1,6 +1,8 @@
 import React, { useState, createContext, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
+import { api, createSession } from "../services/api";
+
 export const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
@@ -10,34 +12,42 @@ export const AuthProvider = ({ children }) => {
 
     useEffect(() => {
         const usuarioRecuperado = localStorage.getItem("usuario");
+        const token = localStorage.getItem('token');
 
-        if(usuarioRecuperado) {
+        if(usuarioRecuperado && token) {
             setUsuario(JSON.parse(usuarioRecuperado));
+            api.defaults.headers.Authorization = `Bearer ${token}`;
         }
 
         setLoading(false);
     }, []);
 
-    const login = (usuario, senha) => {
+    const login = async (usuario, senha) => {
+        const response = await createSession(usuario, senha);
 
-        console.log("login", { usuario, senha});
+        console.log("login", response.data);
 
-        const usuarioLogado = {
-           id: "123",
-           usuario, 
-        };
+
+        const usuarioLogado = response.data.usuario;
+        const token = response.data.token;
 
         localStorage.setItem("usuario", JSON.stringify(usuarioLogado));
+        localStorage.setItem("token", token);
 
-        if(senha === "admin"){
-            setUsuario({ id: "123", usuario });
-            navigate("/");
-        }
+        api.defaults.headers.Authorization = `Bearer ${token}`;
+
+        setUsuario(usuarioLogado);
+        navigate("/");
     };
 
     const logout = () => {
         console.log("logout");
-        localStorage.removeItem('usuario');
+        
+        localStorage.removeItem("usuario");
+        localStorage.removeItem("token");
+        
+        api.defaults.headers.Authorization = null;
+        
         setUsuario(null);
         navigate("/login");
     };

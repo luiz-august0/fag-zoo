@@ -1,8 +1,13 @@
+CREATE TABLE setor(
+    Str_Codigo INT PRIMARY KEY AUTO_INCREMENT,
+    Str_Descricao VARCHAR(50) NOT NULL
+);
+
 CREATE TABLE usuario(
     Usr_Codigo INT PRIMARY KEY AUTO_INCREMENT,
-    Usr_Login VARCHAR(55) NOT NULL,
+    Usr_Login VARCHAR(55) NOT NULL UNIQUE,
     Usr_Senha VARCHAR(255) NOT NULL,
-    Usr_Setor VARCHAR(50) NOT NULL
+    Str_Codigo INT NOT NULL
 );
 
 CREATE TABLE animal(
@@ -91,6 +96,10 @@ CREATE TABLE historicoClinico_anexo(
    HsCli_Codigo INT NOT NULL,
    Anx_Desc VARCHAR(255) NOT NULL
 );
+
+ALTER TABLE usuario
+ADD CONSTRAINT fk_usuario_setor FOREIGN KEY (Str_Codigo)
+REFERENCES setor (Str_Codigo);
 
 ALTER TABLE nutricaoAnimal
 ADD CONSTRAINT fk_nutricao_animal FOREIGN KEY (Ani_Codigo)

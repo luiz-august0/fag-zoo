@@ -1,1 +1,2 @@
-INSERT INTO usuario (Usr_Nome, Usr_Login, Usr_Senha, Usr_Setor) VALUES ("admin", "admin", "admin", "admin");
+INSERT INTO setor (Str_Descricao) VALUES ("ADM");
+

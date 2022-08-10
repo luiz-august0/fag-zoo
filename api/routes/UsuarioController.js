@@ -51,7 +51,7 @@ class UsuarioController {
 
             mysql.getConnection((error, conn) => {
                 conn.query(
-                    `INSERT INTO usuario (Usr_Login, Usr_Senha, Usr_Setor) VALUES ("${usuario}","${encryptedPassword}","${setor}")`,
+                    `INSERT INTO usuario (Usr_Login, Usr_Senha, Str_Codigo) VALUES ("${usuario}","${encryptedPassword}","${setor}")`,
                     (error, result, fields) => {
                         conn.release();
                         if (error) { return res.status(500).send({ error: error }) }
