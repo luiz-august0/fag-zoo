@@ -4,7 +4,7 @@ import { AuthContext } from '../../contexts/auth';
 import Image from '../../img/image.png';
 
 const Login = () => {
-    const { authenticated, login } = useContext(AuthContext);
+    const { login } = useContext(AuthContext);
 
     const [usuario, setUsuario] = useState("");
     const [senha, setSenha] = useState(""); 
@@ -18,7 +18,6 @@ const Login = () => {
     return (
         <div id="login">
             <img src={Image} alt=""/>
-            <p>{String(authenticated)}</p>
             <form className="form" onSubmit={handleSubmit}>
                 <div className="field">
                     <label className="lbUsuario" htmlFor="usuario">Usuario</label>

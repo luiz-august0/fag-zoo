@@ -1,18 +1,25 @@
 import React, { useContext } from 'react';
 import { AuthContext } from '../../contexts/auth';
+import './styles.css';
+import Image from '../../img/logout.png';
 
 const Home = () => {
-    const { authenticated, logout } = useContext(AuthContext);
+    const {logout } = useContext(AuthContext);
 
     const handleLogout = () => {
         logout();
     };
 
     return (
-        <div>
-            <h2>Home</h2>
-            <p>{String(authenticated)}</p>
-            <button onClick={handleLogout}>Sair</button>
+        <div className="main-container">
+            <div className="cont-second">
+                <h2>inittal</h2>
+                <button className='logout-button' onClick={handleLogout}><img src={Image}  className="image-logout" alt="" width={40} height={40}/></button>
+            </div>
+            <div class="on-screen">
+
+            </div>
+
         </div>
     );
 };
