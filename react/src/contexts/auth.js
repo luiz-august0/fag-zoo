@@ -27,7 +27,6 @@ export const AuthProvider = ({ children }) => {
 
         console.log("login", response.data);
 
-
         const usuarioLogado = response.data.usuario;
         const token = response.data.token;
 
@@ -41,7 +40,6 @@ export const AuthProvider = ({ children }) => {
     };
 
     const logout = () => {
-        console.log("logout");
         
         localStorage.removeItem("usuario");
         localStorage.removeItem("token");

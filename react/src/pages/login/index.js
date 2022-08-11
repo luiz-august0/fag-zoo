@@ -11,10 +11,18 @@ const Login = () => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        console.log("submit", {usuario, senha});
-        login(usuario, senha);
-    };
+        if (usuario === '' && senha === '') {
+            alert('Usuário e senha deve ser informados');
+            return;
+        }
 
+        try {
+            login(usuario, senha);
+        } catch (error) {
+            alert('Usuário ou senha inválidos');
+        }
+    }
+      
     return (
         <div id="login">
             <img src={Image} alt=""/>
