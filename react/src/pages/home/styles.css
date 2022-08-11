@@ -1,10 +1,46 @@
 .main-container {
-    display: flex;
     min-height: 100vh;
     padding: 0;
     background-color: #E6E6E6;
 
 }
+
+.on-screen button {
+    vertical-align: top;
+    width: 15%;
+    height: 100px;
+    font-size: 20px;
+    background-color: #6bbf79;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    position: auto;
+}
+
+.on-screen button:hover{
+    background-color: #396340;
+    color: whitesmoke;
+}
+
+
+.bt1 {
+    text-align: center;
+
+}
+
+.bt1 button {
+    margin: 10rem 5rem 5rem 5rem;
+}
+
+.bt2 {
+    text-align: center;
+}
+
+
+.bt2 button {
+    margin: 2rem 5rem 5rem 5rem;
+}
+
 
 .cont-second {
     display: flex;
@@ -16,7 +52,7 @@
 
 .cont-second  h2{
     margin-left: 2rem;
-    margin-top: 0;
+    margin-top: 5px;
 }
 
 .logout-button {
