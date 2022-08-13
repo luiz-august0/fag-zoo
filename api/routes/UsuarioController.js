@@ -48,18 +48,28 @@ class UsuarioController {
             const { usuario, senha, setor } = req.body;
 
             const encryptedPassword = await createPasswordHash(senha);
-
+            
             mysql.getConnection((error, conn) => {
                 conn.query(
-                    `INSERT INTO usuario (Usr_Login, Usr_Senha, Str_Codigo) VALUES ("${usuario}","${encryptedPassword}","${setor}")`,
+                    `SELECT * FROM usuario WHERE Usr_Login = "${usuario}"`,
                     (error, result, fields) => {
-                        conn.release();
                         if (error) { return res.status(500).send({ error: error }) }
-                        return res.status(201).json(result);
+                    
+                        if (JSON.stringify(result) != '[]') {
+                            return res.status(401).json('Usuário já cadastrado');
+                        } else {
+                            conn.query(
+                                `INSERT INTO usuario (Usr_Login, Usr_Senha, Str_Codigo) VALUES ("${usuario}","${encryptedPassword}","${setor}")`,
+                                (error, result, fields) => {
+                                    conn.release();
+                                    if (error) { return res.status(500).send({ error: error }) }
+                                    return res.status(201).json(result);
+                                }
+                            )
+                        }
                     }
                 )
             });
-
         } catch(err) {
             console.error(err);
             return res.status(500).json({ error: "Internal server error." });

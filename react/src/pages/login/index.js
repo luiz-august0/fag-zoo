@@ -3,31 +3,44 @@ import './styles.css';
 import { AuthContext } from '../../contexts/auth';
 import Image from '../../img/image.png';
 
-const Login = () => {
-    const { login } = useContext(AuthContext);
 
+const Login = () => {
+    
+    const { login } = useContext(AuthContext);
+    
     const [usuario, setUsuario] = useState("");
     const [senha, setSenha] = useState(""); 
+    const [msgErro, setMsgErro] = useState("");
+    
+    const recebeMsgErro = (erro) => {
+        setMsgErro(erro);
+    }
+
+    const mensagemErro = (erro) => {
+        return (
+            <h4>{erro}</h4>
+        )
+    }
 
     const handleSubmit = (e) => {
         e.preventDefault();
         if (usuario === '' && senha === '') {
-            alert('Usuário e senha deve ser informados');
+            recebeMsgErro('Usuário e senha deve ser informado');
             return;
         }
-
-        try {
-            login(usuario, senha);
-        } catch (error) {
-            alert('Usuário ou senha inválidos');
-        }
+        
+        login(usuario, senha);
+     
     }
       
     return (
         <div id="login">
             <img src={Image} alt=""/>
-            <form className="form" onSubmit={handleSubmit}>
+            <form className="form">
                 <div className="field">
+                <div className="div-erro">
+                    {mensagemErro(msgErro)}
+                </div>
                     <label className="lbUsuario" htmlFor="usuario">Usuario</label>
                     <input 
                         type="text" 
@@ -48,7 +61,7 @@ const Login = () => {
                     />
                 </div>
                 <div className="actions">
-                    <button type="submit">ENTRAR</button>                
+                    <button type="submit" onClick={handleSubmit}>ENTRAR</button>                
                 </div>
             </form>
         </div>
