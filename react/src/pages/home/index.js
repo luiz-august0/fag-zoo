@@ -8,23 +8,17 @@ import { getUsuarios } from '../../services/api';
 const Home = () => {
     const { logout } = useContext(AuthContext);
     const [usuarios, setUsuarios] = useState([]);
-    const [loading, setLoading] = useState([true]);
 
     useEffect(() => {
         (async () => {
             const response = await getUsuarios();
             setUsuarios(response.data);
-            setLoading(false);
         })();
     }, []);
 
     const handleLogout = () => {
         logout();
     };
-
-    if (loading) {
-        return <div className="loading">Carregando dados...</div>;
-    }
 
     return (
         <div className="main-container">

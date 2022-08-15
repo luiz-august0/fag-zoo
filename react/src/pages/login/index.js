@@ -1,46 +1,37 @@
 import React, { useState, useContext } from 'react';
+import Swal from 'sweetalert2'
+import withReactContent from 'sweetalert2-react-content'
 import './styles.css';
 import { AuthContext } from '../../contexts/auth';
 import Image from '../../img/image.png';
 
 
 const Login = () => {
-    
     const { login } = useContext(AuthContext);
     
     const [usuario, setUsuario] = useState("");
     const [senha, setSenha] = useState(""); 
-    const [msgErro, setMsgErro] = useState("");
     
-    const recebeMsgErro = (erro) => {
-        setMsgErro(erro);
-    }
-
-    const mensagemErro = (erro) => {
-        return (
-            <h4>{erro}</h4>
-        )
-    }
+    const MySwal = withReactContent(Swal);
 
     const handleSubmit = (e) => {
         e.preventDefault();
         if (usuario === '' && senha === '') {
-            recebeMsgErro('Usuário e senha deve ser informado');
+            MySwal.fire({
+            html: <i>Usuário e senha deve ser informado</i>,
+            icon: 'error'
+            })
             return;
-        }
-        
+        } 
+
         login(usuario, senha);
-     
     }
       
     return (
         <div id="login">
             <img src={Image} alt=""/>
-            <form className="form">
+            <form className="form" onSubmit={handleSubmit}>
                 <div className="field">
-                <div className="div-erro">
-                    {mensagemErro(msgErro)}
-                </div>
                     <label className="lbUsuario" htmlFor="usuario">Usuario</label>
                     <input 
                         type="text" 
@@ -61,7 +52,7 @@ const Login = () => {
                     />
                 </div>
                 <div className="actions">
-                    <button type="submit" onClick={handleSubmit}>ENTRAR</button>                
+                    <button type="submit">ENTRAR</button>                
                 </div>
             </form>
         </div>
