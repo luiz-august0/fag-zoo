@@ -2,6 +2,9 @@ import React, { useState, useContext, useEffect } from 'react';
 import { AuthContext } from '../../contexts/auth';
 import './styles.css';
 import Image from '../../img/logout.png';
+import Popup from 'reactjs-popup';
+import 'reactjs-popup/dist/index.css';
+import Modal from './modalstyle';
 
 import { getUsuarios } from '../../services/api';
 
@@ -20,6 +23,7 @@ const Home = () => {
         logout();
     };
 
+
     return (
         <div className="main-container">
             <div className="cont-second">
@@ -28,7 +32,7 @@ const Home = () => {
             </div>
             <div class="on-screen">
                 <div className='bt1'>
-                    <button >Cadastro de animal</button>
+                    <Modal />
                     <button >Cadastro de nutrição</button>
                     <button >Cadastro de acompanhamento médico</button>
                 </div>
