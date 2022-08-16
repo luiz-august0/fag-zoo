@@ -8,7 +8,8 @@ class UsuarioController {
         try {
             mysql.getConnection((error, conn) => {
                 conn.query(
-                    'SELECT * FROM usuario',
+                    `SELECT U.*, ST.Str_Descricao FROM usuario U ` + 
+                    `INNER JOIN setor ST ON U.Str_Codigo = ST.Str_Codigo`,
                     (error, result, fields) => {
                         if (error) { return res.status(500).send({ error: error }) }
                         return res.status(201).json(result);
@@ -23,11 +24,13 @@ class UsuarioController {
 
     async show (req, res) {
         try {
-            const { id } = req.params;
+            const { login } = req.params;
 
             mysql.getConnection((error, conn) => {
                 conn.query(
-                    `SELECT * FROM usuario WHERE Usr_Codigo = "${id}"`,
+                    `SELECT U.*, ST.Str_Descricao FROM usuario U ` + 
+                    `INNER JOIN setor ST ON U.Str_Codigo = ST.Str_Codigo ` + 
+                    `WHERE U.Usr_Login LIKE "%${login}%"`,
                     (error, result, fields) => {
                         if (error) { return res.status(500).send({ error: error }) }
                         if (!result) {
@@ -124,16 +127,20 @@ class UsuarioController {
                         if (JSON.stringify(result) === '[]') {
                             return res.status(404).json();
                         }
-                        else {
-                            conn.query(
-                                `DELETE FROM usuario WHERE Usr_Codigo = "${id}"`,
-                            (error, result, fields) => {
-                                conn.release();
-                                if (error) { return res.status(500).send({ error: error }) }
-                                return res.status(201).json(result);
-                            }
-                            )
+
+                        if (JSON.stringify(result[0].Usr_Login) === '"admin"') {
+                            return res.status(404).json({ error: 'Usuário de administrador não pode ser deletado' });
                         }
+                        
+                        conn.query(
+                            `DELETE FROM usuario WHERE Usr_Codigo = "${id}"`,
+                        (error, result, fields) => {
+                            conn.release();
+                            if (error) { return res.status(500).send({ error: error }) }
+                            return res.status(201).json(result);
+                        }
+                        )
+                       
                     }
                 )
             });

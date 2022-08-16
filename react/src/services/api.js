@@ -8,6 +8,12 @@ export const createSession = async (usuario, senha) => {
     return api.put('/sessions', { usuario, senha })
 };
 
-export const getUsuarios = async() => {
-    return api.get('/usuario');
+export const getUsuarios = async (query) => {
+    let url = `/usuario`;
+
+    if (query !== '') {
+        url = url + `/${query}`
+    }
+
+    return api.get(url);
 };

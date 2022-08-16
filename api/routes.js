@@ -10,7 +10,7 @@ routes.use(auth);
 
 routes.post('/usuario', UsuarioController.create);
 routes.get('/usuario', UsuarioController.index);
-routes.get('/usuario/:id', UsuarioController.show);
+routes.get('/usuario/:login', UsuarioController.show);
 routes.put('/usuario/:id', UsuarioController.update);
 routes.delete('/usuario/:id', UsuarioController.destroy);
 

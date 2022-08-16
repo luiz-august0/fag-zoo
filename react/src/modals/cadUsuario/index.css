@@ -1,5 +1,11 @@
-
-.modal {
+  .loading {
+     display: flex;
+     align-items: center;
+     justify-content: center;
+     min-height: 100vh;
+     padding: 0 2rem;
+  }
+  .modal {
     font-size: 12px;
     border: #000000;
     
@@ -18,12 +24,63 @@
     padding: 10px 5px;
     font-size: 20px;
   }
+
+  .modal > .content > .search {
+    display: flex;
+    align-items: center;
+    background-color: #f1f1f1;
+    max-width: 480px;
+    margin: 2rem auto;
+    padding: .5rem;
+    gap: 5px;
+  }
+
+  .modal > .content > .usuarios {
+    max-width: 480px;
+    margin: 1rem auto;
+  }
+
+  .modal > .content > .usuarios .title {
+    font-size: 1.3rem;
+    text-align: center;
+  }
+
+  .modal > .content > .usuarios .list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  .modal > .content > .usuarios .item {
+    display: flex;
+    align-items: center;
+    background-color: #f1f1f1;
+    border-bottom: 1px solid #d5d5d5;
+    padding: .5rem;
+  }
+
+  .modal > .content > .usuarios .item:last-child {
+    border-bottom: none;
+  }
+
+  .modal > .content > .usuarios .item .info {
+    flex:1;
+  }
+
+  .modal label {
+    flex-shrink: 0;
+  }
+
+  .modal input {
+    width: 100%;
+  }
+
+  
   .modal > .actions {
     width: 100%;
     padding: 10px 5px;
     margin: auto;
     text-align: center;
-
   }
   .modal > .close {
     cursor: pointer;
