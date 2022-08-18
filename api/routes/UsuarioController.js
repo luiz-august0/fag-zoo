@@ -1,4 +1,3 @@
-import { json } from 'body-parser';
 import { createPasswordHash } from '../services/auth';
 
 const mysql = require('../config/mysql').pool;

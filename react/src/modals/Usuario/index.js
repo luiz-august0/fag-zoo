@@ -1,10 +1,9 @@
-import React, { useState , useEffect} from 'react';
+import React from 'react';
 import Popup from 'reactjs-popup';
 
 import GridUsuario from './GridUsuario';
 import './index.css';
 
-import { getUsuarios } from '../../services/api';
 
 
 const Usuario = () => {

@@ -1,22 +1,12 @@
-import React, { useState, useContext, useEffect } from 'react';
+import React, { useContext } from 'react';
 import { AuthContext } from '../../contexts/auth';
 import './styles.css';
 import Image from '../../img/logout.png';
 import 'reactjs-popup/dist/index.css';
 import Usuario from '../../modals/Usuario';
 
-import { getUsuarios } from '../../services/api';
-
 const Home = () => {
     const { logout } = useContext(AuthContext);
-    const [usuarios, setUsuarios] = useState([]);
-
-    useEffect(() => {
-        (async () => {
-            const response = await getUsuarios();
-            setUsuarios(response.data);
-        })();
-    }, []);
 
     const handleLogout = () => {
         logout();
@@ -45,15 +35,3 @@ const Home = () => {
 };
 
 export default Home;
-
-/* exemplo para trazer objetos do backend
-<ul>
-                {
-                    usuarios.map((usuario) => (
-                        <li key={usuario.Usr_Codigo}>
-                            {usuario.Usr_Codigo} - {usuario.Usr_Login}
-                        </li>
-                    ))
-                }
-            </ul>
-*/ 
