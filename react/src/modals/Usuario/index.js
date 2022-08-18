@@ -1,34 +1,13 @@
 import React, { useState , useEffect} from 'react';
 import Popup from 'reactjs-popup';
-import { Link } from "react-router-dom";
 
-import Search from './Search';
-import Usuario from './Usuarios';
+import GridUsuario from './GridUsuario';
 import './index.css';
 
 import { getUsuarios } from '../../services/api';
 
 
-const CadastroUsuario = () => {
-
-    const [usuarios, setUsuarios] = useState([]);
-
-    const loadData = async (query = '') => {
-        const response = await getUsuarios(query);
-        setUsuarios(response.data);
-    }
-
-    useEffect(() => {
-        (async () => await loadData())();  
-    }, []);
-
-    const handleSearch = () => {
-
-    }
-
-    const handleDeleteUsuario = (usuario) => {
-
-    }
+const Usuario = () => {
     
     return (
         <Popup
@@ -43,10 +22,7 @@ const CadastroUsuario = () => {
                     </button>
                     <div className="header">Cadastro de Usuário</div>
                     <div className="content">
-                        <Search onSearch={handleSearch}/>
-                        <Usuario 
-                        usuarios={usuarios} 
-                        onDeleteUsuario={handleDeleteUsuario}/>
+                        <GridUsuario/>
                     </div>
                     <div className="actions">
                     <button className="button"onClick={() => {}}>
@@ -59,4 +35,4 @@ const CadastroUsuario = () => {
     );
 } 
 
-export default CadastroUsuario;
+export default Usuario;

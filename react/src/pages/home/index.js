@@ -3,7 +3,7 @@ import { AuthContext } from '../../contexts/auth';
 import './styles.css';
 import Image from '../../img/logout.png';
 import 'reactjs-popup/dist/index.css';
-import CadastroUsuario from '../../modals/cadUsuario';
+import Usuario from '../../modals/Usuario';
 
 import { getUsuarios } from '../../services/api';
 
@@ -30,7 +30,7 @@ const Home = () => {
             </div>
             <div class="on-screen">
                 <div className='bt1'>
-                    <CadastroUsuario />
+                    <Usuario />
                     <button >Cadastro de nutrição</button>
                     <button >Cadastro de acompanhamento médico</button>
                 </div>
