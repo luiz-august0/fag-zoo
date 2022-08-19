@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { AgGridReact } from 'ag-grid-react';
-import { getUsuarios, createUsuario, deleteUsuario } from "../../services/api";
+import { getUsuarios, createUsuario, updateUsuario, deleteUsuario } from "../../services/api";
 
 import Grid from '@mui/material/Grid'
 import Button from '@mui/material/Button';
@@ -20,12 +20,31 @@ const GridUsuario = () => {
     const [open, setOpen] = React.useState(false);
     const [formData, setFormData] = useState(initialValue);
 
+    const columnDefs = [
+        { field: "Usr_Codigo", headerName: "Código Usuário", hide:true},
+        { field: "Usr_Login", headerName: "Usuário" },
+        { field: "Str_Codigo", headerName: "Código Setor"},
+        { field: "Str_Descricao", headerName: "Setor" },
+        { field: "Usr_Codigo", headerName:"Ações", cellRendererFramework:(params) => 
+        <div>
+            <Button variant="outlined" color="primary" onClick={() => handleUpdate(params.data)}>Editar</Button>
+            <Button variant="outlined" color="secondary" onClick={() => handleDelete(params.value)}>Excluir</Button>
+        </div>}
+    ];
+
+    const defaultColDef = {
+        sortable: true,
+        flex: 1, filter: true,
+        floatingFilter: true
+    }
+
     const handleClickOpen = () => {
         setOpen(true);
     }
 
     const handleClose = () => {
         setOpen(false);
+        setFormData(initialValue);
     }
     
     const refreshGrid = async () => {
@@ -46,23 +65,55 @@ const GridUsuario = () => {
         setGridApi(params)
     }
 
+    //Insere registro
     const handleFormSubmit = async () => {
-        try {            
-            const usuario = formData.usuario;
-            const senha = formData.senha;
-            const setor = formData.setor;
-            
-            await createUsuario(usuario, senha, setor);
-            refreshGrid();
-            handleClose();
-            setFormData(initialValue);
-        } catch (error) {
-            console.log(error);
+        const usuario = formData.usuario;
+        const senha = formData.senha;
+        const setor = formData.setor;
+
+        if (usuario === '' || senha === '' || setor === '') {
+            MySwal.fire({
+                html: <i>Preencha corretamente os campos</i>,
+                icon: 'warning'
+            })
+        }
+
+        if(formData.id) {
+            try {            
+                await updateUsuario(usuario, senha, setor, formData.id);
+                refreshGrid();
+                handleClose();
+            } catch (error) {
+                console.log(error);
+            }
+        }else {
+            try {           
+                await createUsuario(usuario, senha, setor);
+                refreshGrid();
+                handleClose();
+            } catch (error) {
+                console.log(error);
+            }
         }
     }
 
-    const handleDelete = async (id) => {
-        await MySwal.fire({
+    const handleUpdate = (oldData) => {
+        setFormData(oldData);
+        handleClickOpen();
+    }
+
+    //Deleta registro
+    const handleDelete = (id) => {
+        const deleteRegister = () => {
+            try {
+                deleteUsuario(id);
+            } catch (error) {
+                console.log('aqui');
+            }
+            refreshGrid();
+        }
+
+        MySwal.fire({
             title: 'Confirma a exclusão do usuário?',
             showDenyButton: true,
             confirmButtonText: 'Sim',
@@ -75,32 +126,9 @@ const GridUsuario = () => {
             }
           }).then((result) => {
             if (result.isConfirmed) {
-                try {
-                    deleteUsuario(id);
-                } catch (error) {
-                    console.log('aqui');
-                }
+                deleteRegister()
             }
-            refreshGrid();
         })
-    }
-
-    const columnDefs = [
-        { field: "Usr_Codigo", headerName: "Código Usuário", hide:true},
-        { field: "Usr_Login", headerName: "Usuário" },
-        { field: "Str_Codigo", headerName: "Código Setor"},
-        { field: "Str_Descricao", headerName: "Setor" },
-        { field: "Usr_Codigo", headerName:"Ações", cellRendererFramework:(params) => 
-        <div>
-            <Button variant="outlined" color="primary">Editar</Button>
-            <Button variant="outlined" color="secondary" onClick={() => handleDelete(params.value)}>Excluir</Button>
-        </div>}
-    ];
-
-    const defaultColDef = {
-        sortable: true,
-        flex: 1, filter: true,
-        floatingFilter: true
     }
 
     return (

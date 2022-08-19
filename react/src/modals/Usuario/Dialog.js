@@ -5,7 +5,7 @@ import Dialog from '@mui/material/Dialog';
 import { DialogActions, DialogContent, TextField } from '@mui/material';
 
 const FormDialog = ({ open, handleClose, data, onChange, handleFormSubmit }) => {
-    const { usuario, senha, setor } = data;
+    const { id, usuario, senha, setor } = data;
 
     return (
         <div>
@@ -15,7 +15,7 @@ const FormDialog = ({ open, handleClose, data, onChange, handleFormSubmit }) => 
                 aria-labelledby="alert-dialog-title"
                 aria-describedby="alert-dialog-description"
             >
-                <DialogTitle id="alert-dialog-title">Criar novo Usuário</DialogTitle>
+                <DialogTitle id="alert-dialog-title">{id?"Editar Usuário":"Criar novo Usuário"}</DialogTitle>
                 <DialogContent>
                     <form>
                         <TextField id="usuario" value={usuario} onChange={e => onChange(e)} placeholder="Usuário" variant="outlined" margin="dense" label="Usuário" fullWidth />
