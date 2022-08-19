@@ -5,11 +5,19 @@ export const api = axios.create({
 });
 
 export const createSession = async (usuario, senha) => {
-    return api.put('/sessions', { usuario, senha })
+    return api.put('/sessions', { usuario, senha });
 };
 
 export const getUsuarios = async () => { 
-    return api.get('/usuario') 
+    return api.get('/usuario');
+};
+
+export const createUsuario = async (usuario, senha, setor) => {
+    return api.post('/usuario', { usuario, senha, setor});
+};
+
+export const deleteUsuario = async (usuarioID) => {
+    return api.delete('/usuario:', { usuarioID });
 };
 
 /*

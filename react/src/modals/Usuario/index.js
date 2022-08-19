@@ -10,7 +10,7 @@ const Usuario = () => {
     
     return (
         <Popup
-            trigger={<button className="button">Cadastro de Usuário</button>}
+            trigger={<button className="button">Usuários</button>}
             modal
             nested
             >
@@ -19,7 +19,7 @@ const Usuario = () => {
                     <button className="close" onClick={close}>
                         &times;
                     </button>
-                    <div className="header">Cadastro de Usuário</div>
+                    <div className="header">Usuários</div>
                     <div className="content">
                         <GridUsuario/>
                     </div>
