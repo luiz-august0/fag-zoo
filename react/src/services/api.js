@@ -1,23 +1,16 @@
 import axios from "axios";
 
 export const api = axios.create({
-    baseURL: 'http://localhost:5000',
+    baseURL: 'http://localhost:5000'
 });
 
 export const createSession = async (usuario, senha) => {
     return api.put('/sessions', { usuario, senha })
 };
 
-export function getUsuarios() { 
+export const getUsuarios = async () => { 
     return api.get('/usuario') 
-      .then((res) => res)
-      .then((data) => { 
-        return { 
-          count: data.length, 
-          result: data
-        }; 
-      }); 
-} 
+};
 
 /*
 export function addOrder(order: any) {

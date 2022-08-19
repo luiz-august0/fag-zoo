@@ -24,9 +24,6 @@ const Usuario = () => {
                         <GridUsuario/>
                     </div>
                     <div className="actions">
-                    <button className="button"onClick={() => {}}>
-                        Novo
-                    </button>
                     </div>
                 </div>
             )}
