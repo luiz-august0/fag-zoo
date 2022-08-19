@@ -17,7 +17,7 @@ export const createUsuario = async (usuario, senha, setor) => {
 };
 
 export const deleteUsuario = async (usuarioID) => {
-    return api.delete('/usuario:', { usuarioID });
+    return api.delete(`/usuario/${usuarioID}`);
 };
 
 /*

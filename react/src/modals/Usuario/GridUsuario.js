@@ -7,9 +7,13 @@ import Button from '@mui/material/Button';
 import "ag-grid-community/dist/styles/ag-grid.css";
 import "ag-grid-community/dist/styles/ag-theme-alpine.css";
 import FormDialog from "./Dialog";
+import Swal from 'sweetalert2'
+import withReactContent from 'sweetalert2-react-content'
 const initialValue = {usuario: "", senha: "", setor: ""};
 
 const GridUsuario = () => {
+
+    const MySwal = withReactContent(Swal);
     
     const [gridApi, setGridApi] = useState(null);
     const [usuarios, setUsuarios] = useState([]);
@@ -58,12 +62,27 @@ const GridUsuario = () => {
     }
 
     const handleDelete = async (id) => {
-        try {
-            await deleteUsuario(id);
+        await MySwal.fire({
+            title: 'Confirma a exclusão do usuário?',
+            showDenyButton: true,
+            confirmButtonText: 'Sim',
+            denyButtonText: 'Não',
+            customClass: {
+            actions: 'my-actions',
+            cancelButton: 'order-1 right-gap',
+            confirmButton: 'order-2',
+            denyButton: 'order-3',
+            }
+          }).then((result) => {
+            if (result.isConfirmed) {
+                try {
+                    deleteUsuario(id);
+                } catch (error) {
+                    console.log('aqui');
+                }
+            }
             refreshGrid();
-        } catch (error) {
-            console.log(error);
-        }
+        })
     }
 
     const columnDefs = [
