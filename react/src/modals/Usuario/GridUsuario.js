@@ -19,6 +19,7 @@ const GridUsuario = () => {
     const [usuarios, setUsuarios] = useState([]);
     const [open, setOpen] = React.useState(false);
     const [formData, setFormData] = useState(initialValue);
+    const [showMsgWarning, SetShowMsgWarning] = React.useState(false);
 
     const columnDefs = [
         { field: "Usr_Codigo", headerName: "Código Usuário", hide:true},
@@ -70,12 +71,10 @@ const GridUsuario = () => {
         const usuario = formData.usuario;
         const senha = formData.senha;
         const setor = formData.setor;
-
+        
         if (usuario === '' || senha === '' || setor === '') {
-            MySwal.fire({
-                html: <i>Preencha corretamente os campos</i>,
-                icon: 'warning'
-            })
+            SetShowMsgWarning(true);
+            return;
         }
 
         if(formData.id) {
@@ -98,7 +97,8 @@ const GridUsuario = () => {
     }
 
     const handleUpdate = (oldData) => {
-        setFormData(oldData);
+        const data = [oldData.Usr_Login, oldData.Usr_Senha, oldData.Str_Codigo];
+        setFormData({usuario: oldData.Usr_Login, senha: "", setor: oldData.Str_Codigo, id: oldData.Usr_Codigo});
         handleClickOpen();
     }
 
@@ -144,7 +144,14 @@ const GridUsuario = () => {
                     onGridReady={onGridReady}
                 />
             </div>
-            <FormDialog open={open} handleClose={handleClose} data={formData} onChange={onChange} handleFormSubmit={handleFormSubmit}/>
+            <FormDialog
+            open={open} 
+            handleClose={handleClose} 
+            data={formData} 
+            onChange={onChange} 
+            handleFormSubmit={handleFormSubmit}
+            showMsgWarning={showMsgWarning}
+            />
         </div>
     )
 }

@@ -95,7 +95,7 @@ class UsuarioController {
                         }
                         else {
                             conn.query(
-                                `UPDATE usuario SET Usr_Login = "${usuario}", Usr_Senha = "${encryptedPassword}", Usr_Setor = "${setor}" WHERE Usr_Codigo = "${id}"`,
+                                `UPDATE usuario SET Usr_Login = "${usuario}", Usr_Senha = "${encryptedPassword}", Str_Codigo = "${setor}" WHERE Usr_Codigo = "${id}"`,
                             (error, result, fields) => {
                                 conn.release();
                                 if (error) { return res.status(500).send({ error: error }) }

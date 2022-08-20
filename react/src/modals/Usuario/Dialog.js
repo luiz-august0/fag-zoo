@@ -2,9 +2,9 @@ import * as React from 'react';
 import Button from '@mui/material/Button';
 import DialogTitle from '@mui/material/DialogTitle';
 import Dialog from '@mui/material/Dialog';
-import { DialogActions, DialogContent, TextField } from '@mui/material';
+import { DialogActions, DialogContent, TextField, Alert, AlertTitle} from '@mui/material';
 
-const FormDialog = ({ open, handleClose, data, onChange, handleFormSubmit }) => {
+const FormDialog = ({ open, handleClose, data, onChange, handleFormSubmit, showMsgWarning }) => {
     const { id, usuario, senha, setor } = data;
 
     return (
@@ -15,6 +15,13 @@ const FormDialog = ({ open, handleClose, data, onChange, handleFormSubmit }) => 
                 aria-labelledby="alert-dialog-title"
                 aria-describedby="alert-dialog-description"
             >
+                {showMsgWarning?
+                <Alert severity="warning">
+                    <AlertTitle>Alerta</AlertTitle>
+                    Campos não foram preenchidos <strong>Verificar!</strong>
+                </Alert>
+                : null}
+
                 <DialogTitle id="alert-dialog-title">{id?"Editar Usuário":"Criar novo Usuário"}</DialogTitle>
                 <DialogContent>
                     <form>

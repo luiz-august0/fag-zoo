@@ -17,7 +17,7 @@ export const createUsuario = async (usuario, senha, setor) => {
 };
 
 export const updateUsuario = async (usuario, senha, setor, usuarioID) => {
-    return api.post(`/usuario/${usuarioID}`, { usuario, senha, setor });
+    return api.put(`/usuario/${usuarioID}`, { usuario, senha, setor });
 };
 
 export const deleteUsuario = async (usuarioID) => {
