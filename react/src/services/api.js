@@ -24,6 +24,10 @@ export const deleteUsuario = async (usuarioID) => {
     return api.delete(`/usuario/${usuarioID}`);
 };
 
+export const getSetores = async () => {
+    return api.get('/setor');
+}
+
 /*
 export function addOrder(order: any) {
     console.log(order);

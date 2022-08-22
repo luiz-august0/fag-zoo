@@ -19,7 +19,6 @@ const GridUsuario = () => {
     const [usuarios, setUsuarios] = useState([]);
     const [open, setOpen] = React.useState(false);
     const [formData, setFormData] = useState(initialValue);
-    const [showMsgWarning, SetShowMsgWarning] = React.useState(false);
 
     const columnDefs = [
         { field: "Usr_Codigo", headerName: "Código Usuário", hide:true},
@@ -66,51 +65,63 @@ const GridUsuario = () => {
         setGridApi(params)
     }
 
-    //Insere registro
+    //Insere registro //Atualiza registro
     const handleFormSubmit = async () => {
         const usuario = formData.usuario;
         const senha = formData.senha;
         const setor = formData.setor;
-        
-        if (usuario === '' || senha === '' || setor === '') {
-            SetShowMsgWarning(true);
-            return;
-        }
 
         if(formData.id) {
             try {            
                 await updateUsuario(usuario, senha, setor, formData.id);
                 refreshGrid();
                 handleClose();
+                MySwal.fire({
+                    html: <i>Usuário alterado com sucesso!</i>,
+                    icon: 'success'
+                })
             } catch (error) {
-                console.log(error);
+                handleClose();
+                MySwal.fire({
+                    html: <i>{JSON.stringify(error.response.data).slice(0, -1).slice(1 | 1)}</i>,
+                    icon: 'error'
+                })
             }
         }else {
             try {           
                 await createUsuario(usuario, senha, setor);
                 refreshGrid();
                 handleClose();
+                MySwal.fire({
+                    html: <i>Usuário cadastrado com sucesso!</i>,
+                    icon: 'success'
+                })
             } catch (error) {
-                console.log(error);
+                handleClose();
+                MySwal.fire({
+                    html: <i>{JSON.stringify(error.response.data).slice(0, -1).slice(1 | 1)}</i>,
+                    icon: 'error'
+                })
             }
         }
     }
 
     const handleUpdate = (oldData) => {
-        const data = [oldData.Usr_Login, oldData.Usr_Senha, oldData.Str_Codigo];
         setFormData({usuario: oldData.Usr_Login, senha: "", setor: oldData.Str_Codigo, id: oldData.Usr_Codigo});
         handleClickOpen();
     }
 
     //Deleta registro
     const handleDelete = (id) => {
-        const deleteRegister = () => {
+        const deleteRegister = async () => {
             try {
-                deleteUsuario(id);
+                await deleteUsuario(id);
             } catch (error) {
-                console.log('aqui');
+                MySwal.fire({
+                    html: <i>{JSON.stringify(error.response.data.error).slice(0, -1).slice(1 | 1)}</i>,
+                    icon: 'error'
+                })
             }
-            refreshGrid();
         }
 
         MySwal.fire({
@@ -126,7 +137,8 @@ const GridUsuario = () => {
             }
           }).then((result) => {
             if (result.isConfirmed) {
-                deleteRegister()
+                deleteRegister();
+                refreshGrid();
             }
         })
     }
@@ -150,7 +162,6 @@ const GridUsuario = () => {
             data={formData} 
             onChange={onChange} 
             handleFormSubmit={handleFormSubmit}
-            showMsgWarning={showMsgWarning}
             />
         </div>
     )

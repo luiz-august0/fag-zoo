@@ -13,5 +13,6 @@ routes.get('/usuario', UsuarioController.index);
 routes.get('/usuario/:login', UsuarioController.show);
 routes.put('/usuario/:id', UsuarioController.update);
 routes.delete('/usuario/:id', UsuarioController.destroy);
+routes.get('/setor', UsuarioController.indexSetor);
 
 export default routes;

@@ -117,6 +117,10 @@ class UsuarioController {
         try {
             const { id } = req.params;
 
+            if (id === '1') {
+                return res.status(404).json({ error: 'Usuário de administrador não pode ser deletado' });
+            }
+
             mysql.getConnection((error, conn) => {
                 conn.query(
                     `SELECT * FROM usuario WHERE Usr_Codigo = "${id}"`,
@@ -125,10 +129,6 @@ class UsuarioController {
 
                         if (JSON.stringify(result) === '[]') {
                             return res.status(404).json();
-                        }
-
-                        if (JSON.stringify(result[0].Usr_Login) === '"admin"') {
-                            return res.status(404).json({ error: 'Usuário de administrador não pode ser deletado' });
                         }
                         
                         conn.query(
@@ -147,6 +147,23 @@ class UsuarioController {
         } catch (err) {
             console.error(err);
             return res.status(500).json({ error: "Internal server error." });
+        }
+    }
+
+    async indexSetor(req, res) {
+        try {
+            mysql.getConnection((error, conn) => {
+                conn.query(
+                    `SELECT * FROM setor`,
+                    (error, result, fields) => {
+                        if (error) { return res.status(500).send({ error: error }) }
+                        return res.status(201).json(result);
+                    }
+                )
+            })
+        } catch(err) {
+            console.error(err);
+            return res.status(500).json({ error: "Internal server error." })
         }
     }
 
