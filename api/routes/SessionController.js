@@ -38,6 +38,7 @@ class SessionController {
                         });
                     }
                 )
+                conn.release();
             });
         } catch (err) {
             console.error(err);

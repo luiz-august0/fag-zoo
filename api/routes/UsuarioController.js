@@ -14,6 +14,7 @@ class UsuarioController {
                         return res.status(201).json(result);
                     }
                 )
+                conn.release();
             })
         } catch(err) {
             console.error(err);
@@ -38,6 +39,7 @@ class UsuarioController {
                         return res.status(201).json(result);
                     }
                 )
+                conn.release();
             });
         } catch (err) {
             console.error(err);
@@ -63,7 +65,6 @@ class UsuarioController {
                             conn.query(
                                 `INSERT INTO usuario (Usr_Login, Usr_Senha, Str_Codigo) VALUES ("${usuario}","${encryptedPassword}","${setor}")`,
                                 (error, result, fields) => {
-                                    conn.release();
                                     if (error) { return res.status(500).send({ error: error }) }
                                     return res.status(201).json(result);
                                 }
@@ -71,6 +72,7 @@ class UsuarioController {
                         }
                     }
                 )
+                conn.release();
             });
         } catch(err) {
             console.error(err);
@@ -97,7 +99,6 @@ class UsuarioController {
                             conn.query(
                                 `UPDATE usuario SET Usr_Login = "${usuario}", Usr_Senha = "${encryptedPassword}", Str_Codigo = "${setor}" WHERE Usr_Codigo = "${id}"`,
                             (error, result, fields) => {
-                                conn.release();
                                 if (error) { return res.status(500).send({ error: error }) }
                                 return res.status(201).json(result);
                             }
@@ -105,6 +106,7 @@ class UsuarioController {
                         }
                     }
                 )
+                conn.release();
             });
             
         } catch (err) {
@@ -134,7 +136,6 @@ class UsuarioController {
                         conn.query(
                             `DELETE FROM usuario WHERE Usr_Codigo = "${id}"`,
                         (error, result, fields) => {
-                            conn.release();
                             if (error) { return res.status(500).send({ error: error }) }
                             return res.status(201).json(result);
                         }
@@ -142,6 +143,7 @@ class UsuarioController {
                        
                     }
                 )
+                conn.release();
             });
 
         } catch (err) {
@@ -160,6 +162,7 @@ class UsuarioController {
                         return res.status(201).json(result);
                     }
                 )
+                conn.release();
             })
         } catch(err) {
             console.error(err);

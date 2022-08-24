@@ -46,7 +46,7 @@ const FormDialog = ({ open, handleClose, data, onChange, handleFormSubmit }) => 
         }
     
         setOpenAlert(false);
-      };
+    };
 
     return (
         <div>
