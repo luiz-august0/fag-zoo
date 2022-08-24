@@ -3,7 +3,9 @@ import { AuthContext } from '../../contexts/auth';
 import './styles.css';
 import Image from '../../img/logout.png';
 import 'reactjs-popup/dist/index.css';
+
 import Usuario from '../../modals/Usuario';
+import Animal from '../../modals/Animal';
 
 const Home = () => {
     const { logout } = useContext(AuthContext);
@@ -20,14 +22,11 @@ const Home = () => {
             </div>
             <div class="on-screen">
                 <div className='bt1'>
-                    <Usuario />
-                    <button >Cadastro de nutrição</button>
-                    <button >Cadastro de acompanhamento médico</button>
+                    <Usuario/>
+                    <Animal/>
                 </div>
                 <div className='bt2'>
-                    <button >Pesquisar animal</button>
-                    <button >Cadastro de xxxxxxx</button>
-                    <button >Cadastro de enriquecimento ambiental</button>
+
                 </div>
             </div>
         </div>
