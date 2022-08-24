@@ -21,6 +21,11 @@ const FormDialog = ({ open, handleClose, data, onChange, handleFormSubmit }) => 
     const { id, usuario, senha, setor } = data;
     const [ setores, setSetores ] = React.useState([]);
     const [ openAlert, setOpenAlert ] = React.useState(false);
+    const [ setorSelected, setSetorSelected] = React.useState();
+
+    console.log(data);
+    console.log(setorSelected);
+    data.setor = setorSelected;
 
     const getDataSetores = async () => {
         const response = await getSetores();
@@ -46,7 +51,11 @@ const FormDialog = ({ open, handleClose, data, onChange, handleFormSubmit }) => 
         }
     
         setOpenAlert(false);
-    };
+    };  
+
+    const handleChange = (event) => {
+        setSetorSelected(event.target.value);
+    } 
 
     return (
         <div>
@@ -75,10 +84,10 @@ const FormDialog = ({ open, handleClose, data, onChange, handleFormSubmit }) => 
                         <InputLabel id="demo-simple-select-label">Setor</InputLabel>
                         <Select
                         labelId="demo-simple-select-label"
-                        id="demo-simple-select"
-                        value={setor}
+                        id="setor"
+                        value={setorSelected}
                         label="Setor"
-                        onChange={e => onChange(e)}
+                        onChange={handleChange}
                         >
                             {setores.map((element) => {
                                 return (
