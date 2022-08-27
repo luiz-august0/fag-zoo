@@ -13,6 +13,8 @@ CREATE TABLE usuario(
 CREATE TABLE animal(
     Ani_Codigo INT PRIMARY KEY AUTO_INCREMENT,
     Ani_Nome VARCHAR(80) NOT NULL,
+    Ani_NomeCient VARCHAR(80) NOT NULL,
+    Ani_Apelido VARCHAR(80) NOT NULL,
     Ani_Identificacao VARCHAR(110),
     Ani_Sexo CHAR(1) NOT NULL,
     Ani_Origem VARCHAR(80),
@@ -23,6 +25,7 @@ CREATE TABLE animal(
 CREATE TABLE nutricaoAnimal(
     NtrAni_Codigo INT PRIMARY KEY AUTO_INCREMENT,
     Ani_Codigo INT NOT NULL,
+    NtrAni_Dia VARCHAR(18) NOT NULL,
     NtrAni_Hora TIME NOT NULL,
     NtrAni_Alimen VARCHAR (50) NOT NULL,
     NtrAni_Qtd DOUBLE NOT NULL

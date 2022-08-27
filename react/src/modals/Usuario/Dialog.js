@@ -19,12 +19,13 @@ import { getSetores } from '../../services/api';
 
 const FormDialog = ({ open, handleClose, data, onChange, handleFormSubmit }) => {
     const { id, usuario, senha, setor } = data;
+    const initialSetor = parseInt(data.setor);
     const [ setores, setSetores ] = React.useState([]);
     const [ openAlert, setOpenAlert ] = React.useState(false);
-    const [ setorSelected, setSetorSelected] = React.useState();
+    const [ setorSelected, setSetorSelected] = React.useState(initialSetor);
 
+    console.log(initialSetor);
     console.log(data);
-    console.log(setorSelected);
     data.setor = setorSelected;
 
     const getDataSetores = async () => {
@@ -37,7 +38,7 @@ const FormDialog = ({ open, handleClose, data, onChange, handleFormSubmit }) => 
     }, []);
 
     const onConfirm = () => {
-        if (usuario === '' || senha === '' || setor === '') {
+        if (usuario === '' || senha === '' || setor === undefined) {
             setOpenAlert(true);
             return;
         }
