@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { AgGridReact } from 'ag-grid-react';
-import { getUsuarios, createUsuario, updateUsuario, deleteUsuario } from "../../services/api";
+import { getAnimais, createAnimal, updateAnimal, deleteAnimal } from "../../services/api";
 
 import Grid from '@mui/material/Grid'
 import Button from '@mui/material/Button';
@@ -9,23 +9,26 @@ import "ag-grid-community/dist/styles/ag-theme-alpine.css";
 import FormDialog from "./Dialog";
 import Swal from 'sweetalert2'
 import withReactContent from 'sweetalert2-react-content'
-const initialValue = {usuario: "", senha: "", setor: ""};
+const initialValue = {ani_nome: "", ani_nomecient: "", ani_apelido: "", ani_identificacao: "", ani_sexo: "", ani_origem: ""};
 
 const GridAnimal = () => {
 
     const MySwal = withReactContent(Swal);
     
     const [gridApi, setGridApi] = useState(null);
-    const [usuarios, setUsuarios] = useState([]);
+    const [animais, setAnimais] = useState([]);
     const [open, setOpen] = React.useState(false);
     const [formData, setFormData] = useState(initialValue);
 
     const columnDefs = [
-        { field: "Usr_Codigo", headerName: "Código Usuário", hide:true},
-        { field: "Usr_Login", headerName: "Usuário" },
-        { field: "Str_Codigo", headerName: "Código Setor"},
-        { field: "Str_Descricao", headerName: "Setor" },
-        { field: "Usr_Codigo", headerName:"Ações", cellRendererFramework:(params) => 
+        { field: "Ani_Codigo", headerName: "Código",},
+        { field: "Ani_Nome", headerName: "Nome" },
+        { field: "Ani_NomeCient", headerName: "Nome Científico"},
+        { field: "Ani_Apelido", headerName: "Apelido"},
+        { field: "Ani_Identificacao", headerName: "Identificação" },
+        { field: "Ani_Sexo", headerName: "Sexo" },
+        { field: "Ani_Origem", headerName: "Origem" },
+        { field: "Ani_Codigo", headerName:"Ações", cellRendererFramework:(params) => 
         <div>
             <Button variant="outlined" color="primary" onClick={() => handleUpdate(params.data)}>Editar</Button>
             <Button variant="outlined" color="secondary" onClick={() => handleDelete(params.value)}>Excluir</Button>
@@ -48,8 +51,8 @@ const GridAnimal = () => {
     }
     
     const refreshGrid = async () => {
-        const response = await getUsuarios();
-        setUsuarios(response.data);
+        const response = await getAnimais();
+        setAnimais(response.data);
     }
 
     useEffect(() => {
@@ -67,17 +70,20 @@ const GridAnimal = () => {
 
     //Insere registro //Atualiza registro
     const handleFormSubmit = async () => {
-        const usuario = formData.usuario;
-        const senha = formData.senha;
-        const setor = formData.setor;
+        const ani_nome = formData.ani_nome;
+        const ani_nomecient = formData.ani_nomecient;
+        const ani_apelido = formData.ani_apelido;
+        const ani_identificacao = formData.ani_identificacao;
+        const ani_sexo = formData.ani_sexo;
+        const ani_origem = formData.ani_origem;
 
         if(formData.id) {
             try {            
-                await updateUsuario(usuario, senha, setor, formData.id);
+                await updateAnimal(ani_nome, ani_nomecient, ani_apelido, ani_identificacao, ani_sexo, ani_origem, formData.id);
                 refreshGrid();
                 handleClose();
                 MySwal.fire({
-                    html: <i>Usuário alterado com sucesso!</i>,
+                    html: <i>Animal alterado com sucesso!</i>,
                     icon: 'success'
                 })
             } catch (error) {
@@ -89,11 +95,11 @@ const GridAnimal = () => {
             }
         }else {
             try {           
-                await createUsuario(usuario, senha, setor);
+                await createAnimal(ani_nome, ani_nomecient, ani_apelido, ani_identificacao, ani_sexo, ani_origem);
                 refreshGrid();
                 handleClose();
                 MySwal.fire({
-                    html: <i>Usuário cadastrado com sucesso!</i>,
+                    html: <i>Animal cadastrado com sucesso!</i>,
                     icon: 'success'
                 })
             } catch (error) {
@@ -107,7 +113,14 @@ const GridAnimal = () => {
     }
 
     const handleUpdate = (oldData) => {
-        setFormData({usuario: oldData.Usr_Login, senha: "", setor: oldData.Str_Codigo, id: oldData.Usr_Codigo});
+        setFormData({
+            ani_nome: oldData.Ani_Nome, 
+            ani_nomecient: oldData.Ani_NomeCient, 
+            ani_apelido: oldData.Ani_Apelido, 
+            ani_identificacao: oldData.Ani_Identificacao, 
+            ani_sexo: oldData.Ani_Sexo, 
+            ani_origem: oldData.Ani_Origem, 
+            id: oldData.Ani_Codigo});
         handleClickOpen();
     }
 
@@ -115,9 +128,9 @@ const GridAnimal = () => {
     const handleDelete = (id) => {
         const deleteRegister = async () => {
             try {
-                await deleteUsuario(id);
+                await deleteAnimal(id);
                 MySwal.fire({
-                    html: <i>Usuário excluido com sucesso!</i>,
+                    html: <i>Animal excluido com sucesso!</i>,
                     icon: 'success'
                 })
                 refreshGrid();
@@ -130,7 +143,7 @@ const GridAnimal = () => {
         }
 
         MySwal.fire({
-            title: 'Confirma a exclusão do usuário?',
+            title: 'Confirma a exclusão do animal?',
             showDenyButton: true,
             confirmButtonText: 'Sim',
             denyButtonText: 'Não',
@@ -154,7 +167,7 @@ const GridAnimal = () => {
             </Grid>
             <div className="ag-theme-alpine" style={{ height: '400px'}}>
                 <AgGridReact 
-                    rowData={usuarios}
+                    rowData={animais}
                     columnDefs={columnDefs} 
                     defaultColDef={defaultColDef}
                     onGridReady={onGridReady}

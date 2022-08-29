@@ -4,10 +4,7 @@ import Popup from 'reactjs-popup';
 import GridAnimal from './GridAnimal';
 import './index.css';
 
-
-
-const Usuario = () => {
-    
+const Animal = () => {
     return (
         <Popup
             trigger={<button className="button">Animais</button>}
@@ -31,4 +28,4 @@ const Usuario = () => {
     );
 } 
 
-export default Usuario;
+export default Animal;

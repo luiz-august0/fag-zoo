@@ -15,30 +15,30 @@ import
     InputLabel
 } from '@mui/material';
 
-import { getSetores } from '../../services/api';
-
 const FormDialog = ({ open, handleClose, data, onChange, handleFormSubmit }) => {
-    const { id, usuario, senha, setor } = data;
-    const [ setores, setSetores ] = React.useState([]);
+    const { id, ani_nome, ani_nomecient, ani_apelido, ani_identificacao, ani_sexo, ani_origem } = data;
     const [ openAlert, setOpenAlert ] = React.useState(false);
-    const [ setorSelected, setSetorSelected] = React.useState();
+    const [ msgAlert, setMsgAlert ] = React.useState('');
+    const [ sexoSelected, setSexoSelected] = React.useState();
 
-    console.log(data);
-    console.log(setorSelected);
-    data.setor = setorSelected;
+    data.ani_sexo = sexoSelected;
 
-    const getDataSetores = async () => {
-        const response = await getSetores();
-        setSetores(response.data);
+    const alert = (open,msg) => {
+        setMsgAlert(msg);
+        setOpenAlert(open);
     }
 
-    React.useEffect(() => {
-        getDataSetores();
-    }, []);
-
     const onConfirm = () => {
-        if (usuario === '' || senha === '' || setor === '') {
-            setOpenAlert(true);
+        if (ani_nome === '' && ani_sexo === '') {
+            alert(true, 'Nome do animal e sexo são obrigatórios');
+            return;
+        }
+        if (ani_nome === '' && ani_sexo !== '') {
+            alert(true, 'Nome do animal é obrigatório');
+            return;
+        }
+        if (ani_nome !== '' && ani_sexo === '') {
+            alert(true, 'Sexo é obrigatório');
             return;
         }
 
@@ -50,11 +50,11 @@ const FormDialog = ({ open, handleClose, data, onChange, handleFormSubmit }) => 
           return;
         }
     
-        setOpenAlert(false);
+        alert(false);
     };  
 
     const handleChange = (event) => {
-        setSetorSelected(event.target.value);
+        setSexoSelected(event.target.value);
     } 
 
     return (
@@ -72,29 +72,30 @@ const FormDialog = ({ open, handleClose, data, onChange, handleFormSubmit }) => 
                 anchorOrigin={{vertical: "top", horizontal: "center"}}>
                     <Alert severity="warning" onClose={handleCloseAlert}>
                         <AlertTitle>Alerta</AlertTitle>
-                        Existem campos que não foram preenchidos <strong>Verificar!</strong>
+                        ${msgAlert} <strong>Verifique!</strong>
                     </Alert>
                 </Snackbar>
 
-                <DialogTitle id="alert-dialog-title">{id?"Editar Usuário":"Criar novo Usuário"}</DialogTitle>
+                <DialogTitle id="alert-dialog-title">{id?"Editar Animal":"Criar Animal"}</DialogTitle>
                 <DialogContent>
                     <form>
-                        <TextField id="usuario" value={usuario} onChange={e => onChange(e)} placeholder="Usuário" variant="outlined" margin="dense" label="Usuário" fullWidth />
-                        <TextField id="senha" value={senha} onChange={e => onChange(e)} placeholder="Senha" variant="outlined" label="Senha" margin="dense" fullWidth />
-                        <InputLabel id="demo-simple-select-label">Setor</InputLabel>
+                        <TextField id="ani_nome" value={ani_nome} onChange={e => onChange(e)} placeholder="Nome" variant="outlined" margin="dense" label="Nome" fullWidth />
+                        <TextField id="ani_nomecient" value={ani_nomecient} onChange={e => onChange(e)} placeholder="Nome Científico" variant="outlined" label="Nome Científico" margin="dense" fullWidth />
+                        <TextField id="ani_apelido" value={ani_apelido} onChange={e => onChange(e)} placeholder="Apelido" variant="outlined" margin="dense" label="Apelido" fullWidth />
+                        <TextField id="ani_identificacao" value={ani_identificacao} onChange={e => onChange(e)} placeholder="Identificação" variant="outlined" label="Identificação" margin="dense" fullWidth />
+                        <InputLabel id="demo-simple-select-label">Sexo</InputLabel>
                         <Select
                         labelId="demo-simple-select-label"
-                        id="setor"
-                        value={setorSelected}
+                        id="ani_sexo"
+                        value={sexoSelected}
                         label="Setor"
                         onChange={handleChange}
                         >
-                            {setores.map((element) => {
-                                return (
-                                    <MenuItem value={element.Str_Codigo}>{element.Str_Descricao}</MenuItem> 
-                                )
-                            })}
+                            <MenuItem value={'M'}>Masculino</MenuItem> 
+                            <MenuItem value={'F'}>Feminino</MenuItem> 
+                            <MenuItem value={'H'}>Hermafrodita</MenuItem> 
                         </Select>
+                        <TextField id="ani_origem" value={ani_origem} onChange={e => onChange(e)} placeholder="Origem" variant="outlined" margin="dense" label="Origem" fullWidth />
                     </form>
                 </DialogContent>
                 <DialogActions>
