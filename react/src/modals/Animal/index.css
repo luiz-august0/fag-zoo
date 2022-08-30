@@ -1,9 +1,8 @@
   .modal {
-    width: auto;
     font-size: 12px;
     border: #000000;
-    
   }
+  
   .modal > .header {
     width: 100%;
     border-bottom: 1px solid gray;

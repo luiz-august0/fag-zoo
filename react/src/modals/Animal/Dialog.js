@@ -29,15 +29,12 @@ const FormDialog = ({ open, handleClose, data, onChange, handleFormSubmit }) => 
     }
 
     const onConfirm = () => {
-        if (ani_nome === '' && ani_sexo === '') {
-            alert(true, 'Nome do animal e sexo são obrigatórios');
-            return;
-        }
-        if (ani_nome === '' && ani_sexo !== '') {
+        if (ani_nome === '') {
             alert(true, 'Nome do animal é obrigatório');
             return;
         }
-        if (ani_nome !== '' && ani_sexo === '') {
+
+        if (ani_sexo === undefined) {
             alert(true, 'Sexo é obrigatório');
             return;
         }
@@ -72,14 +69,14 @@ const FormDialog = ({ open, handleClose, data, onChange, handleFormSubmit }) => 
                 anchorOrigin={{vertical: "top", horizontal: "center"}}>
                     <Alert severity="warning" onClose={handleCloseAlert}>
                         <AlertTitle>Alerta</AlertTitle>
-                        ${msgAlert} <strong>Verifique!</strong>
+                        {msgAlert} <strong>Verifique!</strong>
                     </Alert>
                 </Snackbar>
 
-                <DialogTitle id="alert-dialog-title">{id?"Editar Animal":"Criar Animal"}</DialogTitle>
+                <DialogTitle id="alert-dialog-title">{id?"Editar Animal":"Cadastrar Animal"}</DialogTitle>
                 <DialogContent>
                     <form>
-                        <TextField id="ani_nome" value={ani_nome} onChange={e => onChange(e)} placeholder="Nome" variant="outlined" margin="dense" label="Nome" fullWidth />
+                        <TextField id="ani_nome" value={ani_nome} onChange={e => onChange(e)} placeholder="Nome" variant="outlined" margin="dense" label="Nome" fullWidth/>
                         <TextField id="ani_nomecient" value={ani_nomecient} onChange={e => onChange(e)} placeholder="Nome Científico" variant="outlined" label="Nome Científico" margin="dense" fullWidth />
                         <TextField id="ani_apelido" value={ani_apelido} onChange={e => onChange(e)} placeholder="Apelido" variant="outlined" margin="dense" label="Apelido" fullWidth />
                         <TextField id="ani_identificacao" value={ani_identificacao} onChange={e => onChange(e)} placeholder="Identificação" variant="outlined" label="Identificação" margin="dense" fullWidth />
