@@ -1,10 +1,8 @@
 import React from 'react';
-import Popup from 'reactjs-popup';
+import Popup from 'reactjs-popup-normal';
 
 import GridUsuario from './GridUsuario';
 import './index.css';
-
-
 
 const Usuario = () => {
     

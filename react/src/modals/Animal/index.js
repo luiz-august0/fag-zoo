@@ -1,12 +1,12 @@
 import React from 'react';
-import Popup from 'reactjs-popup';
+import Popup from 'reactjs-popup-large';
 
 import GridAnimal from './GridAnimal';
 import './index.css';
 
 const Animal = () => {
     return (
-        <Popup
+        <Popup 
             trigger={<button className="button">Animais</button>}
             modal
             nested

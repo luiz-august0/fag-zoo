@@ -2,7 +2,7 @@ import React, { useContext } from 'react';
 import { AuthContext } from '../../contexts/auth';
 import './styles.css';
 import Image from '../../img/logout.png';
-import 'reactjs-popup/dist/index.css';
+import 'reactjs-popup-normal/dist/index.css';
 
 import Usuario from '../../modals/Usuario';
 import Animal from '../../modals/Animal';
