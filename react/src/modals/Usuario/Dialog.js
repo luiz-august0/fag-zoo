@@ -19,15 +19,13 @@ import { getSetores } from '../../services/api';
 
 const FormDialog = ({ open, handleClose, data, onChange, handleFormSubmit }) => {
     const { id, usuario, senha, setor } = data;
-    const initialSetor = parseInt(data.setor);
     const [ setores, setSetores ] = React.useState([]);
     const [ openAlert, setOpenAlert ] = React.useState(false);
-    const [ setorSelected, setSetorSelected] = React.useState(initialSetor);
-
-    console.log(initialSetor);
-    console.log(data);
-    data.setor = setorSelected;
-
+    const [ setorSelected, setSetorSelected] = React.useState();
+    
+    //data.setor = setorSelected;
+    console.log(data.setor)
+    
     const getDataSetores = async () => {
         const response = await getSetores();
         setSetores(response.data);
@@ -38,12 +36,15 @@ const FormDialog = ({ open, handleClose, data, onChange, handleFormSubmit }) => 
     }, []);
 
     const onConfirm = () => {
+        data.setor = setorSelected;
         if (usuario === '' || senha === '' || setor === undefined) {
             setOpenAlert(true);
             return;
         }
 
-        handleFormSubmit()
+        handleFormSubmit();
+        setOpenAlert(false);
+        setSetorSelected();
     }
 
     const handleCloseAlert = (event, reason) => {
@@ -57,6 +58,10 @@ const FormDialog = ({ open, handleClose, data, onChange, handleFormSubmit }) => 
     const handleChange = (event) => {
         setSetorSelected(event.target.value);
     } 
+
+    const onOpen = () => {
+        console.log('aqui');
+    }
 
     return (
         <div>
@@ -85,6 +90,7 @@ const FormDialog = ({ open, handleClose, data, onChange, handleFormSubmit }) => 
                         <InputLabel id="demo-simple-select-label">Setor</InputLabel>
                         <Select
                         labelId="demo-simple-select-label"
+                        defaultValue={data.setor !== ''?data.setor:data.setor = 1}
                         id="setor"
                         value={setorSelected}
                         label="Setor"
