@@ -9,6 +9,8 @@ import "ag-grid-community/dist/styles/ag-theme-alpine.css";
 import FormDialog from "./Dialog";
 import Swal from 'sweetalert2'
 import withReactContent from 'sweetalert2-react-content'
+import { mobileDetect } from "../../globalFunctions";
+
 const initialValue = {usuario: "", senha: "", setor: ""};
 
 const GridUsuario = () => {
@@ -23,7 +25,7 @@ const GridUsuario = () => {
     const columnDefs = [
         { field: "Usr_Codigo", headerName: "Código Usuário", hide:true},
         { field: "Usr_Login", headerName: "Usuário" },
-        { field: "Str_Codigo", headerName: "Código Setor"},
+        { field: "Str_Codigo", headerName: "Código Setor", hide: mobileDetect()},
         { field: "Str_Descricao", headerName: "Setor" },
         { field: "Usr_Codigo", headerName:"Ações", cellRendererFramework:(params) => 
         <div>
@@ -34,8 +36,9 @@ const GridUsuario = () => {
 
     const defaultColDef = {
         sortable: true,
-        flex: 1, filter: true,
-        floatingFilter: true
+        filter: true,
+        floatingFilter: true,
+        resizable: true
     }
 
     const handleClickOpen = () => {

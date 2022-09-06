@@ -1,9 +1,7 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import { useNavigate } from "react-router-dom";
 import './styles.css';
 import Image from '../../img/logout.png';
-
-
 
 const Nutricao = () => {
    

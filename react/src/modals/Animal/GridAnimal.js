@@ -9,6 +9,8 @@ import "ag-grid-community/dist/styles/ag-theme-alpine.css";
 import FormDialog from "./Dialog";
 import Swal from 'sweetalert2'
 import withReactContent from 'sweetalert2-react-content'
+import { mobileDetect } from "../../globalFunctions";
+
 const initialValue = {ani_nome: "", ani_nomecient: "", ani_apelido: "", ani_identificacao: "", ani_sexo: "", ani_origem: ""};
 
 const GridAnimal = () => {
@@ -21,13 +23,13 @@ const GridAnimal = () => {
     const [formData, setFormData] = useState(initialValue);
 
     const columnDefs = [
-        { field: "Ani_Codigo", headerName: "Código",},
+        { field: "Ani_Codigo", headerName: "Código", width: 180},
         { field: "Ani_Nome", headerName: "Nome" },
-        { field: "Ani_NomeCient", headerName: "Nome Científico"},
-        { field: "Ani_Apelido", headerName: "Apelido"},
-        { field: "Ani_Identificacao", headerName: "Identificação" },
+        { field: "Ani_NomeCient", headerName: "Nome Científico", hide: mobileDetect()},
+        { field: "Ani_Apelido", headerName: "Apelido", hide: mobileDetect()},
+        { field: "Ani_Identificacao", headerName: "Identificação"},
         { field: "Ani_Sexo", headerName: "Sexo" },
-        { field: "Ani_Origem", headerName: "Origem" },
+        { field: "Ani_Origem", headerName: "Origem", hide: mobileDetect() },
         { field: "Ani_Codigo", headerName:"Ações", cellRendererFramework:(params) => 
         <div>
             <Button variant="outlined" color="primary" onClick={() => handleUpdate(params.data)}>Editar</Button>
@@ -37,8 +39,9 @@ const GridAnimal = () => {
 
     const defaultColDef = {
         sortable: true,
-        flex: 1, filter: true,
-        floatingFilter: true
+        filter: true,
+        floatingFilter: true,
+        resizable: true
     }
 
     const handleClickOpen = () => {

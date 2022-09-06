@@ -2,7 +2,7 @@ import React, { useContext } from "react";
 import { BrowserRouter, Route, Routes, Navigate } from "react-router-dom";
 import Login from "../pages/login/index";
 import Home from "../pages/home/index";
-import Nutricao from "../pages/Nutricao/index";
+import Nutricao from "../pages/nutricao/index";
 import { AuthProvider, AuthContext } from "../contexts/auth";
 
 const Rotas = () => {

@@ -23,9 +23,6 @@ const FormDialog = ({ open, handleClose, data, onChange, handleFormSubmit }) => 
     const [ openAlert, setOpenAlert ] = React.useState(false);
     const [ setorSelected, setSetorSelected] = React.useState();
     
-    //data.setor = setorSelected;
-    console.log(data.setor)
-    
     const getDataSetores = async () => {
         const response = await getSetores();
         setSetores(response.data);
@@ -36,8 +33,7 @@ const FormDialog = ({ open, handleClose, data, onChange, handleFormSubmit }) => 
     }, []);
 
     const onConfirm = () => {
-        data.setor = setorSelected;
-        if (usuario === '' || senha === '' || setor === undefined) {
+        if (usuario === '' || senha === '' || setor === '') {
             setOpenAlert(true);
             return;
         }
@@ -56,12 +52,9 @@ const FormDialog = ({ open, handleClose, data, onChange, handleFormSubmit }) => 
     };  
 
     const handleChange = (event) => {
-        setSetorSelected(event.target.value);
+        data.setor = event.target.value;
+        setSetorSelected(data.setor);
     } 
-
-    const onOpen = () => {
-        console.log('aqui');
-    }
 
     return (
         <div>
@@ -90,9 +83,9 @@ const FormDialog = ({ open, handleClose, data, onChange, handleFormSubmit }) => 
                         <InputLabel id="demo-simple-select-label">Setor</InputLabel>
                         <Select
                         labelId="demo-simple-select-label"
-                        defaultValue={data.setor !== ''?data.setor:data.setor = 1}
-                        id="setor"
-                        value={setorSelected}
+                        id="setor" 
+                        defaultValue={data.setor !== ''?data.setor:null}
+                        value={data.setor}
                         label="Setor"
                         onChange={handleChange}
                         >
