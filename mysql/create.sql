@@ -25,7 +25,7 @@ CREATE TABLE animal(
 CREATE TABLE nutricaoAnimal(
     NtrAni_Codigo INT PRIMARY KEY AUTO_INCREMENT,
     Ani_Codigo INT NOT NULL,
-    NtrAni_Dia VARCHAR(18) NOT NULL,
+    NtrAni_Dia CHAR(3) NOT NULL,
     NtrAni_Hora TIME NOT NULL,
     NtrAni_Alimen VARCHAR (50) NOT NULL,
     NtrAni_Qtd DOUBLE NOT NULL

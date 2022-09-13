@@ -3,6 +3,7 @@ import UsuarioController from "./routes/UsuarioController";
 import auth from "./middlewares/auth";
 import SessionController from "./routes/SessionController";
 import AnimalController from "./routes/AnimalController";
+import NutricaoController from "./routes/NutricaoController";
 
 const routes = new Router();
 
@@ -23,5 +24,11 @@ routes.get('/animal', AnimalController.index);
 routes.get('/animal/:id', AnimalController.show);
 routes.put('/animal/:id', AnimalController.update);
 routes.delete('/animal/:id', AnimalController.destroy);
+
+//Rotas nutricao
+routes.get('/nutricao/:id', NutricaoController.show);
+routes.post('/nutricao/', NutricaoController.create);
+routes.put('/nutricao/:id', NutricaoController.update);
+routes.delete('/nutricao/:id', NutricaoController.destroy);
 
 export default routes;
