@@ -142,7 +142,7 @@ const GridNutricao = (animalID) => {
         }
 
         MySwal.fire({
-            title: 'Confirma a exclusão do animal?',
+            title: 'Confirma a exclusão da nutrição?',
             showDenyButton: true,
             confirmButtonText: 'Sim',
             denyButtonText: 'Não',

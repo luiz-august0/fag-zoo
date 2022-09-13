@@ -78,9 +78,9 @@ const FormDialog = ({ open, handleClose, data, onChange, handleFormSubmit }) => 
                 <DialogTitle id="alert-dialog-title">{id?"Editar Usuário":"Criar novo Usuário"}</DialogTitle>
                 <DialogContent>
                     <form>
-                        <TextField id="usuario" value={usuario} onChange={e => onChange(e)} placeholder="Usuário" variant="outlined" margin="dense" label="Usuário" fullWidth />
-                        <TextField id="senha" value={senha} onChange={e => onChange(e)} placeholder="Senha" variant="outlined" label="Senha" margin="dense" fullWidth />
-                        <InputLabel id="demo-simple-select-label">Setor</InputLabel>
+                        <TextField required id="usuario" value={usuario} onChange={e => onChange(e)} placeholder="Usuário" variant="outlined" margin="dense" label="Usuário" fullWidth />
+                        <TextField required id="senha" value={senha} onChange={e => onChange(e)} placeholder="Senha" variant="outlined" label="Senha" margin="dense" fullWidth />
+                        <InputLabel required id="demo-simple-select-label">Setor</InputLabel>
                         <Select
                         labelId="demo-simple-select-label"
                         id="setor" 

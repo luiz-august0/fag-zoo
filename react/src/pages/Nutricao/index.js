@@ -7,6 +7,7 @@ import
     Select,
     Button,
     MenuItem,
+    InputLabel
 } from '@mui/material';
 
 import GridNutricao from './GridNutricao';
@@ -28,8 +29,14 @@ const Nutricao = () => {
     }
 
     const getDataAnimal = async (id) => {
-        const response = await showAnimal(id);
-        setAnimalData(response.data);
+        setAnimalData([]);
+        if (id !== undefined) {
+            const response = await showAnimal(id);
+            setAnimalData(response.data);
+        } else {
+            const response = await getAnimais();
+            setAnimalData(response.data);
+        }
     }
 
     const onConfirm = () => {
@@ -50,6 +57,7 @@ const Nutricao = () => {
             </div>
             <div className="main-container">
                 <div className="main-screen">
+                    <InputLabel id="demo-simple-select-label">Buscar Animal</InputLabel>
                     <Select
                     id="animal" 
                     value={animalSelected}
@@ -64,6 +72,7 @@ const Nutricao = () => {
                         })}
                     </Select>
                     <Button style={{left: '5%'}} variant="contained" color="primary" onClick={() => onConfirm()}>Confirmar</Button>
+                    <Button style={{left: '10%'}} variant="contained" color="warning" onClick={() => getDataAnimal()}>Carregar todos</Button>
                 </div>
                 <div className="animal-content">
                     {animalData.map((element) => {
@@ -72,7 +81,10 @@ const Nutricao = () => {
                                 <h2>Código: {element.Ani_Codigo}</h2>
                                 <h2>Nome: {element.Ani_Nome}</h2>
                                 <h2>Identificação: {element.Ani_Identificacao}</h2>
+                                <h1 style={{textAlign: 'center'}}>Tabela de nutrição do Animal</h1>
                                 <GridNutricao animalID={element.Ani_Codigo}/>
+                                <br/>
+                                <br/>
                             </div>
                         )
                     })}

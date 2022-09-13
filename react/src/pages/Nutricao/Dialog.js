@@ -16,12 +16,10 @@ import
 } from '@mui/material';
 
 const FormDialog = ({ open, handleClose, data, onChange, handleFormSubmit }) => {
-    const { id, ani_nome, ani_nomecient, ani_apelido, ani_identificacao, ani_sexo, ani_origem } = data;
+    const { id, ntr_dia, ntr_hora, ntr_alimento, ntr_qtd} = data;
     const [ openAlert, setOpenAlert ] = React.useState(false);
     const [ msgAlert, setMsgAlert ] = React.useState('');
-    const [ sexoSelected, setSexoSelected] = React.useState();
-
-    data.ani_sexo = sexoSelected;
+    const [ diaSelected, setDiaSelected] = React.useState();
 
     const alert = (open,msg) => {
         setMsgAlert(msg);
@@ -29,13 +27,23 @@ const FormDialog = ({ open, handleClose, data, onChange, handleFormSubmit }) => 
     }
 
     const onConfirm = () => {
-        if (ani_nome === '') {
-            alert(true, 'Nome do animal é obrigatório');
+        if (ntr_dia === '') {
+            alert(true, 'Dia é obrigatório');
             return;
         }
 
-        if (ani_sexo === undefined) {
-            alert(true, 'Sexo é obrigatório');
+        if (ntr_hora === '') {
+            alert(true, 'Hora é obrigatório');
+            return;
+        }
+
+        if (ntr_alimento === '') {
+            alert(true, 'Alimento é obrigatório');
+            return;
+        }
+
+        if (ntr_qtd === '') {
+            alert(true, 'Quantidade do alimento é obrigatório');
             return;
         }
 
@@ -51,7 +59,8 @@ const FormDialog = ({ open, handleClose, data, onChange, handleFormSubmit }) => 
     };  
 
     const handleChange = (event) => {
-        setSexoSelected(event.target.value);
+        data.ntr_dia = event.target.value;
+        setDiaSelected(data.ntr_dia);
     } 
 
     return (
@@ -73,26 +82,30 @@ const FormDialog = ({ open, handleClose, data, onChange, handleFormSubmit }) => 
                     </Alert>
                 </Snackbar>
 
-                <DialogTitle id="alert-dialog-title">{id?"Editar Animal":"Cadastrar Animal"}</DialogTitle>
+                <DialogTitle id="alert-dialog-title">{id?"Editar Nutrição":"Cadastrar Nutrição"}</DialogTitle>
                 <DialogContent>
                     <form>
-                        <TextField id="ani_nome" value={ani_nome} onChange={e => onChange(e)} placeholder="Nome" variant="outlined" margin="dense" label="Nome" fullWidth/>
-                        <TextField id="ani_nomecient" value={ani_nomecient} onChange={e => onChange(e)} placeholder="Nome Científico" variant="outlined" label="Nome Científico" margin="dense" fullWidth />
-                        <TextField id="ani_apelido" value={ani_apelido} onChange={e => onChange(e)} placeholder="Apelido" variant="outlined" margin="dense" label="Apelido" fullWidth />
-                        <TextField id="ani_identificacao" value={ani_identificacao} onChange={e => onChange(e)} placeholder="Identificação" variant="outlined" label="Identificação" margin="dense" fullWidth />
-                        <InputLabel id="demo-simple-select-label">Sexo</InputLabel>
+                        <InputLabel required id="demo-simple-select-label">Dia</InputLabel>
                         <Select
                         labelId="demo-simple-select-label"
-                        id="ani_sexo"
-                        value={sexoSelected}
-                        label="Setor"
+                        id="ntr_dia"
+                        defaultValue={data.ntr_dia !== ''?data.ntr_dia:null}
+                        value={data.ntr_dia}
+                        label="Dia"
                         onChange={handleChange}
                         >
-                            <MenuItem value={'M'}>Masculino</MenuItem> 
-                            <MenuItem value={'F'}>Feminino</MenuItem> 
-                            <MenuItem value={'H'}>Hermafrodita</MenuItem> 
+                            <MenuItem value={'SEG'}>Segunda-Feira</MenuItem> 
+                            <MenuItem value={'TER'}>Terça-Feira</MenuItem> 
+                            <MenuItem value={'QUA'}>Quarta-Feira</MenuItem> 
+                            <MenuItem value={'QUI'}>Quinta-Feira</MenuItem> 
+                            <MenuItem value={'SEX'}>Sexta-Feira</MenuItem> 
+                            <MenuItem value={'SAB'}>Sábado</MenuItem> 
+                            <MenuItem value={'DOM'}>Domingo</MenuItem> 
                         </Select>
-                        <TextField id="ani_origem" value={ani_origem} onChange={e => onChange(e)} placeholder="Origem" variant="outlined" margin="dense" label="Origem" fullWidth />
+                        <InputLabel required id="demo-simple-select-label">Hora</InputLabel>
+                        <TextField id="ntr_hora" required value={ntr_hora} onChange={e => onChange(e)} placeholder="Hora" variant="outlined" margin="dense" fullWidth type={'time'}/>
+                        <TextField id="ntr_alimento" required value={ntr_alimento} onChange={e => onChange(e)} placeholder="Alimento" variant="outlined" margin="dense" label="Alimento" fullWidth type={'text'}/>
+                        <TextField id="ntr_qtd" required value={ntr_qtd} onChange={e => onChange(e)} placeholder="Quantidade" variant="outlined" label="Quantidade" margin="dense" fullWidth type={'number'}/>
                     </form>
                 </DialogContent>
                 <DialogActions>
