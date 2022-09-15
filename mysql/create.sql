@@ -28,7 +28,9 @@ CREATE TABLE nutricaoAnimal(
     NtrAni_Dia CHAR(3) NOT NULL,
     NtrAni_Hora TIME NOT NULL,
     NtrAni_Alimen VARCHAR (50) NOT NULL,
-    NtrAni_Qtd DOUBLE NOT NULL
+    NtrAni_UnMed CHAR(2) NOT NULL,
+    NtrAni_Qtd FLOAT NOT NULL,
+    NtrAni_Obs VARCHAR(125) 
 );
 
 CREATE TABLE historicoAnimal(

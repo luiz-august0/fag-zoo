@@ -12,7 +12,7 @@ import withReactContent from 'sweetalert2-react-content'
 //import { mobileDetect } from "../../globalFunctions";
 
 const GridNutricao = (animalID) => {
-    const initialValue = {ani_codigo : animalID.animalID, ntr_dia : "", ntr_hora : "", ntr_alimento : "", ntr_qtd : ""};
+    const initialValue = {ani_codigo : animalID.animalID, ntr_dia : "", ntr_hora : "", ntr_alimento : "", ntr_unmed : "", ntr_qtd : "", ntr_obs : ""};
 
     const MySwal = withReactContent(Swal);
     
@@ -27,7 +27,9 @@ const GridNutricao = (animalID) => {
         { field: "NtrAni_Dia", headerName: "Dia"},
         { field: "NtrAni_Hora", headerName: "Hora"},
         { field: "NtrAni_Alimen", headerName: "Alimento"},
+        { field: "NtrAni_UnMed", headerName: "Unidade" },
         { field: "NtrAni_Qtd", headerName: "Quantidade" },
+        { field: "NtrAni_Obs", headerName: "Observação" },
         { field: "NtrAni_Codigo", headerName:"Ações", cellRendererFramework:(params) => 
         <div>
             <Button variant="outlined" color="primary" onClick={() => handleUpdate(params.data)}>Editar</Button>
@@ -39,7 +41,7 @@ const GridNutricao = (animalID) => {
         sortable: true,
         filter: true,
         floatingFilter: true,
-        resizable: true
+        resizable: true,
     }
 
     const handleClickOpen = () => {
@@ -66,7 +68,7 @@ const GridNutricao = (animalID) => {
     }
 
     const onGridReady = (params) => {
-        setGridApi(params)
+        setGridApi(params);
     }
 
     //Insere registro //Atualiza registro
@@ -75,15 +77,17 @@ const GridNutricao = (animalID) => {
         const ntr_dia = formData.ntr_dia;
         const ntr_hora = formData.ntr_hora;
         const ntr_alimento = formData.ntr_alimento;
+        const ntr_unmed = formData.ntr_unmed;
         const ntr_qtd = formData.ntr_qtd;
+        const ntr_obs = formData.ntr_obs;
 
         if(formData.id) {
             try {            
-                await updateNutricao(ani_codigo, ntr_dia, ntr_hora, ntr_alimento, ntr_qtd, formData.id);
+                await updateNutricao(ani_codigo, ntr_dia, ntr_hora, ntr_alimento, ntr_unmed, ntr_qtd, ntr_obs, formData.id);
                 refreshGrid();
                 handleClose();
                 MySwal.fire({
-                    html: <i>Nutrição alterada com sucesso!</i>,
+                    html: <i>Refeição alterada com sucesso!</i>,
                     icon: 'success'
                 })
             } catch (error) {
@@ -95,11 +99,11 @@ const GridNutricao = (animalID) => {
             }
         }else {
             try {           
-                await createNutricao(ani_codigo, ntr_dia, ntr_hora, ntr_alimento, ntr_qtd);
+                await createNutricao(ani_codigo, ntr_dia, ntr_hora, ntr_alimento, ntr_unmed, ntr_qtd, ntr_obs);
                 refreshGrid();
                 handleClose();
                 MySwal.fire({
-                    html: <i>Nutrição cadastrada com sucesso!</i>,
+                    html: <i>Refeição cadastrada com sucesso!</i>,
                     icon: 'success'
                 })
             } catch (error) {
@@ -118,7 +122,9 @@ const GridNutricao = (animalID) => {
             ntr_dia: oldData.NtrAni_Dia, 
             ntr_hora: oldData.NtrAni_Hora, 
             ntr_alimento: oldData.NtrAni_Alimen, 
+            ntr_unmed: oldData.NtrAni_UnMed,
             ntr_qtd: oldData.NtrAni_Qtd, 
+            ntr_obs: oldData.NtrAni_Obs,
             id: oldData.NtrAni_Codigo});
         handleClickOpen();
     }
@@ -129,7 +135,7 @@ const GridNutricao = (animalID) => {
             try {
                 await deleteNutricao(id);
                 MySwal.fire({
-                    html: <i>Nutrição excluida com sucesso!</i>,
+                    html: <i>Refeição excluida com sucesso!</i>,
                     icon: 'success'
                 })
                 refreshGrid();
@@ -142,7 +148,7 @@ const GridNutricao = (animalID) => {
         }
 
         MySwal.fire({
-            title: 'Confirma a exclusão da nutrição?',
+            title: 'Confirma a exclusão da refeição?',
             showDenyButton: true,
             confirmButtonText: 'Sim',
             denyButtonText: 'Não',

@@ -39,5 +39,20 @@
 }
 
 .animal-content {
-    width: 60%;
+    width: 75%;
+    margin-top: 2%;
+}
+
+.animal-information {
+    width: 50%;
+    border: 5px solid #6bbf79;
+    border-radius: 20px;
+}
+
+.animal-information h3 {
+    margin-left: 10px;
+}
+
+.animal-content h2 {
+    text-align: center;
 }

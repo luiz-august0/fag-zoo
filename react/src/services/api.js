@@ -55,12 +55,12 @@ export const showAnimal = async (animalID) => {
 /**************************************************************/
 
 //Rotas de nutricao
-export const createNutricao = async (ani_codigo, ntr_dia, ntr_hora, ntr_alimento, ntr_qtd) => {
-    return api.post('/nutricao', { ani_codigo, ntr_dia, ntr_hora, ntr_alimento, ntr_qtd });
+export const createNutricao = async (ani_codigo, ntr_dia, ntr_hora, ntr_alimento, ntr_unmed, ntr_qtd, ntr_obs) => {
+    return api.post('/nutricao', { ani_codigo, ntr_dia, ntr_hora, ntr_alimento, ntr_unmed, ntr_qtd, ntr_obs });
 };
 
-export const updateNutricao = async (nutricaoID, ntr_dia, ntr_hora, ntr_alimento, ntr_qtd) => {
-    return api.put(`/nutricao/${nutricaoID}`, { ntr_dia, ntr_hora, ntr_alimento, ntr_qtd});
+export const updateNutricao = async (nutricaoID, ntr_dia, ntr_hora, ntr_alimento, ntr_unmed, ntr_qtd, ntr_obs) => {
+    return api.put(`/nutricao/${nutricaoID}`, { ntr_dia, ntr_hora, ntr_alimento, ntr_unmed, ntr_qtd, ntr_obs});
 };
 
 export const deleteNutricao = async (nutricaoID) => {
