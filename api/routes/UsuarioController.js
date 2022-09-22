@@ -24,13 +24,13 @@ class UsuarioController {
 
     async show (req, res) {
         try {
-            const { login } = req.params;
+            const { id } = req.params;
 
             mysql.getConnection((error, conn) => {
                 conn.query(
                     `SELECT U.*, ST.Str_Descricao FROM usuario U ` + 
                     `INNER JOIN setor ST ON U.Str_Codigo = ST.Str_Codigo ` + 
-                    `WHERE U.Usr_Login LIKE "%${login}%"`,
+                    `WHERE U.Usr_Codigo = ${id}`,
                     (error, result, fields) => {
                         if (error) { return res.status(500).send({ error: error }) }
                         if (!result) {

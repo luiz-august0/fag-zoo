@@ -11,7 +11,7 @@ const Usuario = () => {
     if (mobileDetect() === true) {
         return (
             <PopupMobile
-                trigger={<button className="button">Usuários</button>}
+                trigger={<button className="button"><p>Usuários</p></button>}
                 modal
                 nested
                 >
@@ -31,7 +31,7 @@ const Usuario = () => {
     } else {
         return (
             <PopupDesktop
-                trigger={<button className="button">Usuários</button>}
+                trigger={<button className="button"><p>Usuários</p></button>}
                 modal
                 nested
                 >

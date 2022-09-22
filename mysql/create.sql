@@ -77,15 +77,23 @@ CREATE TABLE medicacaoHorario(
 CREATE TABLE historicoEtologico(
    HsEt_Codigo INT PRIMARY KEY AUTO_INCREMENT,
    Ani_Codigo INT NOT NULL,
-   HsEt_Acmp TEXT NOT NULL,
-   HsEt_Data DATE NOT NULL,
-   HsEt_Hora TIME NOT NULL
+   HsEt_Comp VARCHAR(12) NOT NULL,
+   HsEt_Obs TEXT
 );
 
-CREATE TABLE condutaAdotada(
-   Ca_Codigo INT PRIMARY KEY AUTO_INCREMENT,
-   HsEt_Codigo INT NOT NULL,
-   Ca_Conduta TEXT NOT NULL
+CREATE TABLE atividadeAnimal(
+   Ativ_Codigo INT PRIMARY KEY AUTO_INCREMENT,
+   Ani_Codigo INT NOT NULL,
+   Ativ_Desc TEXT NOT NULL,
+   Ativ_Data DATE NOT NULL,
+   Ativ_Hora TIME NOT NULL,
+   Ativ_Resp VARCHAR(55) NOT NULL,
+   Ativ_Interacao CHAR(1) NOT NULL
+);
+
+CREATE TABLE imagensAtividade(
+   Ativ_Codigo INT NOT NULL,
+   ImgAt_Desc VARCHAR(255)
 );
 
 CREATE TABLE historicoClinico(
@@ -129,9 +137,13 @@ ALTER TABLE historicoEtologico
 ADD CONSTRAINT fk_historicoEt_animal FOREIGN KEY (Ani_Codigo)
 REFERENCES animal (Ani_Codigo);
 
-ALTER TABLE condutaAdotada 
-ADD CONSTRAINT fk_conduta_historicoEt FOREIGN KEY (HsEt_Codigo)
-REFERENCES historicoEtologico (HsEt_Codigo);
+ALTER TABLE atividadeAnimal
+ADD CONSTRAINT fk_atividade_animal FOREIGN KEY (Ani_Codigo)
+REFERENCES animal (Ani_Codigo);
+
+ALTER TABLE imagensAtividade
+ADD CONSTRAINT fk_imagem_atividade FOREIGN KEY (Ativ_Codigo)
+REFERENCES atividadeAnimal (Ativ_Codigo);
 
 ALTER TABLE historicoClinico
 ADD CONSTRAINT fk_historico_historicoAni FOREIGN KEY (HsAni_Codigo)

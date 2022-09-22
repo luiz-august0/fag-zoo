@@ -3,7 +3,7 @@ import Swal from 'sweetalert2'
 import withReactContent from 'sweetalert2-react-content'
 import { useNavigate } from "react-router-dom";
 
-import { api, createSession } from "../services/api";
+import { api, createSession, getUsuario } from "../services/api";
 
 export const AuthContext = createContext();
 
@@ -37,6 +37,10 @@ export const AuthProvider = ({ children }) => {
             localStorage.setItem("token", token);
     
             api.defaults.headers.Authorization = `Bearer ${token}`;
+
+            const responseUsuario = await getUsuario(usuarioLogado.id);
+
+            localStorage.setItem("setor", responseUsuario.data[0].Str_Codigo);
     
             setUsuario(usuarioLogado);
             navigate("/");

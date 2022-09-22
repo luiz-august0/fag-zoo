@@ -7,7 +7,7 @@ import './index.css';
 const Animal = () => {
     return (
         <Popup 
-            trigger={<button className="button">Animais</button>}
+            trigger={<button className="button"><p>Animais</p></button>}
             modal
             nested
             >

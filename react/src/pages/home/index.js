@@ -25,14 +25,9 @@ const Home = () => {
                 <button className='logout-button' onClick={handleLogout}><img src={Image}  className="image-logout" alt="" width={40} height={40}/></button>
             </div>
             <div class="on-screen">
-                <div className='bt1'>
-                    <Usuario/>
-                    <Animal/>
-                    <button onClick={() => navigate("/nutricao")}>Nutrição</button>
-                </div>
-                <div className='bt2'>
-
-                </div>
+                {localStorage.getItem("setor") === "1"?<Usuario/>:null}
+                <Animal/>
+                <button onClick={() => navigate("/nutricao")}><p>Nutrição</p></button>
             </div>
         </div>
     );

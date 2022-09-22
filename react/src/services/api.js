@@ -15,6 +15,10 @@ export const getUsuarios = async () => {
     return api.get('/usuario');
 };
 
+export const getUsuario = async (usuarioID) => { 
+    return api.get(`/usuario/${usuarioID}`);
+};
+
 export const createUsuario = async (usuario, senha, setor) => {
     return api.post('/usuario', { usuario, senha, setor});
 };
