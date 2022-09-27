@@ -9,7 +9,7 @@ import "ag-grid-community/dist/styles/ag-theme-alpine.css";
 import FormDialog from "./Dialog";
 import Swal from 'sweetalert2'
 import withReactContent from 'sweetalert2-react-content'
-import { mobileDetect } from "../../globalFunctions";
+import { mobileDetect, flexOnOrNot } from "../../globalFunctions";
 
 const initialValue = {usuario: "", senha: "", setor: ""};
 
@@ -38,7 +38,8 @@ const GridUsuario = () => {
         sortable: true,
         filter: true,
         floatingFilter: true,
-        resizable: true
+        resizable: true,
+        flex: flexOnOrNot()
     }
 
     const handleClickOpen = () => {

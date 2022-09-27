@@ -13,3 +13,11 @@ export function mobileDetect() {
        return false;
      }
    }
+
+export const flexOnOrNot = () => {
+    if (mobileDetect()) {
+        return 0;
+    } else {
+        return 1;
+    }
+}

@@ -9,7 +9,7 @@ import "ag-grid-community/dist/styles/ag-theme-alpine.css";
 import FormDialog from "./Dialog";
 import Swal from 'sweetalert2'
 import withReactContent from 'sweetalert2-react-content'
-import { mobileDetect } from "../../globalFunctions";
+import { mobileDetect, flexOnOrNot } from "../../globalFunctions";
 
 const initialValue = {ani_nome: "", ani_nomecient: "", ani_apelido: "", ani_identificacao: "", ani_sexo: "", ani_origem: ""};
 
@@ -41,7 +41,8 @@ const GridAnimal = () => {
         sortable: true,
         filter: true,
         floatingFilter: true,
-        resizable: true
+        resizable: true,
+        flex: flexOnOrNot()
     }
 
     const handleClickOpen = () => {
