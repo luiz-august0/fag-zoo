@@ -10,6 +10,7 @@ import
     InputLabel
 } from '@mui/material';
 
+import CopyDialog from './CopyDialog';
 import GridNutricao from './GridNutricao';
 import { showAnimal, getAnimais } from '../../services/api';
 
@@ -18,6 +19,7 @@ const Nutricao = () => {
     const [animalSelected, setAnimalSelected] = useState();
     const [animais, setAnimais] = useState([]);
     const [animalData, setAnimalData] = useState([]);
+    const [open, setOpen] = useState(false);
 
     React.useEffect(() => {
         getDataAnimais();
@@ -49,6 +51,10 @@ const Nutricao = () => {
         setAnimalSelected(event.target.value);
     }
 
+    const handleClose = () => {
+        setOpen(false);
+    }
+
     return (
         <div>
             <div className="cont-second">
@@ -73,6 +79,7 @@ const Nutricao = () => {
                     </Select>
                     <Button style={{left: '5%'}} variant="contained" color="primary" onClick={() => onConfirm()}>Confirmar</Button>
                     <Button style={{left: '10%'}} variant="contained" color="warning" onClick={() => getDataAnimal()}>Carregar todos</Button>
+                    <Button style={{left: '15%'}} variant="contained" color="warning" onClick={() => setOpen(true)} >Copiar Nutrição</Button>
                 </div>
                 <div className="animal-content">
                     {animalData.map((element) => {
@@ -91,6 +98,11 @@ const Nutricao = () => {
                         )
                     })}
                 </div>
+                <CopyDialog
+                open={open} 
+                handleClose={handleClose} 
+                dataAnimais={animais} 
+                />
             </div>
         </div>
     );

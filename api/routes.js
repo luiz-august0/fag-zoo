@@ -7,11 +7,11 @@ import NutricaoController from "./routes/NutricaoController";
 
 const routes = new Router();
 
+routes.post('/usuario', UsuarioController.create);
 routes.put('/sessions', SessionController.create);
 routes.use(auth);
 
 //Rotas usuário
-routes.post('/usuario', UsuarioController.create);
 routes.get('/usuario', UsuarioController.index);
 routes.get('/usuario/:id', UsuarioController.show);
 routes.put('/usuario/:id', UsuarioController.update);
@@ -28,6 +28,7 @@ routes.delete('/animal/:id', AnimalController.destroy);
 //Rotas nutricao
 routes.get('/nutricao/:id', NutricaoController.show);
 routes.post('/nutricao/', NutricaoController.create);
+routes.post('/nutricaoCopy/:id', NutricaoController.copy);
 routes.put('/nutricao/:id', NutricaoController.update);
 routes.delete('/nutricao/:id', NutricaoController.destroy);
 

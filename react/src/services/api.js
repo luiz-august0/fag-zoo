@@ -67,6 +67,10 @@ export const updateNutricao = async (nutricaoID, ntr_dia, ntr_hora, ntr_alimento
     return api.put(`/nutricao/${nutricaoID}`, { ntr_dia, ntr_hora, ntr_alimento, ntr_unmed, ntr_qtd, ntr_obs});
 };
 
+export const copyNutricao = async (id_origem, id_destino) => {
+    return api.post(`/nutricaoCopy/${id_destino}`, { id_origem });
+};
+
 export const deleteNutricao = async (nutricaoID) => {
     return api.delete(`/nutricao/${nutricaoID}`);
 };

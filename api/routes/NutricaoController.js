@@ -48,6 +48,32 @@ class NutricaoController {
         }
     }
 
+    async copy(req, res) {
+        try {
+            const { id_origem } = req.body;
+            const { id } = req.params;
+
+            mysql.getConnection((error, conn) => {
+                conn.query(
+                    `INSERT INTO nutricaoanimal (Ani_Codigo, NtrAni_Dia, NtrAni_Hora, NtrAni_Alimen, NtrAni_UnMed, NtrAni_Qtd, NtrAni_Obs) ` + 
+                    `SELECT ${id}, NtrAni_Dia, NtrAni_Hora, NtrAni_Alimen, NtrAni_UnMed, NtrAni_Qtd, NtrAni_Obs ` + 
+                    `FROM nutricaoanimal WHERE Ani_Codigo = ${id_origem} `,
+                    (error, result, fields) => {
+                        if (error) { return res.status(500).send({ error: error }) }
+                        if (!result) {
+                            return res.status(404).json();
+                        }
+                        return res.status(201).json(result);
+                    }
+                )
+                conn.release();
+            });
+        } catch(err) {
+            console.error(err);
+            return res.status(500).json({ error: "Internal server error." });
+        }
+    }
+
     async update(req, res) {
         try {
             const { id } = req.params;
