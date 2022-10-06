@@ -24,7 +24,7 @@ const GridAnimal = () => {
 
     const columnDefs = [
         { field: "Ani_Codigo", headerName: "Código", width: 180},
-        { field: "Ani_Nome", headerName: "Nome" },
+        { field: "Ani_Nome", headerName: "Nome/Espécie" },
         { field: "Ani_NomeCient", headerName: "Nome Científico", hide: mobileDetect()},
         { field: "Ani_Apelido", headerName: "Apelido", hide: mobileDetect()},
         { field: "Ani_Identificacao", headerName: "Identificação"},

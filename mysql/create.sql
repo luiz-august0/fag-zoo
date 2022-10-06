@@ -78,7 +78,11 @@ CREATE TABLE historicoEtologico(
    HsEt_Codigo INT PRIMARY KEY AUTO_INCREMENT,
    Ani_Codigo INT NOT NULL,
    HsEt_Comp VARCHAR(12) NOT NULL,
-   HsEt_Obs TEXT
+   HsEt_OutrComp VARCHAR(50),
+   HsEt_Obs TEXT,
+   HsEt_Data DATE NOT NULL,
+   HsEt_Hora TIME NOT NULL,
+   HsEt_Resp VARCHAR(55) NOT NULL
 );
 
 CREATE TABLE atividadeAnimal(
