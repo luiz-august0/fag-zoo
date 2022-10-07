@@ -4,6 +4,7 @@ import auth from "./middlewares/auth";
 import SessionController from "./routes/SessionController";
 import AnimalController from "./routes/AnimalController";
 import NutricaoController from "./routes/NutricaoController";
+import EtologicoController from "./routes/EtologicoController";
 
 const routes = new Router();
 
@@ -27,9 +28,15 @@ routes.delete('/animal/:id', AnimalController.destroy);
 
 //Rotas nutricao
 routes.get('/nutricao/:id', NutricaoController.show);
-routes.post('/nutricao/', NutricaoController.create);
+routes.post('/nutricao', NutricaoController.create);
 routes.post('/nutricaoCopy/:id', NutricaoController.copy);
 routes.put('/nutricao/:id', NutricaoController.update);
 routes.delete('/nutricao/:id', NutricaoController.destroy);
+
+//Rotas Histórico Etologico
+routes.get('/etologico/:id', EtologicoController.show);
+routes.post('/etologico', EtologicoController.create);
+routes.put('/etologico/:id', EtologicoController.update);
+routes.delete('/etologico/:id', EtologicoController.destroy);
 
 export default routes;

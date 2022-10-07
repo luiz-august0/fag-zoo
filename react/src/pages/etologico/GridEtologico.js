@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { AgGridReact } from 'ag-grid-react';
-import { showNutricao, createNutricao, updateNutricao, deleteNutricao } from "../../services/api";
+import { showEtologico, createEtologico, updateEtologico, deleteEtologico } from "../../services/api";
 
 import Grid from '@mui/material/Grid'
 import Button from '@mui/material/Button';
@@ -11,26 +11,25 @@ import Swal from 'sweetalert2'
 import withReactContent from 'sweetalert2-react-content'
 import { flexOnOrNot } from "../../globalFunctions";
 
-const GridNutricao = (animalID) => {
-    const initialValue = {ani_codigo : animalID.animalID, ntr_dia : "", ntr_hora : "", ntr_alimento : "", ntr_unmed : "", ntr_qtd : "", ntr_obs : ""};
+const GridEtologico = (animalID) => {
+    const initialValue = {codigoAni : animalID.animalID, comp: "", outrComp: "", obs: "", dataHist: "", hora: "", resp: ""};
 
     const MySwal = withReactContent(Swal);
     
     const [gridApi, setGridApi] = useState(null);
-    const [nutricoes, setNutricoes] = useState([]);
+    const [etologicos, setEtologicos] = useState([]);
     const [open, setOpen] = React.useState(false);
     const [formData, setFormData] = useState(initialValue);
 
     const columnDefs = [
-        { field: "NtrAni_Codigo", headerName: "Código", hide: true},
+        { field: "HsEt_Codigo", headerName: "Código", hide: true},
         { field: "Ani_Codigo", headerName: "Código do Animal", hide: true},
-        { field: "NtrAni_Dia", headerName: "Dia"},
-        { field: "NtrAni_Hora", headerName: "Hora"},
-        { field: "NtrAni_Alimen", headerName: "Alimento"},
-        { field: "NtrAni_UnMed", headerName: "Unidade" },
-        { field: "NtrAni_Qtd", headerName: "Quantidade" },
-        { field: "NtrAni_Obs", headerName: "Observação" },
-        { field: "NtrAni_Codigo", headerName:"Ações", cellRendererFramework:(params) => 
+        { field: "HsEt_Comp", headerName: "Comportamento"},
+        { field: "HsEt_OutrComp", headerName: "Outros Comportamentos"},
+        { field: "HsEt_Obs", headerName: "Observação"},
+        { field: "HsEt_Data", headerName: "Data", type: ['dateColumn', 'nonEditableColumn'] },
+        { field: "HsEt_Hora", headerName: "Hora" },
+        { field: "HsEt_Codigo", headerName:"Ações", cellRendererFramework:(params) => 
         <div>
             <Button variant="outlined" color="primary" onClick={() => handleUpdate(params.data)}>Editar</Button>
             <Button variant="outlined" color="secondary" onClick={() => handleDelete(params.value)}>Excluir</Button>
@@ -55,8 +54,8 @@ const GridNutricao = (animalID) => {
     }
     
     const refreshGrid = async () => {
-        const response = await showNutricao(animalID.animalID);
-        setNutricoes(response.data);
+        const response = await showEtologico(animalID.animalID);
+        setEtologicos(response.data);
     }
 
     useEffect(() => {
@@ -74,21 +73,21 @@ const GridNutricao = (animalID) => {
 
     //Insere registro //Atualiza registro
     const handleFormSubmit = async () => {
-        const ani_codigo = formData.ani_codigo;
-        const ntr_dia = formData.ntr_dia;
-        const ntr_hora = formData.ntr_hora;
-        const ntr_alimento = formData.ntr_alimento;
-        const ntr_unmed = formData.ntr_unmed;
-        const ntr_qtd = formData.ntr_qtd;
-        const ntr_obs = formData.ntr_obs;
+        const codigoAni = formData.codigoAni;
+        const comp = formData.comp;
+        const outrComp = formData.outrComp;
+        const obs = formData.obs;
+        const dataHist = formData.dataHist;
+        const hora = formData.hora;
+        const resp = formData.resp;
 
         if(formData.id) {
             try {            
-                await updateNutricao(formData.id, ntr_dia, ntr_hora, ntr_alimento, ntr_unmed, ntr_qtd, ntr_obs);
+                await updateEtologico(formData.id, comp, outrComp, obs, dataHist, hora, resp);
                 refreshGrid();
                 handleClose();
                 MySwal.fire({
-                    html: <i>Refeição alterada com sucesso!</i>,
+                    html: <i>Histórico alterado com sucesso!</i>,
                     icon: 'success'
                 })
             } catch (error) {
@@ -100,11 +99,11 @@ const GridNutricao = (animalID) => {
             }
         }else {
             try {           
-                await createNutricao(ani_codigo, ntr_dia, ntr_hora, ntr_alimento, ntr_unmed, ntr_qtd, ntr_obs);
+                await createEtologico(codigoAni, comp, outrComp, obs, dataHist, hora, resp);
                 refreshGrid();
                 handleClose();
                 MySwal.fire({
-                    html: <i>Refeição cadastrada com sucesso!</i>,
+                    html: <i>Histórico cadastrado com sucesso!</i>,
                     icon: 'success'
                 })
             } catch (error) {
@@ -119,14 +118,14 @@ const GridNutricao = (animalID) => {
 
     const handleUpdate = (oldData) => {
         setFormData({
-            ani_codigo: oldData.Ani_Codigo, 
-            ntr_dia: oldData.NtrAni_Dia, 
-            ntr_hora: oldData.NtrAni_Hora, 
-            ntr_alimento: oldData.NtrAni_Alimen, 
-            ntr_unmed: oldData.NtrAni_UnMed,
-            ntr_qtd: oldData.NtrAni_Qtd, 
-            ntr_obs: oldData.NtrAni_Obs,
-            id: oldData.NtrAni_Codigo});
+            codigoAni: oldData.Ani_Codigo, 
+            comp: oldData.HsEt_Comp, 
+            outrComp: oldData.HsEt_OutrComp, 
+            obs: oldData.HsEt_Obs, 
+            dataHist: oldData.HsEt_Data,
+            hora: oldData.HsEt_Hora, 
+            resp: oldData.HsEt_Resp,
+            id: oldData.HsEt_Codigo});
         handleClickOpen();
     }
 
@@ -134,9 +133,9 @@ const GridNutricao = (animalID) => {
     const handleDelete = (id) => {
         const deleteRegister = async () => {
             try {
-                await deleteNutricao(id);
+                await deleteEtologico(id);
                 MySwal.fire({
-                    html: <i>Refeição excluida com sucesso!</i>,
+                    html: <i>Histórico excluido com sucesso!</i>,
                     icon: 'success'
                 })
                 refreshGrid();
@@ -149,7 +148,7 @@ const GridNutricao = (animalID) => {
         }
 
         MySwal.fire({
-            title: 'Confirma a exclusão da refeição?',
+            title: 'Confirma a exclusão do histórico?',
             showDenyButton: true,
             confirmButtonText: 'Sim',
             denyButtonText: 'Não',
@@ -173,7 +172,7 @@ const GridNutricao = (animalID) => {
             </Grid>
             <div className="ag-theme-alpine" style={{ height: '400px'}}>
                 <AgGridReact 
-                    rowData={nutricoes}
+                    rowData={etologicos}
                     columnDefs={columnDefs} 
                     defaultColDef={defaultColDef}
                     onGridReady={onGridReady}
@@ -190,4 +189,4 @@ const GridNutricao = (animalID) => {
     )
 }
 
-export default GridNutricao;
+export default GridEtologico;

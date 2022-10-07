@@ -3,6 +3,7 @@ import { BrowserRouter, Route, Routes, Navigate } from "react-router-dom";
 import Login from "../pages/login/index";
 import Home from "../pages/home/index";
 import Nutricao from "../pages/nutricao/index";
+import Etologico from "../pages/etologico";
 import { AuthProvider, AuthContext } from "../contexts/auth";
 
 const Rotas = () => {
@@ -35,6 +36,12 @@ const Rotas = () => {
                     element={
                     <Private>
                         <Nutricao/>
+                    </Private>}
+                    />
+                    <Route exact path="/etologico" 
+                    element={
+                    <Private>
+                        <Etologico/>
                     </Private>}
                     />
                 </Routes>

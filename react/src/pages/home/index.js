@@ -28,6 +28,7 @@ const Home = () => {
                 {localStorage.getItem("setor") === "1"?<Usuario/>:null}
                 <Animal/>
                 <button onClick={() => navigate("/nutricao")}><p>Nutrição</p></button>
+                <button onClick={() => navigate("/etologico")}><p>Etograma</p></button>
             </div>
         </div>
     );

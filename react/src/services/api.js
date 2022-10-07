@@ -78,4 +78,21 @@ export const deleteNutricao = async (nutricaoID) => {
 export const showNutricao = async (animalID) => {
     return api.get(`/nutricao/${animalID}`);
 };
+
+//Rotas de histórico etológico
+export const createEtologico = async (codigoAni, comp, outrComp, obs, data, hora, resp) => {
+    return api.post('/etologico', { codigoAni, comp, outrComp, obs, data, hora, resp });
+};
+
+export const updateEtologico = async (etologicoID, comp, outrComp, obs, dataHist, hora, resp) => {
+    return api.put(`/etologico/${etologicoID}`, { comp, outrComp, obs, dataHist, hora, resp});
+};
+
+export const deleteEtologico = async (etologicoID) => {
+    return api.delete(`/etologico/${etologicoID}`);
+};
+
+export const showEtologico = async (animalID) => {
+    return api.get(`/etologico/${animalID}`);
+};
 /**************************************************************/
