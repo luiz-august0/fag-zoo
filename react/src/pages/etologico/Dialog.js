@@ -35,6 +35,13 @@ const FormDialog = ({ open, handleClose, data, onChange, handleFormSubmit }) => 
         if (dataHist === '') {
             alert(true, 'Data é obrigatória');
             return;
+        } else {
+            let dateSplitted = dataHist.split('-');
+            let dateCompleted = dateSplitted[0] + dateSplitted[1] + dateSplitted[2];
+            if (dateCompleted.length !== 8) {
+                alert(true, 'Data inválida');
+                return;
+            };
         }
 
         if (hora === '') {

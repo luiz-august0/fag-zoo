@@ -84,11 +84,11 @@ class AnimalController {
                         }
                         else {
                             conn.query(
-                                `UPDATE animal SET Ani_Nome = "${ani_nome}", Ani_NomeCient = ${ani_nomecient != ''?`"${ani_nomecient}"`:'NULL'}, ` +    
-                                `Ani_Apelido = ${ani_apelido != ''?`"${ani_apelido}"`:'NULL'}, ` + 
-                                `Ani_Identificacao = ${ani_identificacao != ''?`"${ani_identificacao}"`:'NULL'}, ` + 
+                                `UPDATE animal SET Ani_Nome = "${ani_nome}", Ani_NomeCient = ${ani_nomecient!=''||ani_nomecient!='null'?`"${ani_nomecient}"`:'NULL'}, ` +    
+                                `Ani_Apelido = ${ani_apelido!=''||ani_apelido!='null'?`"${ani_apelido}"`:'NULL'}, ` + 
+                                `Ani_Identificacao = ${ani_identificacao!=''||ani_identificacao!='null'?`"${ani_identificacao}"`:'NULL'}, ` + 
                                 `Ani_Sexo = "${ani_sexo}", ` + 
-                                `Ani_Origem = ${ani_origem != ''?`"${ani_origem}"`:'NULL'} ` + 
+                                `Ani_Origem = ${ani_origem!=''||ani_origem!='null'?`"${ani_origem}"`:'NULL'} ` + 
                                 `WHERE Ani_Codigo = ${id}`,
                             (error, result, fields) => {
                                 if (error) { return res.status(500).send({ error: error }) }

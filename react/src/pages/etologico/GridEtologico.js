@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { AgGridReact } from 'ag-grid-react';
 import { showEtologico, createEtologico, updateEtologico, deleteEtologico } from "../../services/api";
+import moment from 'moment';
 
 import Grid from '@mui/material/Grid'
 import Button from '@mui/material/Button';
@@ -27,7 +28,31 @@ const GridEtologico = (animalID) => {
         { field: "HsEt_Comp", headerName: "Comportamento"},
         { field: "HsEt_OutrComp", headerName: "Outros Comportamentos"},
         { field: "HsEt_Obs", headerName: "Observação"},
-        { field: "HsEt_Data", headerName: "Data", type: ['dateColumn', 'nonEditableColumn'] },
+        { field: "HsEt_Data", headerName: "Data", filter: 'agDateColumnFilter',
+         valueFormatter: function (params) { return moment(params.data.HsEt_Data).format('DD/MM/YYYY')},
+         filterParams: {
+            debounceMs: 500,
+            suppressAndOrCondition: true,
+            comparator: function(filterLocalDateAtMidnight, cellValue) {
+              if (cellValue == null) {
+                return 0;
+              }
+              var cellValueFormated = moment(cellValue).format('DD/MM/YYYY');
+              var dateParts = cellValueFormated.split('/');
+              var year = Number(dateParts[2]);
+              var month = Number(dateParts[1]) - 1;
+              var day = Number(dateParts[0]);
+              var cellDate = new Date(year, month, day);
+    
+              if (cellDate < filterLocalDateAtMidnight) {
+                return -1;
+              } else if (cellDate > filterLocalDateAtMidnight) {
+                return 1;
+              } else {
+                return 0;
+              }
+            }
+        }},
         { field: "HsEt_Hora", headerName: "Hora" },
         { field: "HsEt_Codigo", headerName:"Ações", cellRendererFramework:(params) => 
         <div>
@@ -122,7 +147,7 @@ const GridEtologico = (animalID) => {
             comp: oldData.HsEt_Comp, 
             outrComp: oldData.HsEt_OutrComp, 
             obs: oldData.HsEt_Obs, 
-            dataHist: oldData.HsEt_Data,
+            dataHist: moment(oldData.HsEt_Data).format('YYYY-MM-DD'),
             hora: oldData.HsEt_Hora, 
             resp: oldData.HsEt_Resp,
             id: oldData.HsEt_Codigo});

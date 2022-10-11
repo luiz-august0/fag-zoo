@@ -52,7 +52,7 @@ const Etologico = () => {
     return (
         <div>
             <div className="cont-second">
-                <h2>Nutrição</h2>
+                <h2>Etograma</h2>
                 <button className='ToHome' onClick={  () => navigate("/")}><img src={Image}  className="Home-button" alt="" width={40} height={40}/></button>
             </div>
             <div className="main-container">

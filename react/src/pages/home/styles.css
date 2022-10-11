@@ -46,8 +46,11 @@
 }
 
 @media screen and (max-width: 600px) {
+    .on-screen {
+        flex-direction: column;
+    }
     .on-screen button {
-        width: 25%;
+        width: 50%;
     }
 }
 

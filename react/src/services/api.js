@@ -80,8 +80,8 @@ export const showNutricao = async (animalID) => {
 };
 
 //Rotas de histórico etológico
-export const createEtologico = async (codigoAni, comp, outrComp, obs, data, hora, resp) => {
-    return api.post('/etologico', { codigoAni, comp, outrComp, obs, data, hora, resp });
+export const createEtologico = async (codigoAni, comp, outrComp, obs, dataHist, hora, resp) => {
+    return api.post('/etologico', { codigoAni, comp, outrComp, obs, dataHist, hora, resp });
 };
 
 export const updateEtologico = async (etologicoID, comp, outrComp, obs, dataHist, hora, resp) => {
