@@ -41,12 +41,12 @@ export const getAnimais = async () => {
     return api.get('/animal');
 };
 
-export const createAnimal = async (ani_nome, ani_nomecient, ani_apelido, ani_identificacao, ani_sexo, ani_origem) => {
-    return api.post('/animal', { ani_nome, ani_nomecient, ani_apelido, ani_identificacao, ani_sexo, ani_origem });
+export const createAnimal = async (ani_nome, ani_nomecient, ani_apelido, ani_identificacao, ani_sexo, ani_origem, dataAdm, dataExp) => {
+    return api.post('/animal', { ani_nome, ani_nomecient, ani_apelido, ani_identificacao, ani_sexo, ani_origem, dataAdm, dataExp });
 };
 
-export const updateAnimal = async (ani_nome, ani_nomecient, ani_apelido, ani_identificacao, ani_sexo, ani_origem, animalID) => {
-    return api.put(`/animal/${animalID}`, { ani_nome, ani_nomecient, ani_apelido, ani_identificacao, ani_sexo, ani_origem, animalID });
+export const updateAnimal = async (ani_nome, ani_nomecient, ani_apelido, ani_identificacao, ani_sexo, ani_origem, dataAdm, dataExp, animalID) => {
+    return api.put(`/animal/${animalID}`, { ani_nome, ani_nomecient, ani_apelido, ani_identificacao, ani_sexo, ani_origem, dataAdm, dataExp, animalID });
 };
 
 export const deleteAnimal = async (animalID) => {

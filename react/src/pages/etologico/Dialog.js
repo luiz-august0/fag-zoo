@@ -41,7 +41,7 @@ const FormDialog = ({ open, handleClose, data, onChange, handleFormSubmit }) => 
             if (dateCompleted.length !== 8) {
                 alert(true, 'Data inválida');
                 return;
-            };
+            }
         }
 
         if (hora === '') {

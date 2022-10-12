@@ -9,7 +9,7 @@ import "ag-grid-community/dist/styles/ag-theme-alpine.css";
 import FormDialog from "./Dialog";
 import Swal from 'sweetalert2'
 import withReactContent from 'sweetalert2-react-content'
-import { mobileDetect, flexOnOrNot } from "../../globalFunctions";
+import { mobileDetect, flexOnOrNot, AG_GRID_LOCALE_BR } from "../../globalFunctions";
 
 const initialValue = {usuario: "", senha: "", setor: ""};
 
@@ -162,6 +162,7 @@ const GridUsuario = () => {
                     columnDefs={columnDefs} 
                     defaultColDef={defaultColDef}
                     onGridReady={onGridReady}
+                    localeText={AG_GRID_LOCALE_BR}
                 />
             </div>
             <FormDialog

@@ -44,14 +44,14 @@ class AnimalController {
 
     async create(req, res) {
         try {
-            const { ani_nome, ani_nomecient, ani_apelido, ani_identificacao, ani_sexo, ani_origem } = req.body;
+            const { ani_nome, ani_nomecient, ani_apelido, ani_identificacao, ani_sexo, ani_origem, dataAdm, dataExp } = req.body;
 
             mysql.getConnection((error, conn) => {
                 conn.query(
-                    `INSERT INTO animal (Ani_Nome, Ani_NomeCient, Ani_Apelido, Ani_Identificacao, Ani_Sexo, Ani_Origem, Ani_DataAdm, Ani_HoraAdm)` + 
+                    `INSERT INTO animal (Ani_Nome, Ani_NomeCient, Ani_Apelido, Ani_Identificacao, Ani_Sexo, Ani_Origem, Ani_DataAdm, Ani_DataExp)` + 
                     `VALUES ("${ani_nome}", ${ani_nomecient != ''?`"${ani_nomecient}"`:'NULL'}, ${ani_apelido != ''?`"${ani_apelido}"`:'NULL'},` +
                     `${ani_identificacao != ''?`"${ani_identificacao}"`:'NULL'}, "${ani_sexo}", ${ani_origem != ''?`"${ani_origem}"`:'NULL'},` + 
-                    `NOW(), NOW())`,
+                    `"${dataAdm}", ${dataExp!=''?`"${dataExp}"`:'NULL'})`,
                     (error, result, fields) => {
                         if (error) { return res.status(500).send({ error: error }) }
                         if (!result) {
@@ -71,7 +71,7 @@ class AnimalController {
     async update(req, res) {
         try {
             const { id } = req.params;
-            const { ani_nome, ani_nomecient, ani_apelido, ani_identificacao, ani_sexo, ani_origem } = req.body;
+            const { ani_nome, ani_nomecient, ani_apelido, ani_identificacao, ani_sexo, ani_origem, dataAdm, dataExp } = req.body;
 
             mysql.getConnection((error, conn) => {
                 conn.query(
@@ -88,7 +88,9 @@ class AnimalController {
                                 `Ani_Apelido = ${ani_apelido!=''||ani_apelido!='null'?`"${ani_apelido}"`:'NULL'}, ` + 
                                 `Ani_Identificacao = ${ani_identificacao!=''||ani_identificacao!='null'?`"${ani_identificacao}"`:'NULL'}, ` + 
                                 `Ani_Sexo = "${ani_sexo}", ` + 
-                                `Ani_Origem = ${ani_origem!=''||ani_origem!='null'?`"${ani_origem}"`:'NULL'} ` + 
+                                `Ani_Origem = ${ani_origem!=''||ani_origem!='null'?`"${ani_origem}"`:'NULL'}, ` +
+                                `Ani_DataAdm = "${dataAdm}", ` + 
+                                `Ani_DataExp = ${dataExp!=''?`"${dataExp}"`:'NULL'} ` +  
                                 `WHERE Ani_Codigo = ${id}`,
                             (error, result, fields) => {
                                 if (error) { return res.status(500).send({ error: error }) }

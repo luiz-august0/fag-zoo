@@ -9,7 +9,7 @@ import "ag-grid-community/dist/styles/ag-theme-alpine.css";
 import FormDialog from "./Dialog";
 import Swal from 'sweetalert2'
 import withReactContent from 'sweetalert2-react-content'
-import { flexOnOrNot } from "../../globalFunctions";
+import { AG_GRID_LOCALE_BR, flexOnOrNot } from "../../globalFunctions";
 
 const GridNutricao = (animalID) => {
     const initialValue = {ani_codigo : animalID.animalID, ntr_dia : "", ntr_hora : "", ntr_alimento : "", ntr_unmed : "", ntr_qtd : "", ntr_obs : ""};
@@ -177,6 +177,7 @@ const GridNutricao = (animalID) => {
                     columnDefs={columnDefs} 
                     defaultColDef={defaultColDef}
                     onGridReady={onGridReady}
+                    localeText={AG_GRID_LOCALE_BR}
                 />
             </div>
             <FormDialog

@@ -16,7 +16,7 @@ import
 } from '@mui/material';
 
 const FormDialog = ({ open, handleClose, data, onChange, handleFormSubmit }) => {
-    const { id, ani_nome, ani_nomecient, ani_apelido, ani_identificacao, ani_sexo, ani_origem } = data;
+    const { id, ani_nome, ani_nomecient, ani_apelido, ani_identificacao, ani_sexo, ani_origem, dataAdm, dataExp } = data;
     const [ openAlert, setOpenAlert ] = React.useState(false);
     const [ msgAlert, setMsgAlert ] = React.useState('');
     const [ sexoSelected, setSexoSelected] = React.useState();
@@ -37,7 +37,21 @@ const FormDialog = ({ open, handleClose, data, onChange, handleFormSubmit }) => 
             return;
         }
 
-        handleFormSubmit()
+        if (dataAdm === '') {
+            alert(true, 'Data de admissão é obrigatória');
+            return;
+        }
+
+        if (dataExp !== '') {
+            let dateSplitted = dataExp.split('-');
+            let dateCompleted = dateSplitted[0] + dateSplitted[1] + dateSplitted[2];
+            if (dateCompleted.length !== 8) {
+                alert(true, 'Data inválida');
+                return;
+            }
+        }
+
+        handleFormSubmit();
     }
 
     const handleCloseAlert = (event, reason) => {
@@ -93,6 +107,10 @@ const FormDialog = ({ open, handleClose, data, onChange, handleFormSubmit }) => 
                             <MenuItem value={'H'}>Hermafrodita</MenuItem> 
                         </Select>
                         <TextField id="ani_origem" value={ani_origem} onChange={e => onChange(e)} placeholder="Origem" variant="outlined" margin="dense" label="Origem" fullWidth />
+                        <InputLabel required id="demo-simple-select-label">Data Admissão</InputLabel>
+                        <TextField id="dataAdm" required value={dataAdm} onChange={e => onChange(e)} placeholder="Data Admissão" variant="outlined" margin="dense" fullWidth type={'date'}/>
+                        <InputLabel id="demo-simple-select-label">Data Expedição</InputLabel>
+                        <TextField id="dataExp" value={dataExp} onChange={e => onChange(e)} placeholder="Data Expedição" variant="outlined" margin="dense" fullWidth type={'date'}/>
                     </form>
                 </DialogContent>
                 <DialogActions>

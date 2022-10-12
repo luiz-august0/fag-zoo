@@ -19,7 +19,7 @@ CREATE TABLE animal(
     Ani_Sexo CHAR(1) NOT NULL,
     Ani_Origem VARCHAR(80),
     Ani_DataAdm DATE NOT NULL,
-    Ani_HoraAdm TIME NOT NULL
+    Ani_DataExp DATE
 );
 
 CREATE TABLE nutricaoAnimal(

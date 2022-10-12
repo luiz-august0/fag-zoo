@@ -9,9 +9,10 @@ import "ag-grid-community/dist/styles/ag-theme-alpine.css";
 import FormDialog from "./Dialog";
 import Swal from 'sweetalert2'
 import withReactContent from 'sweetalert2-react-content'
-import { mobileDetect, flexOnOrNot } from "../../globalFunctions";
+import { mobileDetect, flexOnOrNot, AG_GRID_LOCALE_BR } from "../../globalFunctions";
+import moment from 'moment';
 
-const initialValue = {ani_nome: "", ani_nomecient: "", ani_apelido: "", ani_identificacao: "", ani_sexo: "", ani_origem: ""};
+const initialValue = {ani_nome: "", ani_nomecient: "", ani_apelido: "", ani_identificacao: "", ani_sexo: "", ani_origem: "", dataAdm: "", dataExp: ""};
 
 const GridAnimal = () => {
 
@@ -30,6 +31,60 @@ const GridAnimal = () => {
         { field: "Ani_Identificacao", headerName: "Identificação"},
         { field: "Ani_Sexo", headerName: "Sexo" },
         { field: "Ani_Origem", headerName: "Origem", hide: mobileDetect() },
+        { field: "Ani_DataAdm", headerName: "Data Admissão", filter: 'agDateColumnFilter',
+            valueFormatter: function (params) { return moment(params.data.Ani_DataAdm).format('DD/MM/YYYY')},
+            filterParams: {
+            debounceMs: 500,
+            suppressAndOrCondition: true,
+            comparator: function(filterLocalDateAtMidnight, cellValue) {
+                if (cellValue == null) {
+                  return 0;
+                }
+                var cellValueFormated = moment(cellValue).format('DD/MM/YYYY');
+                var dateParts = cellValueFormated.split('/');
+                var year = Number(dateParts[2]);
+                var month = Number(dateParts[1]) - 1;
+                var day = Number(dateParts[0]);
+                var cellDate = new Date(year, month, day);
+            
+                if (cellDate < filterLocalDateAtMidnight) {
+                  return -1;
+                } else if (cellDate > filterLocalDateAtMidnight) {
+                  return 1;
+                } else {
+                  return 0;
+                }
+            }
+        }},
+        { field: "Ani_DataExp", headerName: "Data Expedição", filter: 'agDateColumnFilter',
+            valueFormatter: function (params) { 
+                if (params.data.Ani_DataExp !== null) {
+                    return moment(params.data.Ani_DataExp).format('DD/MM/YYYY');
+                }  
+            },
+            filterParams: {
+            debounceMs: 500,
+            suppressAndOrCondition: true,
+            comparator: function(filterLocalDateAtMidnight, cellValue) {
+                if (cellValue == null) {
+                  return 0;
+                }
+                var cellValueFormated = moment(cellValue).format('DD/MM/YYYY');
+                var dateParts = cellValueFormated.split('/');
+                var year = Number(dateParts[2]);
+                var month = Number(dateParts[1]) - 1;
+                var day = Number(dateParts[0]);
+                var cellDate = new Date(year, month, day);
+            
+                if (cellDate < filterLocalDateAtMidnight) {
+                  return -1;
+                } else if (cellDate > filterLocalDateAtMidnight) {
+                  return 1;
+                } else {
+                  return 0;
+                }
+            }
+        }},
         { field: "Ani_Codigo", headerName:"Ações", cellRendererFramework:(params) => 
         <div>
             <Button variant="outlined" color="primary" onClick={() => handleUpdate(params.data)}>Editar</Button>
@@ -80,10 +135,12 @@ const GridAnimal = () => {
         const ani_identificacao = formData.ani_identificacao;
         const ani_sexo = formData.ani_sexo;
         const ani_origem = formData.ani_origem;
+        const dataAdm = formData.dataAdm; 
+        const dataExp = formData.dataExp;
 
         if(formData.id) {
             try {            
-                await updateAnimal(ani_nome, ani_nomecient, ani_apelido, ani_identificacao, ani_sexo, ani_origem, formData.id);
+                await updateAnimal(ani_nome, ani_nomecient, ani_apelido, ani_identificacao, ani_sexo, ani_origem, dataAdm, dataExp, formData.id);
                 refreshGrid();
                 handleClose();
                 MySwal.fire({
@@ -99,7 +156,7 @@ const GridAnimal = () => {
             }
         }else {
             try {           
-                await createAnimal(ani_nome, ani_nomecient, ani_apelido, ani_identificacao, ani_sexo, ani_origem);
+                await createAnimal(ani_nome, ani_nomecient, ani_apelido, ani_identificacao, ani_sexo, ani_origem, dataAdm, dataExp);
                 refreshGrid();
                 handleClose();
                 MySwal.fire({
@@ -124,6 +181,8 @@ const GridAnimal = () => {
             ani_identificacao: oldData.Ani_Identificacao, 
             ani_sexo: oldData.Ani_Sexo, 
             ani_origem: oldData.Ani_Origem, 
+            dataAdm: moment(oldData.Ani_DataAdm).format('YYYY-MM-DD'),
+            dataExp: oldData.Ani_DataExp!==null?moment(oldData.Ani_DataExp).format('YYYY-MM-DD'):"",
             id: oldData.Ani_Codigo});
         handleClickOpen();
     }
@@ -175,6 +234,7 @@ const GridAnimal = () => {
                     columnDefs={columnDefs} 
                     defaultColDef={defaultColDef}
                     onGridReady={onGridReady}
+                    localeText={AG_GRID_LOCALE_BR}
                 />
             </div>
             <FormDialog

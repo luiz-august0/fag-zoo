@@ -10,7 +10,7 @@ import "ag-grid-community/dist/styles/ag-theme-alpine.css";
 import FormDialog from "./Dialog";
 import Swal from 'sweetalert2'
 import withReactContent from 'sweetalert2-react-content'
-import { flexOnOrNot } from "../../globalFunctions";
+import { AG_GRID_LOCALE_BR, flexOnOrNot } from "../../globalFunctions";
 
 const GridEtologico = (animalID) => {
     const initialValue = {codigoAni : animalID.animalID, comp: "", outrComp: "", obs: "", dataHist: "", hora: "", resp: ""};
@@ -201,6 +201,7 @@ const GridEtologico = (animalID) => {
                     columnDefs={columnDefs} 
                     defaultColDef={defaultColDef}
                     onGridReady={onGridReady}
+                    localeText={AG_GRID_LOCALE_BR}
                 />
             </div>
             <FormDialog
