@@ -84,11 +84,11 @@ class AnimalController {
                         }
                         else {
                             conn.query(
-                                `UPDATE animal SET Ani_Nome = "${ani_nome}", Ani_NomeCient = ${ani_nomecient!=''||ani_nomecient!='null'?`"${ani_nomecient}"`:'NULL'}, ` +    
-                                `Ani_Apelido = ${ani_apelido!=''||ani_apelido!='null'?`"${ani_apelido}"`:'NULL'}, ` + 
-                                `Ani_Identificacao = ${ani_identificacao!=''||ani_identificacao!='null'?`"${ani_identificacao}"`:'NULL'}, ` + 
+                                `UPDATE animal SET Ani_Nome = "${ani_nome}", Ani_NomeCient = ${ani_nomecient!=''&&ani_nomecient!=null?`"${ani_nomecient}"`:'NULL'}, ` +    
+                                `Ani_Apelido = ${ani_apelido!=''&&ani_apelido!=null?`"${ani_apelido}"`:'NULL'}, ` + 
+                                `Ani_Identificacao = ${ani_identificacao!=''&&ani_identificacao!=null?`"${ani_identificacao}"`:'NULL'}, ` + 
                                 `Ani_Sexo = "${ani_sexo}", ` + 
-                                `Ani_Origem = ${ani_origem!=''||ani_origem!='null'?`"${ani_origem}"`:'NULL'}, ` +
+                                `Ani_Origem = ${ani_origem!=''&&ani_origem!=null?`"${ani_origem}"`:'NULL'}, ` +
                                 `Ani_DataAdm = "${dataAdm}", ` + 
                                 `Ani_DataExp = ${dataExp!=''?`"${dataExp}"`:'NULL'} ` +  
                                 `WHERE Ani_Codigo = ${id}`,

@@ -139,7 +139,7 @@ const GridAnimal = () => {
         const dataExp = formData.dataExp;
 
         if(formData.id) {
-            try {            
+            try {  
                 await updateAnimal(ani_nome, ani_nomecient, ani_apelido, ani_identificacao, ani_sexo, ani_origem, dataAdm, dataExp, formData.id);
                 refreshGrid();
                 handleClose();
@@ -206,7 +206,7 @@ const GridAnimal = () => {
         }
 
         MySwal.fire({
-            title: 'Confirma a exclusão do animal?',
+            title: 'Confirma a exclusão do animal e todo seu histórico?',
             showDenyButton: true,
             confirmButtonText: 'Sim',
             denyButtonText: 'Não',

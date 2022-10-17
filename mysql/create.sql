@@ -156,3 +156,16 @@ REFERENCES historicoAnimal (HsAni_Codigo);
 ALTER TABLE historicoClinico_anexo
 ADD CONSTRAINT fk_historicoCli_anexo FOREIGN KEY (HsCli_Codigo)
 REFERENCES historicoClinico (HsCli_Codigo);
+
+DELIMITER $$
+
+CREATE TRIGGER before_animal_delete 
+BEFORE DELETE ON animal FOR EACH ROW
+BEGIN
+    DELETE FROM atividadeanimal WHERE Ani_Codigo = OLD.Ani_Codigo;
+    DELETE FROM historicoanimal WHERE Ani_Codigo = OLD.Ani_Codigo;
+    DELETE FROM historicoetologico WHERE Ani_Codigo = OLD.Ani_Codigo;
+    DELETE FROM nutricaoanimal WHERE Ani_Codigo = OLD.Ani_Codigo;
+END$$    
+
+DELIMITER ;

@@ -55,8 +55,8 @@ class EtotologicoController {
 
             mysql.getConnection((error, conn) => {
                 conn.query(
-                    `UPDATE historicoEtologico SET HsEt_Comp = "${comp}", HsEt_OutrComp = ${outrComp!=''||outrComp!='null'?`"${outrComp}"`:'NULL'}, ` + 
-                    `HsEt_Obs = ${obs!=''||obs!='null'?`"${obs}"`:'NULL'}, ` +  
+                    `UPDATE historicoEtologico SET HsEt_Comp = "${comp}", HsEt_OutrComp = ${outrComp!=''&&outrComp!=null?`"${outrComp}"`:'NULL'}, ` + 
+                    `HsEt_Obs = ${obs!=''&&obs!=null?`"${obs}"`:'NULL'}, ` +  
                     `HsEt_Data = "${dataHist}", HsEt_Hora = "${hora}", HsEt_Resp = "${resp}" WHERE HsEt_Codigo = ${id}`,
                     (error, result, fields) => {
                         if (error) { return res.status(500).send({ error: error }) }

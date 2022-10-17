@@ -82,7 +82,7 @@ class NutricaoController {
             mysql.getConnection((error, conn) => {
                 conn.query(
                     `UPDATE nutricaoanimal SET NtrAni_Dia = "${ntr_dia}", NtrAni_Hora = "${ntr_hora}", NtrAni_Alimen = "${ntr_alimento}", NtrAni_UnMed = "${ntr_unmed}", NtrAni_Qtd = ${ntr_qtd}, ` + 
-                    `NtrAni_Obs = ${ntr_obs!=''||ntr_obs!='null'?`"${ntr_obs}"`:'NULL'} WHERE NtrAni_Codigo = ${id}`,
+                    `NtrAni_Obs = ${ntr_obs!=''&&ntr_obs!=null?`"${ntr_obs}"`:'NULL'} WHERE NtrAni_Codigo = ${id}`,
                     (error, result, fields) => {
                         if (error) { return res.status(500).send({ error: error }) }
                         return res.status(201).json(result);

@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from "react-router-dom";
 import './styles.css';
-import Image from '../../img/logout.png';
+import Image from '../../img/back-arrow.png';
 import 
 { 
     Select,
