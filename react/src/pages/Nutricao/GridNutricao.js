@@ -178,6 +178,7 @@ const GridNutricao = (animalID) => {
                     defaultColDef={defaultColDef}
                     onGridReady={onGridReady}
                     localeText={AG_GRID_LOCALE_BR}
+                    gridOptions={{paginationAutoPageSize: true,pagination: true}}
                 />
             </div>
             <FormDialog

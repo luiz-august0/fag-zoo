@@ -34,7 +34,7 @@ const CopyDialog = ({ open, handleClose, dataAnimais }) => {
     const copiaNutricao = async() => {
         try {           
             await copyNutricao(animalOrigem, animalDestino);
-            handleClose();
+            handleClose({id: animalDestino});
             MySwal.fire({
                 html: <i>Copiada ficha nutricional com sucesso!</i>,
                 icon: 'success'

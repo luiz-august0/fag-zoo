@@ -51,13 +51,22 @@ const Nutricao = () => {
         setAnimalSelected(event.target.value);
     }
 
-    const handleClose = () => {
+    const handleClose = ({id}) => {
         setOpen(false);
+        if (id !== undefined) {
+            getDataAnimal(id);
+        } else {
+            if (animalSelected !== undefined) {
+                getDataAnimal(animalSelected);
+            } else {
+                getDataAnimal();
+            }
+        }
     }
 
     return (
         <div>
-            <div className="cont-second">
+            <div className="headerNutri">
                 <h2>Nutrição</h2>
                 <button className='ToHome' onClick={  () => navigate("/")}><img src={Image}  className="Home-button" alt="" width={40} height={40}/></button>
             </div>
@@ -85,7 +94,7 @@ const Nutricao = () => {
                     {animalData.map((element) => {
                         return (
                             <div>
-                                <div className="animal-information">
+                                <div className="animalNutricao-information">
                                     <h3>Código: {element.Ani_Codigo}</h3>
                                     <h3>Nome: {element.Ani_Nome}</h3>
                                     <h3>Identificação: {element.Ani_Identificacao !== null?element.Ani_Identificacao:"Não contém"}</h3>
