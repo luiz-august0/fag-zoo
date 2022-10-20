@@ -12,7 +12,7 @@
 .headerNutri {
     display: flex;
     padding: 5px 5px 0px 0px ;
-    background-color: #bf8e1c;
+    background-color: #CCC046;
     height: 52px;
     width: 100%;
 }
@@ -45,7 +45,7 @@
 
 .animalNutricao-information {
     width: 50%;
-    border: 5px solid #bf8e1c;
+    border: 5px solid #CCC046;
     border-radius: 20px;
 }
 
