@@ -95,4 +95,9 @@ export const deleteEtologico = async (etologicoID) => {
 export const showEtologico = async (animalID) => {
     return api.get(`/etologico/${animalID}`);
 };
+
+//Rotas de atividade
+export const getImg = async () => {
+    return api.get('/atividade');
+};
 /**************************************************************/

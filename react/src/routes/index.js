@@ -4,6 +4,7 @@ import Login from "../pages/login/index";
 import Home from "../pages/home/index";
 import Nutricao from "../pages/nutricao/index";
 import Etologico from "../pages/etologico";
+import Atividade from "../pages/atividade";
 import { AuthProvider, AuthContext } from "../contexts/auth";
 
 const Rotas = () => {
@@ -42,6 +43,12 @@ const Rotas = () => {
                     element={
                     <Private>
                         <Etologico/>
+                    </Private>}
+                    />
+                    <Route exact path="/atividade" 
+                    element={
+                    <Private>
+                        <Atividade/>
                     </Private>}
                     />
                 </Routes>

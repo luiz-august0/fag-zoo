@@ -29,6 +29,7 @@ const Home = () => {
                 <Animal/>
                 <button onClick={() => navigate("/nutricao")}><p>Nutrição</p></button>
                 <button onClick={() => navigate("/etologico")}><p>Etograma</p></button>
+                <button onClick={() => navigate("/atividade")}><p>Atividade</p></button>
             </div>
         </div>
     );
