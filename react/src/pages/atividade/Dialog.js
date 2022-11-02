@@ -16,10 +16,10 @@ import
 } from '@mui/material';
 
 const FormDialog = ({ open, handleClose, data, onChange, handleFormSubmit }) => {
-    const { id, comp, outrComp, obs, dataHist, hora, resp} = data;
+    const { id, descricao, dataAtt, hora, resp, interacao} = data;
     const [ openAlert, setOpenAlert ] = React.useState(false);
     const [ msgAlert, setMsgAlert ] = React.useState('');
-    const [ compSelected, setCompSelected] = React.useState();
+    const [ interacaoSelected, setInteracaoSelected] = React.useState();
 
     const alert = (open,msg) => {
         setMsgAlert(msg);
@@ -27,16 +27,16 @@ const FormDialog = ({ open, handleClose, data, onChange, handleFormSubmit }) => 
     }
 
     const onConfirm = () => {
-        if (comp === '') {
-            alert(true, 'Comportamento é obrigatório');
+        if (descricao === '') {
+            alert(true, 'Descrição é obrigatória');
             return;
         }
 
-        if (dataHist === '') {
+        if (dataAtt === '') {
             alert(true, 'Data é obrigatória');
             return;
         } else {
-            let dateSplitted = dataHist.split('-');
+            let dateSplitted = dataAtt.split('-');
             let dateCompleted = dateSplitted[0] + dateSplitted[1] + dateSplitted[2];
             if (dateCompleted.length !== 8) {
                 alert(true, 'Data inválida');
@@ -45,12 +45,17 @@ const FormDialog = ({ open, handleClose, data, onChange, handleFormSubmit }) => 
         }
 
         if (hora === '') {
-            alert(true, 'Hora é obrigatório');
+            alert(true, 'Hora é obrigatória');
             return;
         }
 
         if (resp === '') {
             alert(true, 'Responsável é obrigatório');
+            return;
+        }
+
+        if (interacao === '') {
+            alert(true, 'Interação é obrigatória');
             return;
         }
 
@@ -66,8 +71,8 @@ const FormDialog = ({ open, handleClose, data, onChange, handleFormSubmit }) => 
     };  
 
     const handleChange = (event) => {
-        data.comp = event.target.value;
-        setCompSelected(data.comp);
+        data.interacao = event.target.value;
+        setInteracaoSelected(data.interacao);
     } 
 
     return (
@@ -89,41 +94,28 @@ const FormDialog = ({ open, handleClose, data, onChange, handleFormSubmit }) => 
                     </Alert>
                 </Snackbar>
 
-                <DialogTitle id="alert-dialog-title">{id?"Editar Histórico":"Cadastrar Histórico"}</DialogTitle>
+                <DialogTitle id="alert-dialog-title">{id?"Editar Atividade":"Cadastrar Atividade"}</DialogTitle>
                 <DialogContent>
                     <form>
-                        <InputLabel required id="demo-simple-select-label">Comportamento</InputLabel>
-                        <Select
-                        labelId="demo-simple-select-label"
-                        id="comp"
-                        defaultValue={data.comp !== ''?data.comp:null}
-                        value={data.comp}
-                        label="Comportamento"
-                        onChange={handleChange}
-                        >
-                            <MenuItem value={'PA'}>(PA)Parado Ativo</MenuItem> 
-                            <MenuItem value={'PI'}>(PI)Parado Inativo</MenuItem> 
-                            <MenuItem value={'V1'}>(V1)Vocalização Alta</MenuItem> 
-                            <MenuItem value={'V2'}>(V2)Vocalização Baixa</MenuItem> 
-                            <MenuItem value={'IS+'}>(IS+)Interação social positiva</MenuItem> 
-                            <MenuItem value={'IS-'}>(IS-)Interação social negativa</MenuItem> 
-                            <MenuItem value={'M'}>(M)Movimentando-se</MenuItem> 
-                            <MenuItem value={'CM'}>(CM)Comportamento de manutenção</MenuItem> 
-                            <MenuItem value={'IE'}>(IE)Interação com o enriquecimento</MenuItem> 
-                            <MenuItem value={'F'}>(F)Forragem</MenuItem> 
-                            <MenuItem value={'A'}>(A)Alimentando-se</MenuItem> 
-                            <MenuItem value={'D'}>(D)Defecar</MenuItem> 
-                            <MenuItem value={'EX'}>(EX)Exploratório</MenuItem> 
-                            <MenuItem value={'ES'}>(ES)Estereotipado</MenuItem> 
-                            <MenuItem value={'FU'}>(FU)Fuga</MenuItem> 
-                        </Select>
-                        <TextField id="outrComp" value={outrComp} onChange={e => onChange(e)} placeholder="Outro Comportamento" variant="outlined" margin="dense" label="Outro Comportamento" fullWidth type={'text'}/>
-                        <TextField id="obs" value={obs} onChange={e => onChange(e)} placeholder="Observação" variant="outlined" margin="dense" label="Observação" fullWidth type={'text'}/>
+                        <TextField required id="descricao" value={descricao} onChange={e => onChange(e)} placeholder="Descrição" variant="outlined" margin="dense" label="Descrição" fullWidth type={'text'}/>
                         <InputLabel required id="demo-simple-select-label">Data</InputLabel>
-                        <TextField id="dataHist" required value={dataHist} onChange={e => onChange(e)} placeholder="Data" variant="outlined" margin="dense" fullWidth type={'date'}/>
+                        <TextField id="dataAtt" required value={dataAtt} onChange={e => onChange(e)} placeholder="Data" variant="outlined" margin="dense" fullWidth type={'date'}/>
                         <InputLabel required id="demo-simple-select-label">Hora</InputLabel>
                         <TextField id="hora" required value={hora} onChange={e => onChange(e)} placeholder="Hora" variant="outlined" margin="dense" fullWidth type={'time'}/>
                         <TextField id="resp" required value={resp} onChange={e => onChange(e)} placeholder="Responsável" variant="outlined" margin="dense" label="Responsável" fullWidth type={'text'}/>
+                        <InputLabel required id="demo-simple-select-label">Interação</InputLabel>
+                        <Select
+                        labelId="demo-simple-select-label"
+                        id="interacao"
+                        defaultValue={data.interacao !== ''?data.interacao:null}
+                        value={data.interacao}
+                        label="Interação"
+                        onChange={handleChange}
+                        >
+                            <MenuItem value={'B'}>BOA</MenuItem> 
+                            <MenuItem value={'M'}>MÉDIA</MenuItem> 
+                            <MenuItem value={'R'}>RUIM</MenuItem>  
+                        </Select>
                     </form>
                 </DialogContent>
                 <DialogActions>

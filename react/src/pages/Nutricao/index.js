@@ -76,7 +76,7 @@ const Nutricao = () => {
                     <Select
                     id="animal" 
                     value={animalSelected}
-                    label="Nutrição"
+                    label="Animal"
                     onChange={handleChange}
                     style={{width: '250px'}}
                     >

@@ -51,8 +51,8 @@ const Atividade = () => {
 
     return (
         <div>
-            <div className="headerEtolog">
-                <h2>Etograma</h2>
+            <div className="headerAtt">
+                <h2>Atividade</h2>
                 <button className='ToHome' onClick={  () => navigate("/")}><img src={Image}  className="Home-button" alt="" width={40} height={40}/></button>
             </div>
             <div className="main-container">
@@ -61,7 +61,7 @@ const Atividade = () => {
                     <Select
                     id="animal" 
                     value={animalSelected}
-                    label="Nutrição"
+                    label="Animal"
                     onChange={handleChange}
                     style={{width: '250px'}}
                     >
@@ -78,7 +78,7 @@ const Atividade = () => {
                     {animalData.map((element) => {
                         return (
                             <div>
-                                <div className="animalEtolog-information">
+                                <div className="animalAtt-information">
                                     <h3>Código: {element.Ani_Codigo}</h3>
                                     <h3>Nome: {element.Ani_Nome}</h3>
                                     <h3>Identificação: {element.Ani_Identificacao !== null?element.Ani_Identificacao:"Não contém"}</h3>

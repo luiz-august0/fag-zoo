@@ -5,6 +5,7 @@ import SessionController from "./routes/SessionController";
 import AnimalController from "./routes/AnimalController";
 import NutricaoController from "./routes/NutricaoController";
 import EtologicoController from "./routes/EtologicoController";
+import AtividadeController from "./routes/AtividadeController";
 import multer from "multer";
 import { storage } from './uploadImageAtt';
 const upload = multer({ storage: storage });
@@ -43,6 +44,10 @@ routes.put('/etologico/:id', EtologicoController.update);
 routes.delete('/etologico/:id', EtologicoController.destroy);
 
 //Rotas Atividades
+routes.get('/atividade/:id', AtividadeController.show);
+routes.post('/atividade', AtividadeController.create);
+routes.put('/atividade/:id', AtividadeController.update);
+routes.delete('/atividade/:id', AtividadeController.destroy);
 routes.post('/atividade_img/:id', upload.single("file"), (req, res) => {
 	return res.json(req.file.filename);
 });

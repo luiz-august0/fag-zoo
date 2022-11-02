@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { AgGridReact } from 'ag-grid-react';
-import { getImg } from "../../services/api";
+import { showAtividade, createAtividade, updateAtividade, deleteAtividade } from "../../services/api";
 import moment from 'moment';
 
 import Grid from '@mui/material/Grid'
@@ -13,22 +13,71 @@ import withReactContent from 'sweetalert2-react-content'
 import { AG_GRID_LOCALE_BR, flexOnOrNot } from "../../globalFunctions";
 
 const GridAtividade = (animalID) => {
-    const initialValue = {codigoAni : animalID.animalID, comp: "", outrComp: "", obs: "", dataHist: "", hora: "", resp: ""};
+    const initialValue = {codigoAni : animalID.animalID, descricao: "", dataAtt: "", hora: "", resp: "", interacao: ""};
     const MySwal = withReactContent(Swal);
     const [gridApi, setGridApi] = useState(null);
     const [atividades, setAtividades] = useState([]);
     const [open, setOpen] = React.useState(false);
     const [formData, setFormData] = useState(initialValue);
 
-    console.log(atividades);
     const columnDefs = [
-        { field: "Ativ_Codigo", headerName: "Código",},
+        { field: "Ativ_Codigo", headerName: "Código", hide: true},
+        { field: "Ani_Codigo", headerName: "Código do Animal", hide: true},
+        { field: "Ativ_Desc", headerName: "Descrição"},
+        { field: "Ativ_Data", headerName: "Data", filter: 'agDateColumnFilter',
+         valueFormatter: function (params) { return moment(params.data.Ativ_Data).format('DD/MM/YYYY')},
+         filterParams: {
+            debounceMs: 500,
+            suppressAndOrCondition: true,
+            comparator: function(filterLocalDateAtMidnight, cellValue) {
+              if (cellValue == null) {
+                return 0;
+              }
+              var cellValueFormated = moment(cellValue).format('DD/MM/YYYY');
+              var dateParts = cellValueFormated.split('/');
+              var year = Number(dateParts[2]);
+              var month = Number(dateParts[1]) - 1;
+              var day = Number(dateParts[0]);
+              var cellDate = new Date(year, month, day);
+    
+              if (cellDate < filterLocalDateAtMidnight) {
+                return -1;
+              } else if (cellDate > filterLocalDateAtMidnight) {
+                return 1;
+              } else {
+                return 0;
+              }
+            }
+        }},
+        { field: "Ativ_Hora", headerName: "Hora" },
+        { field: "Ativ_Resp", headerName: "Responsável" },
+        { field: "Ativ_Interacao", headerName: "Interação", cellRendererFramework:(params) => {
+            let interacao = "";
+            switch (params.data.Ativ_Interacao) {
+                case "B":
+                    interacao = "BOA";
+                    break;
+                case "M": 
+                    interacao = "MÉDIA";
+                    break;
+                case "R":
+                    interacao = "RUIM";
+                    break;
+                default:
+                    break;
+            }
+
+            return (
+                <div>
+                    {interacao}
+                </div>
+            )
+        }},
         {cellRendererFramework:(params) => {
-            const buffer = params.data.ImgAt_Desc
-            const b64 = new Buffer(buffer).toString('base64')
+            const idAtividade = params.data.Ativ_Codigo;
             return (
             <div>
-                <img style={{width: '300px', height: '300px'}} src={`data:${"png"};base64,${b64}`} />
+                <Button variant="outlined" color="primary">Imagens</Button>
             </div>
             )
         }},
@@ -57,7 +106,7 @@ const GridAtividade = (animalID) => {
     }
     
     const refreshGrid = async () => {
-        const response = await getImg();
+        const response = await showAtividade(animalID.animalID);
         setAtividades(response.data);
     }
 
@@ -77,20 +126,19 @@ const GridAtividade = (animalID) => {
     //Insere registro //Atualiza registro
     const handleFormSubmit = async () => {
         const codigoAni = formData.codigoAni;
-        const comp = formData.comp;
-        const outrComp = formData.outrComp;
-        const obs = formData.obs;
-        const dataHist = formData.dataHist;
+        const descricao = formData.descricao;
+        const dataAtt = formData.dataAtt;
         const hora = formData.hora;
         const resp = formData.resp;
+        const interacao = formData.interacao;
 
-        /*if(formData.id) {
+        if(formData.id) {
             try {            
-                await updateEtologico(formData.id, comp, outrComp, obs, dataHist, hora, resp);
+                await updateAtividade(formData.id, descricao, dataAtt, hora, resp, interacao);
                 refreshGrid();
                 handleClose();
                 MySwal.fire({
-                    html: <i>Histórico alterado com sucesso!</i>,
+                    html: <i>Atividade alterada com sucesso!</i>,
                     icon: 'success'
                 })
             } catch (error) {
@@ -102,11 +150,11 @@ const GridAtividade = (animalID) => {
             }
         }else {
             try {           
-                await createEtologico(codigoAni, comp, outrComp, obs, dataHist, hora, resp);
+                await createAtividade(codigoAni, descricao, dataAtt, hora, resp, interacao);
                 refreshGrid();
                 handleClose();
                 MySwal.fire({
-                    html: <i>Histórico cadastrado com sucesso!</i>,
+                    html: <i>Atividade cadastrada com sucesso!</i>,
                     icon: 'success'
                 })
             } catch (error) {
@@ -116,29 +164,28 @@ const GridAtividade = (animalID) => {
                     icon: 'error'
                 })
             }
-        }*/
+        }
     }
 
     const handleUpdate = (oldData) => {
         setFormData({
             codigoAni: oldData.Ani_Codigo, 
-            comp: oldData.HsEt_Comp, 
-            outrComp: oldData.HsEt_OutrComp, 
-            obs: oldData.HsEt_Obs, 
-            dataHist: moment(oldData.HsEt_Data).format('YYYY-MM-DD'),
-            hora: oldData.HsEt_Hora, 
-            resp: oldData.HsEt_Resp,
-            id: oldData.HsEt_Codigo});
+            descricao: oldData.Ativ_Desc, 
+            dataAtt: moment(oldData.Ativ_Data).format('YYYY-MM-DD'), 
+            hora: oldData.Ativ_Hora, 
+            resp: oldData.Ativ_Resp,
+            interacao: oldData.Ativ_Interacao,
+            id: oldData.Ativ_Codigo});
         handleClickOpen();
     }
 
     //Deleta registro
     const handleDelete = (id) => {
-       /* const deleteRegister = async () => {
+       const deleteRegister = async () => {
             try {
-                await deleteEtologico(id);
+                await deleteAtividade(id);
                 MySwal.fire({
-                    html: <i>Histórico excluido com sucesso!</i>,
+                    html: <i>Atividade excluida com sucesso!</i>,
                     icon: 'success'
                 })
                 refreshGrid();
@@ -151,7 +198,7 @@ const GridAtividade = (animalID) => {
         }
 
         MySwal.fire({
-            title: 'Confirma a exclusão do histórico?',
+            title: 'Confirma a exclusão da atividade?',
             showDenyButton: true,
             confirmButtonText: 'Sim',
             denyButtonText: 'Não',
@@ -165,7 +212,7 @@ const GridAtividade = (animalID) => {
             if (result.isConfirmed) {
                 deleteRegister();
             }
-        })*/
+        })
     }
 
     return (

@@ -20,7 +20,7 @@ class AtividadeController {
 
             mysql.getConnection((error, conn) => {
                 conn.query(
-                    `SELECT * FROM historicoEtologico WHERE Ani_Codigo = ${id}`,
+                    `SELECT * FROM atividadeAnimal WHERE Ani_Codigo = ${id}`,
                     (error, result, fields) => {
                         if (error) { return res.status(500).send({ error: error }) }
                         if (!result) {
@@ -39,12 +39,12 @@ class AtividadeController {
 
     async create(req, res) {
         try {
-            const { codigoAni, comp, outrComp, obs, dataHist, hora, resp } = req.body;
+            const { codigoAni, descricao, dataAtt, hora, resp, interacao } = req.body;
 
             mysql.getConnection((error, conn) => {
                 conn.query(
-                    `INSERT INTO historicoEtologico (Ani_Codigo, HsEt_Comp, HsEt_OutrComp, HsEt_Obs, HsEt_Data, HsEt_Hora, HsEt_Resp) ` +
-                    `VALUES (${codigoAni}, "${comp}", ${outrComp!=''?`"${outrComp}"`:'NULL'}, ${obs!=''?`"${obs}"`:'NULL'}, "${dataHist}", "${hora}", "${resp}")`,
+                    `INSERT INTO atividadeAnimal (Ani_Codigo, Ativ_Desc, Ativ_Data, Ativ_Hora, Ativ_Resp, Ativ_Interacao) ` +
+                    `VALUES (${codigoAni}, "${descricao}", "${dataAtt}", "${hora}", "${resp}", "${interacao}")`,
                     (error, result, fields) => {
                         if (error) { return res.status(500).send({ error: error }) }
                         if (!result) {
@@ -64,13 +64,13 @@ class AtividadeController {
     async update(req, res) {
         try {
             const { id } = req.params;
-            const { comp, outrComp, obs, dataHist, hora, resp } = req.body;
+            const { descricao, dataAtt, hora, resp, interacao } = req.body;
 
             mysql.getConnection((error, conn) => {
                 conn.query(
-                    `UPDATE historicoEtologico SET HsEt_Comp = "${comp}", HsEt_OutrComp = ${outrComp!=''&&outrComp!=null?`"${outrComp}"`:'NULL'}, ` + 
-                    `HsEt_Obs = ${obs!=''&&obs!=null?`"${obs}"`:'NULL'}, ` +  
-                    `HsEt_Data = "${dataHist}", HsEt_Hora = "${hora}", HsEt_Resp = "${resp}" WHERE HsEt_Codigo = ${id}`,
+                    `UPDATE atividadeAnimal SET Ativ_Desc = "${descricao}", Ativ_Data = "${dataAtt}", Ativ_Hora = "${hora}", ` + 
+                    `Ativ_Resp = "${resp}", Ativ_Interacao = "${interacao}" ` +  
+                    `WHERE Ativ_Codigo = ${id}`,
                     (error, result, fields) => {
                         if (error) { return res.status(500).send({ error: error }) }
                         return res.status(201).json(result);
@@ -91,7 +91,7 @@ class AtividadeController {
 
             mysql.getConnection((error, conn) => {
                 conn.query(
-                    `DELETE FROM historicoEtologico WHERE HsEt_Codigo = ${id}`,
+                    `DELETE FROM atividadeAnimal WHERE Ativ_Codigo = ${id}`,
                     (error, result, fields) => {
                         if (error) { return res.status(500).send({ error: error }) }
                         return res.status(201).json(result);

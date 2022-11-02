@@ -28,6 +28,7 @@ const GridEtologico = (animalID) => {
         { field: "HsEt_Comp", headerName: "Comportamento"},
         { field: "HsEt_OutrComp", headerName: "Outros Comportamentos"},
         { field: "HsEt_Obs", headerName: "Observação"},
+        { field: "HsEt_Resp", headerName: "Responsável"},
         { field: "HsEt_Data", headerName: "Data", filter: 'agDateColumnFilter',
          valueFormatter: function (params) { return moment(params.data.HsEt_Data).format('DD/MM/YYYY')},
          filterParams: {

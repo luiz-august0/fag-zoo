@@ -97,7 +97,19 @@ export const showEtologico = async (animalID) => {
 };
 
 //Rotas de atividade
-export const getImg = async () => {
-    return api.get('/atividade');
+export const createAtividade = async (codigoAni, descricao, dataAtt, hora, resp, interacao) => {
+    return api.post('/atividade', { codigoAni, descricao, dataAtt, hora, resp, interacao });
+};
+
+export const updateAtividade = async (atividadeID, descricao, dataAtt, hora, resp, interacao) => {
+    return api.put(`/atividade/${atividadeID}`, { descricao, dataAtt, hora, resp, interacao });
+};
+
+export const deleteAtividade = async (atividadeID) => {
+    return api.delete(`/atividade/${atividadeID}`);
+};
+
+export const showAtividade = async (animalID) => {
+    return api.get(`/atividade/${animalID}`);
 };
 /**************************************************************/

@@ -9,7 +9,7 @@
     margin-top: 1%;
 }
 
-.headerEtolog {
+.headerAtt {
     display: flex;
     padding: 5px 5px 0px 0px ;
     background-color: #6986bf;
@@ -17,7 +17,7 @@
     width: 100%;
 }
 
-.headerEtolog  h2{
+.headerAtt  h2{
     margin-left: 2rem;
     margin-top: 5px;
 }
@@ -43,13 +43,13 @@
     margin-top: 2%;
 }
 
-.animalEtolog-information {
+.animalAtt-information {
     width: 50%;
     border: 5px solid #6986bf;
     border-radius: 20px;
 }
 
-.animalEtolog-information h3 {
+.animalAtt-information h3 {
     margin-left: 10px;
 }
 
