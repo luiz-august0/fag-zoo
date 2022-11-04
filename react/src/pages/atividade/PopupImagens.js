@@ -4,9 +4,9 @@ import { Popup as PopupDesktop } from 'reactjs-popup-normal';
 import { Popup as PopupMobile } from 'reactjs-popup-large';
 import { mobileDetect } from '../../globalFunctions';
 import Button from '@mui/material/Button';
-import UploadImagens from "./UploadImagens";
 import ViewImagens from "./ViewImagens";
 import './PopupImagens.css';
+import { createImagemAtt } from "../../services/api";
 
 const thumbsContainer = {
     display: "flex",
@@ -67,7 +67,7 @@ const thumbsContainer = {
     borderColor: "#ff1744"
   };
 
-const PopupImagens = (idAtividade) => {
+const PopupImagens = (atividadeID) => {
     const [ visualMode, setVisualMode ] = useState(true);
     const [ files, setFiles ] = useState([]);
     const {
@@ -77,9 +77,10 @@ const PopupImagens = (idAtividade) => {
       isDragAccept,
       isDragReject
     } = useDropzone({
-      accept: "image/*",
-      onDrop: (acceptedFiles) => {
-        console.log("accepted", acceptedFiles);
+      accept: {
+        'image/*': ['.jpeg', '.png']
+      },
+      onDropAccepted: (acceptedFiles) => {
         setFiles(
           acceptedFiles.map((file) =>
             Object.assign(file, {
@@ -110,11 +111,23 @@ const PopupImagens = (idAtividade) => {
   
     useEffect(
       () => () => {
-        // Make sure to revoke the data uris to avoid memory leaks
         files.forEach((file) => URL.revokeObjectURL(file.preview));
       },
       [files]
     );
+
+    const handleSubmit = () => {
+      try {
+        files.map(async(e) => {
+            console.log(e)
+            const formData = new FormData();
+            formData.append("image", e);
+            await createImagemAtt(atividadeID.atividadeID, formData);
+        })
+      } catch (error) {
+        
+      }
+    }
 
     if (mobileDetect() === true) {
         return (
@@ -137,13 +150,14 @@ const PopupImagens = (idAtividade) => {
                             <div {...getRootProps({ className: "dropzone", style })}>
                                 <input {...getInputProps()} />
                                 {isDragActive ? (
-                                <p>Drop the files here ...</p>
+                                <p>Arraste arquivos aqui...</p>
                                 ) : (
-                                <p>Drag 'n' drop some files here, or click to select files</p>
+                                <p>Arraste arquivos aqui, ou clique para selecionar arquivos</p>
                                 )}
                             </div>
                             <aside style={thumbsContainer}>{thumbs}</aside>
-                            <button onClick={() => alert(files)}> Teste</button>
+                            <Button variant="text" color="primary" onClick={() => handleSubmit()}>Confirmar</Button>
+                            <Button variant="text" color="error" onClick={() => setFiles([])}>Cancelar</Button>
                             </section>}
                         </div>
                     </div>
@@ -171,13 +185,14 @@ const PopupImagens = (idAtividade) => {
                             <div {...getRootProps({ className: "dropzone", style })}>
                                 <input {...getInputProps()} />
                                 {isDragActive ? (
-                                <p>Drop the files here ...</p>
+                                <p>Arraste arquivos aqui...</p>
                                 ) : (
-                                <p>Drag 'n' drop some files here, or click to select files</p>
+                                <p>Arraste arquivos aqui, ou clique para selecionar arquivos</p>
                                 )}
                             </div>
                             <aside style={thumbsContainer}>{thumbs}</aside>
-                            <button onClick={() => alert(files)}> Teste</button>
+                            <Button variant="text" color="primary" onClick={() => handleSubmit()}>Confirmar</Button>
+                            <Button variant="text" color="error" onClick={() => setFiles([])}>Cancelar</Button>
                             </section>}
                         </div>
                     </div>

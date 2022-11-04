@@ -78,7 +78,7 @@ const GridAtividade = (animalID) => {
             const atividadeID = params.data.Ativ_Codigo;
             return (
             <div>
-                <PopupImagens/>
+                <PopupImagens atividadeID={atividadeID}/>
             </div>
             )
         }},

@@ -36,10 +36,17 @@ const FormDialog = ({ open, handleClose, data, onChange, handleFormSubmit }) => 
             alert(true, 'Sexo é obrigatório');
             return;
         }
-
+        
         if (dataAdm === '') {
             alert(true, 'Data de admissão é obrigatória');
             return;
+        } else {
+            let dateSplitted = dataAdm.split('-');
+            let dateCompleted = dateSplitted[0] + dateSplitted[1] + dateSplitted[2];
+            if (dateCompleted.length !== 8) {
+                alert(true, 'Data inválida');
+                return;
+            }
         }
 
         if (dataExp !== '') {
