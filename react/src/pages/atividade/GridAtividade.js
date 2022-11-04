@@ -8,6 +8,7 @@ import Button from '@mui/material/Button';
 import "ag-grid-community/dist/styles/ag-grid.css";
 import "ag-grid-community/dist/styles/ag-theme-alpine.css";
 import FormDialog from "./Dialog";
+import PopupImagens from "./PopupImagens";
 import Swal from 'sweetalert2'
 import withReactContent from 'sweetalert2-react-content'
 import { AG_GRID_LOCALE_BR, flexOnOrNot } from "../../globalFunctions";
@@ -74,10 +75,10 @@ const GridAtividade = (animalID) => {
             )
         }},
         {cellRendererFramework:(params) => {
-            const idAtividade = params.data.Ativ_Codigo;
+            const atividadeID = params.data.Ativ_Codigo;
             return (
             <div>
-                <Button variant="outlined" color="primary">Imagens</Button>
+                <PopupImagens/>
             </div>
             )
         }},
