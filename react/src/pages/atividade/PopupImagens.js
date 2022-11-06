@@ -7,6 +7,8 @@ import Button from '@mui/material/Button';
 import ViewImagens from "./ViewImagens";
 import './PopupImagens.css';
 import { createImagemAtt } from "../../services/api";
+import Swal from 'sweetalert2';
+import withReactContent from 'sweetalert2-react-content';
 
 const thumbsContainer = {
     display: "flex",
@@ -68,6 +70,7 @@ const thumbsContainer = {
   };
 
 const PopupImagens = (atividadeID) => {
+    const MySwal = withReactContent(Swal);
     const [ visualMode, setVisualMode ] = useState(true);
     const [ files, setFiles ] = useState([]);
     const {
@@ -88,6 +91,12 @@ const PopupImagens = (atividadeID) => {
             })
           )
         );
+      },
+      onDropRejected: () => {
+        MySwal.fire({
+          html: <i>Arquivo não suportado!</i>,
+          icon: 'error'
+        })
       }
     });
   
@@ -119,13 +128,21 @@ const PopupImagens = (atividadeID) => {
     const handleSubmit = () => {
       try {
         files.map(async(e) => {
-            console.log(e)
             const formData = new FormData();
-            formData.append("image", e);
+            formData.append("file", e);
             await createImagemAtt(atividadeID.atividadeID, formData);
+            MySwal.fire({
+              html: <i>Imagens enviadas com sucesso!</i>,
+              icon: 'success'
+            });
+            setFiles([]);
+            setVisualMode(true);
         })
       } catch (error) {
-        
+          MySwal.fire({
+            html: <i>Ocorreu algum erro!</i>,
+            icon: 'error'
+          }); 
       }
     }
 
@@ -149,11 +166,15 @@ const PopupImagens = (atividadeID) => {
                             <section className="container">
                             <div {...getRootProps({ className: "dropzone", style })}>
                                 <input {...getInputProps()} />
-                                {isDragActive ? (
-                                <p>Arraste arquivos aqui...</p>
-                                ) : (
+                                {!isDragActive ? (
                                 <p>Arraste arquivos aqui, ou clique para selecionar arquivos</p>
-                                )}
+                                ):null}
+                                {isDragActive && isDragAccept ? (
+                                <p>Arraste arquivos aqui...</p>
+                                ):null}
+                                {isDragActive && isDragReject ? (
+                                <p>Arquivo não suportado</p>
+                                ):null}
                             </div>
                             <aside style={thumbsContainer}>{thumbs}</aside>
                             <Button variant="text" color="primary" onClick={() => handleSubmit()}>Confirmar</Button>
@@ -184,11 +205,15 @@ const PopupImagens = (atividadeID) => {
                             <section className="container">
                             <div {...getRootProps({ className: "dropzone", style })}>
                                 <input {...getInputProps()} />
-                                {isDragActive ? (
-                                <p>Arraste arquivos aqui...</p>
-                                ) : (
+                                {!isDragActive ? (
                                 <p>Arraste arquivos aqui, ou clique para selecionar arquivos</p>
-                                )}
+                                ):null}
+                                {isDragActive && isDragAccept ? (
+                                <p>Arraste arquivos aqui...</p>
+                                ):null}
+                                {isDragActive && isDragReject ? (
+                                <p>Arquivo não suportado</p>
+                                ):null}
                             </div>
                             <aside style={thumbsContainer}>{thumbs}</aside>
                             <Button variant="text" color="primary" onClick={() => handleSubmit()}>Confirmar</Button>

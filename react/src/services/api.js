@@ -4,11 +4,6 @@ export const api = axios.create({
     baseURL: 'http://localhost:5000'
 });
 
-//Configuração para mandar requisição com imagens
-const config = {
-    'Content-Type': 'multipart/form-data',
-}
-
 //Rota de sessão
 export const createSession = async (usuario, senha) => {
     return api.put('/sessions', { usuario, senha });
@@ -119,6 +114,6 @@ export const showAtividade = async (animalID) => {
 };
 
 export const createImagemAtt = async(atividadeID, file) => {
-    return api.post(`/atividade_img/${atividadeID}`, { file }, config);
+    return api.post(`/atividade_img/${atividadeID}`, file);
 };
 /**************************************************************/
