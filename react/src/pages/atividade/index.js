@@ -53,7 +53,7 @@ const Atividade = () => {
         <div>
             <div className="headerAtt">
                 <h2>Atividade</h2>
-                <button className='ToHome' onClick={  () => navigate("/")}><img src={Image}  className="Home-button" alt="" width={40} height={40}/></button>
+                <button className='ToHome' onClick={  () => navigate("/")}><img src={Image} className="Home-button" alt="" width={40} height={40}/></button>
             </div>
             <div className="main-container">
                 <div className="main-screen">

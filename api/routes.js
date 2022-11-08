@@ -1,4 +1,4 @@
-import { Router } from "express";
+import { Router, static as Static } from "express";
 import UsuarioController from "./routes/UsuarioController";
 import auth from "./middlewares/auth";
 import SessionController from "./routes/SessionController";
@@ -12,6 +12,7 @@ const upload = multer({ storage: storage });
 
 const routes = new Router();
 
+routes.use('/image_uploads', Static("image_uploads"));
 routes.put('/sessions', SessionController.create);
 routes.use(auth);
 
@@ -51,5 +52,6 @@ routes.delete('/atividade/:id', AtividadeController.destroy);
 routes.post('/atividade_img/:id', upload.single("file"), (req, res) => {
 	return res.json(req.file.filename);
 });
+routes.get('/atividade_img/:id', AtividadeController.showImagens);
 
 export default routes;

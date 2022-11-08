@@ -14,6 +14,29 @@ class AtividadeController {
         }
     }
 
+    async showImagens (req, res) {
+        try {
+            const { id } = req.params;
+
+            mysql.getConnection((error, conn) => {
+                conn.query(
+                    `SELECT * FROM imagensatividade WHERE Ativ_Codigo = ${id}`,
+                    (error, result, fields) => {
+                        if (error) { return res.status(500).send({ error: error }) }
+                        if (!result) {
+                            return res.status(404).json();
+                        }
+                        return res.status(201).json(result);
+                    }
+                )
+                conn.release();
+            });
+        } catch (err) {
+            console.error(err);
+            return res.status(500).json({ error: "Internal server error." });  
+        }
+    }
+
     async show (req, res) {
         try {
             const { id } = req.params;

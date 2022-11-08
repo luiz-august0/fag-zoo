@@ -116,4 +116,8 @@ export const showAtividade = async (animalID) => {
 export const createImagemAtt = async(atividadeID, file) => {
     return api.post(`/atividade_img/${atividadeID}`, file);
 };
+
+export const showImagens = async(atividadeID) => {
+    return api.get(`/atividade_img/${atividadeID}`);
+};
 /**************************************************************/

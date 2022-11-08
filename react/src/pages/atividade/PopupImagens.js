@@ -162,7 +162,7 @@ const PopupImagens = (atividadeID) => {
                         <div className="content">
                             <Button variant="outlined" color="primary" onClick={() => setVisualMode(true)}>Visualizar imagens</Button>
                             <Button variant="outlined" color="primary" onClick={() => setVisualMode(false)}>Enviar imagens</Button>
-                            {visualMode?<ViewImagens/>:
+                            {visualMode?<ViewImagens atividadeID = {atividadeID.atividadeID}/>:
                             <section className="container">
                             <div {...getRootProps({ className: "dropzone", style })}>
                                 <input {...getInputProps()} />
@@ -201,7 +201,7 @@ const PopupImagens = (atividadeID) => {
                         <div className="content">
                             <Button variant="outlined" color="primary" onClick={() => setVisualMode(true)}>Visualizar imagens</Button>
                             <Button variant="outlined" color="primary" onClick={() => setVisualMode(false)}>Enviar imagens</Button>
-                            {visualMode?<ViewImagens/>:
+                            {visualMode?<ViewImagens atividadeID = {atividadeID.atividadeID}/>:
                             <section className="container">
                             <div {...getRootProps({ className: "dropzone", style })}>
                                 <input {...getInputProps()} />
