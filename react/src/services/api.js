@@ -120,4 +120,8 @@ export const createImagemAtt = async(atividadeID, file) => {
 export const showImagens = async(atividadeID) => {
     return api.get(`/atividade_img/${atividadeID}`);
 };
+
+export const deleteImagemAtt = async(atividadeID, arquivo) => {
+    return api.post(`/atividade_img_delete/${atividadeID}`, { arquivo });
+};
 /**************************************************************/

@@ -53,5 +53,6 @@ routes.post('/atividade_img/:id', upload.single("file"), (req, res) => {
 	return res.json(req.file.filename);
 });
 routes.get('/atividade_img/:id', AtividadeController.showImagens);
+routes.post('/atividade_img_delete/:id', AtividadeController.deleteImageAtt);
 
 export default routes;

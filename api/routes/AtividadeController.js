@@ -14,6 +14,31 @@ class AtividadeController {
         }
     }
 
+    async deleteImageAtt (req, res) {
+        try {
+            const { id } = req.params;
+            const { arquivo } = req.body;
+
+            console.log(`DELETE FROM imagensatividade WHERE Ativ_Codigo = ${id} AND ImgAt_Desc = "${arquivo}"`);
+            mysql.getConnection((error, conn) => {
+                conn.query(
+                    `DELETE FROM imagensatividade WHERE Ativ_Codigo = ${id} AND ImgAt_Desc = "${arquivo}"`,
+                    (error, result, fields) => {
+                        if (error) { return res.status(500).send({ error: error }) }
+                        if (!result) {
+                            return res.status(404).json();
+                        }
+                        return res.status(201).json(result);
+                    }
+                )
+                conn.release();
+            });
+        } catch (err) {
+            console.error(err);
+            return res.status(500).json({ error: "Internal server error." });  
+        }
+    }
+
     async showImagens (req, res) {
         try {
             const { id } = req.params;
