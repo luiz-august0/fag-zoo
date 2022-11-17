@@ -30,6 +30,7 @@ const Home = () => {
                 <button onClick={() => navigate("/nutricao")}><p>Nutrição</p></button>
                 <button onClick={() => navigate("/etologico")}><p>Etograma</p></button>
                 <button onClick={() => navigate("/atividade")}><p>Atividade</p></button>
+                <button onClick={() => navigate("/historico_internamento")}><p>Histórico Internamento</p></button>
             </div>
         </div>
     );

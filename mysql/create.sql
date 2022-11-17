@@ -37,9 +37,11 @@ CREATE TABLE historicoAnimal(
     HsAni_Codigo INT PRIMARY KEY AUTO_INCREMENT,
     Ani_Codigo INT NOT NULL,
     HsAni_Data DATE NOT NULL,
+    HsAni_Hora TIME NOT NULL,
     HsAni_MtvInt TEXT,
+    HsAni_Medico VARCHAR(80),
     HsAni_Diag TEXT,
-    HsAni_Peso  DOUBLE NOT NULL,
+    HsAni_Peso DOUBLE NOT NULL,
     HsAni_Orient TEXT,
     HsAni_Evl TEXT,
     HsAni_ExComp TEXT
