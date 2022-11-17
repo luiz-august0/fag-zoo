@@ -53,7 +53,9 @@ const FormDialog = ({ open, handleClose, data, onChange, handleFormSubmit }) => 
             return;
         }
 
-        handleFormSubmit()
+        handleFormSubmit();
+        setDiaSelected();
+        setUnmedSelected();
     }
 
     const handleCloseAlert = (event, reason) => {

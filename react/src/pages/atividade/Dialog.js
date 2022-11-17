@@ -60,6 +60,7 @@ const FormDialog = ({ open, handleClose, data, onChange, handleFormSubmit }) => 
         }
 
         handleFormSubmit();
+        setInteracaoSelected();
     }
 
     const handleCloseAlert = (event, reason) => {

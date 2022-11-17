@@ -59,6 +59,7 @@ const FormDialog = ({ open, handleClose, data, onChange, handleFormSubmit }) => 
         }
 
         handleFormSubmit();
+        setSexoSelected();
     }
 
     const handleCloseAlert = (event, reason) => {

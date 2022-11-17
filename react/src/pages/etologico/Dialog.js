@@ -55,6 +55,7 @@ const FormDialog = ({ open, handleClose, data, onChange, handleFormSubmit }) => 
         }
 
         handleFormSubmit();
+        setCompSelected();
     }
 
     const handleCloseAlert = (event, reason) => {

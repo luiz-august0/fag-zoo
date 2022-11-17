@@ -60,6 +60,8 @@ const CopyDialog = ({ open, handleClose, dataAnimais }) => {
         }
 
         copiaNutricao();
+        setAnimalOrigem();
+        setAnimalDestino();
     }
 
     const handleCloseAlert = (event, reason) => {
