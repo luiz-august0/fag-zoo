@@ -124,4 +124,25 @@ export const showImagens = async(atividadeID) => {
 export const deleteImagemAtt = async(atividadeID, arquivo) => {
     return api.post(`/atividade_img_delete/${atividadeID}`, { arquivo });
 };
+
+//Rotas de histórico de internamento
+export const getHistoricosInternacao = async (animalID) => {
+    return api.get(`/internacao_historico/${animalID}`);
+};
+
+export const createInternacao = async (codigoAni, dataHist, horaHist, motivo, medico, diagnostico, peso, orientacao, evolucao, exameComp) => {
+    return api.post('/internacao', { codigoAni, dataHist, horaHist, motivo, medico, diagnostico, peso, orientacao, evolucao, exameComp });
+};
+
+export const updateInternacao = async (historicoID, codigoAni, dataHist, horaHist, motivo, medico, diagnostico, peso, orientacao, evolucao, exameComp) => {
+    return api.put(`/internacao/${historicoID}`, { codigoAni, dataHist, horaHist, motivo, medico, diagnostico, peso, orientacao, evolucao, exameComp });
+};
+
+export const deleteInternacao = async (historicoID) => {
+    return api.delete(`/internacao/${historicoID}`);
+};
+
+export const showInternacao = async (historicoID) => {
+    return api.get(`/internacao/${historicoID}`);
+};
 /**************************************************************/

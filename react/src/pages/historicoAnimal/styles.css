@@ -39,8 +39,12 @@
 }
 
 .animal-content {
-    width: 75%;
+    display: flex;
     margin-top: 2%;
+    align-items: center;
+    align-content: center;
+    align-self: center;
+    justify-content: center;
 }
 
 .animalHistInternamento-information {

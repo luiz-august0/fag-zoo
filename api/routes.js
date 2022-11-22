@@ -6,6 +6,7 @@ import AnimalController from "./routes/AnimalController";
 import NutricaoController from "./routes/NutricaoController";
 import EtologicoController from "./routes/EtologicoController";
 import AtividadeController from "./routes/AtividadeController";
+import InternacaoController from "./routes/InternacaoController";
 import multer from "multer";
 import { storage } from './uploadImageAtt';
 const upload = multer({ storage: storage });
@@ -54,5 +55,12 @@ routes.post('/atividade_img/:id', upload.single("file"), (req, res) => {
 });
 routes.get('/atividade_img/:id', AtividadeController.showImagens);
 routes.post('/atividade_img_delete/:id', AtividadeController.deleteImageAtt);
+
+//Rotas Internação
+routes.get('/internacao_historico/:id', InternacaoController.index);
+routes.get('/internacao/:id', InternacaoController.show);
+routes.post('/internacao', InternacaoController.create);
+routes.put('/internacao/:id', InternacaoController.update);
+routes.delete('/internacao/:id', InternacaoController.destroy);
 
 export default routes;
