@@ -159,6 +159,8 @@ ALTER TABLE historicoClinico_anexo
 ADD CONSTRAINT fk_historicoCli_anexo FOREIGN KEY (HsCli_Codigo)
 REFERENCES historicoClinico (HsCli_Codigo);
 
+--------------------------------------------------------- Triggers  -------------------------------------------------------------------------
+
 DELIMITER $$
 
 CREATE TRIGGER before_animal_delete 
@@ -169,5 +171,51 @@ BEGIN
     DELETE FROM historicoetologico WHERE Ani_Codigo = OLD.Ani_Codigo;
     DELETE FROM nutricaoanimal WHERE Ani_Codigo = OLD.Ani_Codigo;
 END$$    
+
+DELIMITER ;
+
+
+
+DELIMITER $$
+
+CREATE TRIGGER before_historicoanimal_delete
+BEFORE DELETE ON historicoanimal FOR EACH ROW
+BEGIN
+    DELETE FROM historicomonitoracao WHERE HsAni_Codigo = OLD.HsAni_Codigo;
+    DELETE FROM historicoclinico WHERE HsAni_Codigo = OLD.HsAni_Codigo;
+END$$
+
+DELIMITER ;
+
+
+DELIMITER $$
+
+CREATE TRIGGER before_historimedicacao_delete
+BEFORE DELETE ON historicomedicacao FOR EACH ROW
+BEGIN
+    DELETE FROM medicacaohorario WHERE HsMed_Codigo = OLD.HsMed_Codigo;
+END$$
+
+DELIMITER ;
+
+
+DELIMITER $$
+
+CREATE TRIGGER before_atividadeanimal_delete
+BEFORE DELETE ON atividadeanimal FOR EACH ROW
+BEGIN
+    DELETE FROM imagensatividade WHERE Ativ_Codigo = OLD.Ativ_Codigo;
+END$$
+
+DELIMITER ;
+
+
+DELIMITER $$
+
+CREATE TRIGGER before_historicoclinico_delete
+BEFORE DELETE ON historicoclinico FOR EACH ROW
+BEGIN
+    DELETE FROM historicoclinico_anexo WHERE HsCli_Codigo = OLD.HsCli_Codigo;
+END$$
 
 DELIMITER ;
