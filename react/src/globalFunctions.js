@@ -15,11 +15,12 @@ export function mobileDetect() {
    }
 
 export const flexOnOrNot = () => {
-    if (mobileDetect()) {
+    /*if (mobileDetect()) {
         return 0;
     } else {
         return 1;
-    }
+    }*/
+    return 0;
 }
 export const AG_GRID_LOCALE_BR = {
     selectAll: '(Selecionar Todos)',

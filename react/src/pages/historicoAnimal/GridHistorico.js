@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { AgGridReact } from 'ag-grid-react';
-import { showEtologico, deleteEtologico } from "../../services/api";
+import { getHistoricosInternacao, deleteInternacao } from "../../services/api";
 import moment from 'moment';
 
 import Grid from '@mui/material/Grid'
@@ -18,14 +18,22 @@ const GridHistorico = (animalID) => {
     const [gridApi, setGridApi] = useState(null);
     const [historicos, setHistoricos] = useState([]);
 
+    const handleClickAdicionar = () => {
+        navigate("/internamento");
+        localStorage.setItem('animalIDHistorico', animalID.animalID);
+        localStorage.removeItem('historicoAnimalID');
+    }
+
+    const handleClickAbrirFicha = (idHistorico) => {
+        navigate("/internamento");
+        localStorage.setItem('animalIDHistorico', animalID.animalID);
+        localStorage.setItem('historicoAnimalID', idHistorico);
+    }
+
     const columnDefs = [
-        { field: "HsEt_Codigo", headerName: "Código", hide: true},
+        { field: "HsAni_Codigo", headerName: "Código do Internamento",},
         { field: "Ani_Codigo", headerName: "Código do Animal", hide: true},
-        { field: "HsEt_Comp", headerName: "Comportamento"},
-        { field: "HsEt_OutrComp", headerName: "Outros Comportamentos"},
-        { field: "HsEt_Obs", headerName: "Observação"},
-        { field: "HsEt_Resp", headerName: "Responsável"},
-        { field: "HsEt_Data", headerName: "Data", filter: 'agDateColumnFilter',
+        { field: "HsAni_Data ", headerName: "Data", filter: 'agDateColumnFilter',
          valueFormatter: function (params) { return moment(params.data.HsEt_Data).format('DD/MM/YYYY')},
          filterParams: {
             debounceMs: 500,
@@ -50,10 +58,12 @@ const GridHistorico = (animalID) => {
               }
             }
         }},
-        { field: "HsEt_Hora", headerName: "Hora" },
-        { field: "HsEt_Codigo", headerName:"Ações", cellRendererFramework:(params) => 
+        { field: "HsAni_Hora", headerName: "Hora" },
+        { field: "HsAni_MtvInt", headerName: "Motivo" },
+        { field: "HsAni_Medico", headerName: "Médico Responsável"},
+        { field: "HsAni_Codigo", headerName:"Ações", cellRendererFramework:(params) => 
         <div>
-            <Button variant="outlined" color="primary">Editar</Button>
+            <Button variant="outlined" color="primary" onClick={() => handleClickAbrirFicha(params.value)}>Editar</Button>
             <Button variant="outlined" color="secondary" onClick={() => handleDelete(params.value)}>Excluir</Button>
         </div>}
     ];
@@ -67,7 +77,7 @@ const GridHistorico = (animalID) => {
     }
     
     const refreshGrid = async () => {
-        const response = await showEtologico(animalID.animalID);
+        const response = await getHistoricosInternacao(animalID.animalID);
         setHistoricos(response.data);
     }
 
@@ -83,7 +93,7 @@ const GridHistorico = (animalID) => {
     const handleDelete = (id) => {
         const deleteRegister = async () => {
             try {
-                await deleteEtologico(id);
+                await deleteInternacao(id);
                 MySwal.fire({
                     html: <i>Histórico excluido com sucesso!</i>,
                     icon: 'success'
@@ -118,7 +128,7 @@ const GridHistorico = (animalID) => {
     return (
         <div className="Grid"> 
             <Grid align="right" marginBottom={1}>
-                <Button variant="contained" color="primary" onClick={() => navigate("/internamento")}>Adicionar</Button>
+                <Button variant="contained" color="primary" onClick={() => handleClickAdicionar()}>Adicionar</Button>
             </Grid>
             <div className="ag-theme-alpine" style={{ height: '400px'}}>
                 <AgGridReact 
@@ -127,7 +137,7 @@ const GridHistorico = (animalID) => {
                     defaultColDef={defaultColDef}
                     onGridReady={onGridReady}
                     localeText={AG_GRID_LOCALE_BR}
-                    gridOptions={{paginationAutoPageSize: true,pagination: true}}
+                    gridOptions={{paginationAutoPageSize: true, pagination: true}}
                 />
             </div>
         </div>
