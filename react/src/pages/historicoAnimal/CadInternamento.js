@@ -8,10 +8,11 @@ import
     Snackbar,
     InputLabel
 } from '@mui/material';
+import moment from 'moment';
 import Swal from 'sweetalert2'
 import withReactContent from 'sweetalert2-react-content'
 import './CadInternamento.css'
-import { createInternacao } from '../../services/api';
+import { createInternacao, showInternacao, updateInternacao } from '../../services/api';
 
 const CadInternamento = () => {
 	const initialState = {codigoAni: "", dataHist: "", horaHist: "", motivo: "", medico: "", diagnostico: "", peso: "", orientacao: "", evolucao: "", exameComp: ""};
@@ -23,21 +24,39 @@ const CadInternamento = () => {
 	const [ editMode, setEditMode ] = useState(false);
 	const [ newRegister, setNewRegister ] = useState(false);
 
+	const loadData = async() => {
+		const response = await showInternacao(localStorage.getItem('historicoAnimalID'));
+		const data = response.data[0];
+		setFormData({codigoAni: data.Ani_Codigo, dataHist: moment(data.HsAni_Data).format('YYYY-MM-DD'), horaHist: data.HsAni_Hora, motivo: data.HsAni_MtvInt, medico: data.HsAni_Medico,
+					diagnostico: data.HsAni_Diag, peso: data.HsAni_Peso, orientacao: data.HsAni_Orient, evolucao: data.HsAni_Evl, exameComp: data.HsAni_ExComp});
+	}
+
 	useEffect(() => {
         if (localStorage.getItem('historicoAnimalID') === null) {
 			setEditMode(true);
 			setNewRegister(true);
-		};
+		} else {
+			loadData();
+		}
     }, []);
+
+	const reloadPage = () => {
+		setNewRegister(false);
+		setEditMode(false);
+		setFormData(initialState);
+	}
 
 	const handleClickNovo = () => {
 		setNewRegister(true);
 		setEditMode(true);
+		setFormData(initialState);
 	}
 
 	const handleClickCancelar = () => {
-		setNewRegister(false);
-		setEditMode(false);
+		reloadPage();
+		if (localStorage.getItem('historicoAnimalID') !== null) {
+			loadData();
+		}
 	}
 
     const alert = (open,msg) => {
@@ -72,13 +91,28 @@ const CadInternamento = () => {
     }
 
 	const handleFormSubmit = async () => {
-		try {            
-			await createInternacao(localStorage.getItem('animalIDHistorico'), formData.dataHist, formData.horaHist, formData.motivo, formData.medico, formData.diagnostico, formData.peso, formData.orientacao,
-								formData.evolucao, formData.exameComp);
-			MySwal.fire({
-				html: <i>Internamento cadastrado com sucesso!</i>,
-				icon: 'success'
-			})
+		try {    
+			if (newRegister) {
+				const response = await createInternacao(localStorage.getItem('animalIDHistorico'), formData.dataHist, formData.horaHist, formData.motivo, formData.medico, formData.diagnostico, formData.peso, formData.orientacao,
+									formData.evolucao, formData.exameComp);
+				MySwal.fire({
+					html: <i>Ficha de internamento cadastrada com sucesso!</i>,
+					icon: 'success'
+				});
+
+				localStorage.setItem('historicoAnimalID', response.data.insertId);
+				reloadPage();
+				loadData();
+			} else {
+				await updateInternacao(localStorage.getItem('historicoAnimalID'), formData.dataHist, formData.horaHist, formData.motivo, formData.medico, formData.diagnostico, formData.peso, formData.orientacao,
+									formData.evolucao, formData.exameComp);
+				MySwal.fire({
+					html: <i>Ficha de internamento atualizada com sucesso!</i>,
+					icon: 'success'
+				});
+				reloadPage();
+				loadData();
+			}
 		} catch (error) {
 			MySwal.fire({
 				html: <i>{JSON.stringify(error.response.data).slice(0, -1).slice(1 | 1)}</i>,
@@ -113,7 +147,7 @@ const CadInternamento = () => {
 				</Alert>
 			</Snackbar>
 			<div>
-				{!newRegister?
+				{!newRegister && localStorage.getItem('historicoAnimalID') !== null?
 				<Button color="warning" variant="outlined" onClick={() => setEditMode(true)}>
 					Editar
 				</Button>:null}

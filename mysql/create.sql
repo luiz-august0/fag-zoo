@@ -183,6 +183,7 @@ BEFORE DELETE ON historicoanimal FOR EACH ROW
 BEGIN
     DELETE FROM historicomonitoracao WHERE HsAni_Codigo = OLD.HsAni_Codigo;
     DELETE FROM historicoclinico WHERE HsAni_Codigo = OLD.HsAni_Codigo;
+    DELETE FROM historicomedicacao WHERE HsAni_Codigo = OLD.HsAni_Codigo;
 END$$
 
 DELIMITER ;

@@ -134,8 +134,8 @@ export const createInternacao = async (codigoAni, dataHist, horaHist, motivo, me
     return api.post('/internacao', { codigoAni, dataHist, horaHist, motivo, medico, diagnostico, peso, orientacao, evolucao, exameComp });
 };
 
-export const updateInternacao = async (historicoID, codigoAni, dataHist, horaHist, motivo, medico, diagnostico, peso, orientacao, evolucao, exameComp) => {
-    return api.put(`/internacao/${historicoID}`, { codigoAni, dataHist, horaHist, motivo, medico, diagnostico, peso, orientacao, evolucao, exameComp });
+export const updateInternacao = async (historicoID, dataHist, horaHist, motivo, medico, diagnostico, peso, orientacao, evolucao, exameComp) => {
+    return api.put(`/internacao/${historicoID}`, { dataHist, horaHist, motivo, medico, diagnostico, peso, orientacao, evolucao, exameComp });
 };
 
 export const deleteInternacao = async (historicoID) => {

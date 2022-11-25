@@ -8,6 +8,13 @@ import CadInternamento from './CadInternamento';
 const Internamento = () => {
 	const navigate = useNavigate();
 	const [ selectedComponent, setSelectedComponent ] = useState(<CadInternamento/>);
+
+    const havePermission = () => {
+        if (localStorage.getItem('historicoAnimalID') !== null) {
+            console.log(localStorage.getItem('historicoAnimalID'));
+            return true;
+        } else { return false }
+    }
     
     const flexOn = () => {
         if (selectedComponent.type.name.toString() === 'CadInternamento') {
@@ -32,9 +39,9 @@ const Internamento = () => {
             <div className="main-container">
                 <div className="main-screen">
                     <Button variant="contained" color="primary" onClick={() => setSelectedComponent(<CadInternamento/>)}>Internamento</Button>
-                    <Button style={{left: '5%'}} variant="contained" color="primary">Monitorações</Button>
-					<Button style={{left: '10%'}} variant="contained" color="primary">Medicamentos</Button>
-					<Button style={{left: '15%'}} variant="contained" color="primary">Exames</Button>
+                    {havePermission()?<Button style={{left: '5%'}} variant="contained" color="primary">Monitorações</Button>:null}
+                    {havePermission()?<Button style={{left: '10%'}} variant="contained" color="primary">Medicamentos</Button>:null}
+                    {havePermission()?<Button style={{left: '15%'}} variant="contained" color="primary">Exames</Button>:null}
                 </div>
                 <div style={{display: flexOn(), justifyContent: 'center', marginTop: '2%'}}>
 					{selectedComponent}
