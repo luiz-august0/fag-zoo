@@ -4,6 +4,7 @@ import Image from '../../img/back-arrow.png';
 import { Button} from '@mui/material';
 import { useNavigate } from "react-router-dom";
 import CadInternamento from './CadInternamento';
+import GridMonitoramentos from './GridMonitoramentos';
 
 const Internamento = () => {
 	const navigate = useNavigate();
@@ -11,17 +12,8 @@ const Internamento = () => {
 
     const havePermission = () => {
         if (localStorage.getItem('historicoAnimalID') !== null) {
-            console.log(localStorage.getItem('historicoAnimalID'));
             return true;
         } else { return false }
-    }
-    
-    const flexOn = () => {
-        if (selectedComponent.type.name.toString() === 'CadInternamento') {
-            return 'flex';
-        } else {
-            return '1'
-        }
     }
 
     const handleClickVoltar = () => {
@@ -39,13 +31,17 @@ const Internamento = () => {
             <div className="main-container">
                 <div className="main-screen">
                     <Button variant="contained" color="primary" onClick={() => setSelectedComponent(<CadInternamento/>)}>Internamento</Button>
-                    {havePermission()?<Button style={{left: '5%'}} variant="contained" color="primary">Monitorações</Button>:null}
+                    {havePermission()?<Button style={{left: '5%'}} variant="contained" color="primary" onClick={() => setSelectedComponent(<GridMonitoramentos/>)}>Monitorações</Button>:null}
                     {havePermission()?<Button style={{left: '10%'}} variant="contained" color="primary">Medicamentos</Button>:null}
                     {havePermission()?<Button style={{left: '15%'}} variant="contained" color="primary">Exames</Button>:null}
                 </div>
-                <div style={{display: flexOn(), justifyContent: 'center', marginTop: '2%'}}>
-					{selectedComponent}
-                </div>
+                {selectedComponent.type.name.toString() === 'CadInternamento'?
+                <div style={{display: 'flex', justifyContent: 'center', marginTop: '2%', width: '75%'}}>
+                    {selectedComponent}
+                </div>:
+                <div style={{justifyContent: 'center', marginTop: '2%', width: '75%'}}>
+                    {selectedComponent}
+                </div>}
             </div>
         </div>
     );

@@ -9,6 +9,7 @@ import AtividadeController from "./routes/AtividadeController";
 import InternacaoController from "./routes/InternacaoController";
 import multer from "multer";
 import { storage } from './uploadImageAtt';
+import MonitoramentosController from "./routes/MonitoramentosController";
 const upload = multer({ storage: storage });
 
 const routes = new Router();
@@ -62,5 +63,12 @@ routes.get('/internacao/:id', InternacaoController.show);
 routes.post('/internacao', InternacaoController.create);
 routes.put('/internacao/:id', InternacaoController.update);
 routes.delete('/internacao/:id', InternacaoController.destroy);
+
+//Rotas Monitoramento
+routes.get('/monitoramento/:id', MonitoramentosController.show);
+routes.post('/monitoramento', MonitoramentosController.create);
+routes.put('/monitoramento/:id', MonitoramentosController.update);
+routes.delete('/monitoramento/:id', MonitoramentosController.destroy);
+routes.get('/monitoracoesCod', MonitoramentosController.getMonitoracoesCod);
 
 export default routes;

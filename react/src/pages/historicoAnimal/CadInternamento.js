@@ -103,6 +103,7 @@ const CadInternamento = () => {
 				localStorage.setItem('historicoAnimalID', response.data.insertId);
 				reloadPage();
 				loadData();
+				window.location.reload();
 			} else {
 				await updateInternacao(localStorage.getItem('historicoAnimalID'), formData.dataHist, formData.horaHist, formData.motivo, formData.medico, formData.diagnostico, formData.peso, formData.orientacao,
 									formData.evolucao, formData.exameComp);

@@ -145,4 +145,25 @@ export const deleteInternacao = async (historicoID) => {
 export const showInternacao = async (historicoID) => {
     return api.get(`/internacao/${historicoID}`);
 };
+
+//Rotas de monitoramentos
+export const getMonitoramentos = async (historicoID) => {
+    return api.get(`/monitoramento/${historicoID}`);
+};
+
+export const createMonitoramento = async (historicoID, tipo, hora, resultado) => {
+    return api.post('/monitoramento', { historicoID, tipo, hora, resultado });
+};
+
+export const updateMonitoramento = async (historicoID, tipo, hora, resultado) => {
+    return api.put(`/monitoramento/${historicoID}`, { historicoID, tipo, hora, resultado });
+};
+
+export const deleteMonitoramento = async (historicoID) => {
+    return api.delete(`/monitoramento/${historicoID}`);
+};
+
+export const getMonitoracoesCod = async() => {
+    return api.get('/monitoracoesCod');
+}
 /**************************************************************/

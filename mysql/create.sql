@@ -116,6 +116,11 @@ CREATE TABLE historicoClinico_anexo(
    Anx_Desc VARCHAR(255) NOT NULL
 );
 
+CREATE TABLE monitoracoes(
+    Codigo VARCHAR(80),
+    Descricao VARCHAR(150)
+);
+
 ALTER TABLE usuario
 ADD CONSTRAINT fk_usuario_setor FOREIGN KEY (Str_Codigo)
 REFERENCES setor (Str_Codigo);
